@@ -1,93 +1,104 @@
-# skills
+# skillos
 
+Enterprise-grade artifact management for **Skills**, **Prompts**, and **Agents**.
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+A pnpm monorepo with a clean **layered architecture**:
 
 ```
-cd existing_repo
-git remote add origin http://localhost/tech/skills.git
-git branch -M main
-git push -uf origin main
+apps/      — entry points (CLI, registry server, future web UI)
+packages/  — reusable building blocks
+  core/           Domain models (Artifact / Skill / Prompt) — the most stable layer
+  storage/        File + SQLite storage with a unified Repository facade
+  services/       Business orchestration (publish, install, sync, search)
+  registry-client/ HTTP client for talking to a remote registry
+  config/         Configuration loading
+  utils/          Shared helpers (logger, fs, hashing)
+runtime/   — future per-host runtimes (node / browser)
+plugins/   — future adapter extension points
+storage/   — local data directory at runtime (artifacts, db, config)
 ```
 
-## Integrate with your tools
+## Quick start
 
-* [Set up project integrations](http://localhost/tech/skills/-/settings/integrations)
+```bash
+# Install deps
+pnpm install
 
-## Collaborate with your team
+# Start the local registry server
+pnpm server
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+# In another terminal, publish an artifact
+pnpm cli publish --manifest ./my-skill/manifest.json --payload ./my-skill.tgz
 
-## Test and Deploy
+# List local artifacts
+pnpm cli list
 
-Use the built-in continuous integration in GitLab.
+# Install an artifact by id
+pnpm cli install skill:team/code-review@1.0.0
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+# Sync from the configured remote registry
+pnpm cli sync
+```
 
-***
+## Manifest example (`manifest.json`)
 
-# Editing this README
+```json
+{
+  "kind": "skill",
+  "name": "team/code-review",
+  "version": "1.0.0",
+  "description": "Reviews TypeScript pull requests",
+  "tags": ["code", "review", "typescript"],
+  "author": { "name": "Platform Team", "email": "platform@example.com" },
+  "license": "Apache-2.0",
+  "entry": "SKILL.md",
+  "metadata": {
+    "capabilities": ["code-review"],
+    "runtime": "any"
+  }
+}
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Supported `kind` values: `skill`, `prompt`, `agent`.
 
-## Suggestions for a good README
+## Configuration
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Default location: `~/.skillos/config.json` (override with `SKILLOS_HOME`).
+Auto-created on first run with sensible defaults; edit to add registries:
 
-## Name
-Choose a self-explaining name for your project.
+```json
+{
+  "registries": [
+    { "name": "default",  "url": "http://127.0.0.1:7421" },
+    { "name": "internal", "url": "https://skillos.corp.local", "token": "..." }
+  ],
+  "defaultRegistry": "internal"
+}
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## HTTP API (server)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+| Method | Path                                          | Description                  |
+| ------ | --------------------------------------------- | ---------------------------- |
+| GET    | `/healthz`                                    | Health check                 |
+| GET    | `/api/artifacts?kind=&q=&limit=&offset=`      | List / search artifacts      |
+| GET    | `/api/artifacts/:id`                          | Get artifact metadata        |
+| GET    | `/api/artifacts/:id/download`                 | Download artifact payload    |
+| GET    | `/api/artifacts/:kind/:name/versions`         | List all versions of a name  |
+| POST   | `/api/artifacts`                              | Publish (multipart)          |
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Architecture notes
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+- **`packages/core`** has zero dependencies on storage or HTTP — it only defines
+  domain types and validators (with `zod`). Everything else depends on it.
+- **`packages/storage`** owns persistence; consumers interact through
+  `ArtifactRepository` (the unified entry point).
+- **`packages/services`** composes `core` + `storage` (+ optional
+  `registry-client`) into use-cases. CLI and server depend only on services.
+- **`apps/*`** are thin: they wire dependencies and expose them
+  (CLI commands / HTTP routes).
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Requirements
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- Node.js >= 18
+- pnpm >= 9
