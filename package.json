@@ -15,9 +15,9 @@
     "test": "pnpm -r test"
   },
   "devDependencies": {
-    "typescript": "^5.5.4",
+    "@types/node": "^20.19.39",
     "tsx": "^4.19.0",
-    "@types/node": "^20.14.0"
+    "typescript": "^5.5.4"
   },
   "engines": {
     "node": ">=18"
