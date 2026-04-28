@@ -1,0 +1,25 @@
+{
+  "name": "@skillos/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "skillos": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@skillos/config": "workspace:*",
+    "@skillos/core": "workspace:*",
+    "@skillos/handlers": "workspace:*",
+    "@skillos/loader": "workspace:*",
+    "@skillos/registry-client": "workspace:*",
+    "@skillos/services": "workspace:*",
+    "@skillos/storage": "workspace:*",
+    "@skillos/utils": "workspace:*",
+    "commander": "^12.1.0"
+  }
+}

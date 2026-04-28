@@ -1,0 +1,41 @@
+import { z } from "zod";
+import {
+  type ArtifactHandler,
+  matchSkillFiles,
+  parseSkillMarkdownManifest,
+} from "@skillos/core";
+
+const schema = z.object({
+  name: z.string().min(1),
+  version: z.string().min(1),
+  description: z.string().optional(),
+  rawMarkdown: z.string(),
+  sections: z
+    .object({
+      role: z.string().optional(),
+      input: z.string().optional(),
+      output: z.string().optional(),
+      prompt: z.string().optional(),
+    })
+    .strict(),
+});
+
+export const skillHandler: ArtifactHandler = {
+  type: "skill",
+
+  match(files) {
+    return matchSkillFiles(files);
+  },
+
+  parse(files) {
+    return parseSkillMarkdownManifest(files);
+  },
+
+  validate(manifest) {
+    return schema.parse(manifest);
+  },
+
+  async execute(artifact) {
+    return artifact.manifest;
+  },
+};

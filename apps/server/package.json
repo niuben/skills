@@ -1,0 +1,21 @@
+{
+  "name": "@skillos/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@skillos/config": "workspace:*",
+    "@skillos/core": "workspace:*",
+    "@skillos/services": "workspace:*",
+    "@skillos/storage": "workspace:*",
+    "@skillos/utils": "workspace:*",
+    "fastify": "^4.28.1",
+    "@fastify/multipart": "^8.3.0"
+  }
+}

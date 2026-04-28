@@ -1,0 +1,26 @@
+{
+  "name": "skillos",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Enterprise skills/prompts/agents artifact management platform",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel dev",
+    "clean": "pnpm -r exec rm -rf dist",
+    "cli": "pnpm --filter @skillos/cli start",
+    "server": "pnpm --filter @skillos/server start",
+    "web": "pnpm --filter @skillos/web dev",
+    "web:build": "pnpm --filter @skillos/web build",
+    "lint": "echo \"(configure linter here)\"",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "tsx": "^4.19.0",
+    "@types/node": "^20.14.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.7.0"
+}
