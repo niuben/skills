@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/loader",
+  "name": "@skillsos/loader",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillos/core": "workspace:*",
+    "@skillsos/core": "workspace:*",
     "tar": "^7.4.3"
   }
 }

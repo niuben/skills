@@ -6,7 +6,7 @@ import { ArtifactCard } from "../components/ArtifactCard";
 
 const KINDS: { key: ArtifactKind | "all"; label: string }[] = [
   { key: "all", label: "全部" },
-  { key: "skill", label: "Skills" },
+  { key: "skills", label: "Skills" },
   { key: "prompt", label: "Prompts" },
   { key: "agent", label: "Agents" },
 ];

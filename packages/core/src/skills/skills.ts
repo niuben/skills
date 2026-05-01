@@ -4,14 +4,14 @@ import {
   SkillMarkdownManifestSchema,
   type SkillManifest,
   type SkillMarkdownManifest,
-} from "./skill.schema.js";
+} from "./skills.schema.js";
 
 export interface SkillRecord extends ArtifactRecord {
-  kind: "skill";
+  kind: "skills";
 }
 
 export function isSkillRecord(a: ArtifactRecord): a is SkillRecord {
-  return a.kind === "skill";
+  return a.kind === "skills";
 }
 
 export function parseSkillManifest(input: unknown): SkillManifest {

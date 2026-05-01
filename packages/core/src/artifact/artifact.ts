@@ -9,7 +9,7 @@ export function parseArtifactId(id: string): {
   name: string;
   version: string;
 } {
-  const match = /^(skill|prompt|agent):([^@]+)@(.+)$/.exec(id);
+  const match = /^(skills|prompt|agent):([^@]+)@(.+)$/.exec(id);
   if (!match) throw new Error(`Invalid artifact id: ${id}`);
   return { kind: match[1] as ArtifactKind, name: match[2], version: match[3] };
 }

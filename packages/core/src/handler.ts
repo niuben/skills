@@ -1,7 +1,7 @@
 import type { Artifact, FileEntry } from "./artifact/artifact.types.js";
 
 export interface ArtifactHandler<T = unknown> {
-  /** Unique artifact type handled by this plugin, e.g. "skill" */
+  /** Unique artifact type handled by this plugin, e.g. "skills" */
   type: string;
 
   /**

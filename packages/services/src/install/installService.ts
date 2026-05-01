@@ -5,10 +5,10 @@ import {
   parseArtifactId,
   type ArtifactKind,
   type ArtifactRecord,
-} from "@skillos/core";
-import type { ArtifactRepository, FileStorage } from "@skillos/storage";
-import type { RegistryClient } from "@skillos/registry-client";
-import { createLogger, ensureDir, sha256Buffer } from "@skillos/utils";
+} from "@skillsos/core";
+import type { ArtifactRepository, FileStorage } from "@skillsos/storage";
+import type { RegistryClient } from "@skillsos/registry-client";
+import { createLogger, ensureDir, sha256Buffer } from "@skillsos/utils";
 
 export interface InstallServiceDeps {
   repository: ArtifactRepository;
@@ -59,13 +59,13 @@ export class InstallService {
       return this.persistInstall(record, payload, preferredKind, name, explicit.version);
     }
 
-    if (kinds.has("skill") && kinds.size === 1) {
-      const preferred = await this.resolveLatest("skill", name);
+    if (kinds.has("skills") && kinds.size === 1) {
+      const preferred = await this.resolveLatest("skills", name);
       if (!preferred) {
-        throw new Error(`artifact skill:${name} not found locally or in configured registry`);
+        throw new Error(`artifact skills:${name} not found locally or in configured registry`);
       }
       const { record, payload } = await this.loadById(preferred.id);
-      return this.persistInstall(record, payload, "skill", name, preferred.version);
+      return this.persistInstall(record, payload, "skills", name, preferred.version);
     }
 
     const orderedKinds = [...kinds].sort();
@@ -81,10 +81,13 @@ export class InstallService {
 
     if (record && (await this.deps.storage.has(record.storagePath))) {
       payload = await this.deps.storage.get(record.storagePath);
+      record = normalizeRecord(record);
     } else if (this.deps.registry) {
       this.log.info(`fetching ${id} from remote registry`);
       record = await this.deps.registry.getMetadata(id);
       payload = await this.deps.registry.download(id);
+
+      record = normalizeRecord(record);
 
       const actual = sha256Buffer(payload);
       if (actual !== record.contentHash) {
@@ -104,15 +107,27 @@ export class InstallService {
     if (local) return local;
 
     if (!this.deps.registry) return null;
-    const remoteVersions = await this.deps.registry.listVersions(kind, name).catch(() => [] as ArtifactRecord[]);
-    return remoteVersions.length > 0 ? remoteVersions[0] : null;
+
+    for (const queryKind of aliasKinds(kind)) {
+      const remoteVersions = await this.deps.registry
+        .listVersions(queryKind as ArtifactKind, name)
+        .catch(() => [] as ArtifactRecord[]);
+      if (remoteVersions.length > 0) {
+        return remoteVersions[0];
+      }
+    }
+
+    return null;
   }
 
   private async discoverKinds(name: string): Promise<Set<ArtifactKind>> {
     const kinds = new Set<ArtifactKind>();
 
     for (const item of this.deps.repository.list({ name, limit: 1000 })) {
-      if (item.name === name) kinds.add(item.kind);
+      if (item.name === name) {
+        const normalized = normalizeKind(item.kind);
+        if (normalized) kinds.add(normalized);
+      }
     }
 
     if (!this.deps.registry) {
@@ -124,7 +139,10 @@ export class InstallService {
       items: [] as ArtifactRecord[],
     }));
     for (const item of remote.items) {
-      if (item.name === name) kinds.add(item.kind);
+      if (item.name === name) {
+        const normalized = normalizeKind(item.kind);
+        if (normalized) kinds.add(normalized);
+      }
     }
 
     return kinds;
@@ -149,4 +167,29 @@ export class InstallService {
     this.log.info(`installed ${id} -> ${installPath}`);
     return { record, installPath };
   }
+}
+
+function normalizeKind(kind: string): ArtifactKind | undefined {
+  if (kind === "skill") return "skills";
+  if (kind === "skills" || kind === "prompt" || kind === "agent") {
+    return kind;
+  }
+  return undefined;
+}
+
+function aliasKinds(kind: ArtifactKind): string[] {
+  return kind === "skills" ? ["skills", "skill"] : [kind];
+}
+
+function normalizeRecord(record: ArtifactRecord): ArtifactRecord {
+  if ((record.kind as string) !== "skill") {
+    return record;
+  }
+
+  return {
+    ...record,
+    kind: "skills",
+    id: record.id.replace(/^skill:/, "skills:"),
+    storagePath: record.storagePath.replace(/^skill\//, "skills/"),
+  };
 }

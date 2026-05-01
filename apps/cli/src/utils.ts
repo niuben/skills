@@ -1,5 +1,5 @@
 import path from "node:path";
-import { loadConfig, type SkillosConfig } from "@skillos/config";
+import { loadConfig, type SkillosConfig } from "@skillsos/config";
 import {
   createArtifactRepository,
   createFileStorage,
@@ -8,14 +8,14 @@ import {
   type ArtifactRepository,
   type FileStorage,
   type PathResolver,
-} from "@skillos/storage";
-import { RegistryClient } from "@skillos/registry-client";
+} from "@skillsos/storage";
+import { RegistryClient } from "@skillsos/registry-client";
 import {
   InstallService,
   PublishService,
   SearchService,
   SyncService,
-} from "@skillos/services";
+} from "@skillsos/services";
 
 export interface CliContext {
   config: SkillosConfig;

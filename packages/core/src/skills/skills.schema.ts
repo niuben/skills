@@ -5,7 +5,7 @@ import { ArtifactManifestSchema } from "../artifact/artifact.validator.js";
  * Legacy schema used by existing publish APIs.
  */
 export const SkillManifestSchema = ArtifactManifestSchema.extend({
-  kind: z.literal("skill"),
+  kind: z.literal("skills"),
   metadata: z.record(z.unknown()).optional(),
 });
 

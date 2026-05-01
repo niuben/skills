@@ -1,4 +1,4 @@
-import type { ArtifactKind, ArtifactManifest, ArtifactRecord } from "@skillos/core";
+import type { ArtifactKind, ArtifactManifest, ArtifactRecord } from "@skillsos/core";
 
 export interface RegistryClientOptions {
   baseUrl: string;

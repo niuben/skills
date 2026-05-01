@@ -1,5 +1,5 @@
-import { loadConfig } from "@skillos/config";
-import { createLogger } from "@skillos/utils";
+import { loadConfig } from "@skillsos/config";
+import { createLogger } from "@skillsos/utils";
 import { buildApp } from "./app.js";
 
 async function main(): Promise<void> {

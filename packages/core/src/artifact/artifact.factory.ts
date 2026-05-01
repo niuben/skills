@@ -1,4 +1,4 @@
-import { sha256Buffer } from "@skillos/utils";
+import { sha256Buffer } from "@skillsos/utils";
 import { makeArtifactId } from "./artifact.js";
 import type {
   ArtifactManifest,

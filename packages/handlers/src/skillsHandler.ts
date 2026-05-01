@@ -3,7 +3,7 @@ import {
   type ArtifactHandler,
   matchSkillFiles,
   parseSkillMarkdownManifest,
-} from "@skillos/core";
+} from "@skillsos/core";
 
 const schema = z.object({
   name: z.string().min(1),
@@ -20,8 +20,8 @@ const schema = z.object({
     .strict(),
 });
 
-export const skillHandler: ArtifactHandler = {
-  type: "skill",
+export const skillsHandler: ArtifactHandler = {
+  type: "skills",
 
   match(files) {
     return matchSkillFiles(files);

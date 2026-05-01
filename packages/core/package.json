@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/core",
+  "name": "@skillsos/core",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillos/utils": "workspace:*",
+    "@skillsos/utils": "workspace:*",
     "zod": "^3.23.8"
   }
 }

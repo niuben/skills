@@ -1,4 +1,4 @@
-# @skillos/storage
+# @skillsos/storage
 
 Persistence adapters for files and metadata.
 

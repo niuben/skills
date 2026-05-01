@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/config",
+  "name": "@skillsos/config",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,6 +17,6 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillos/utils": "workspace:*"
+    "@skillsos/utils": "workspace:*"
   }
 }

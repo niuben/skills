@@ -1,4 +1,4 @@
-# @skillos/core
+# @skillsos/core
 
 Core domain model and contracts for artifacts.
 

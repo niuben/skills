@@ -1,4 +1,4 @@
-export type ArtifactKind = "skill" | "prompt" | "agent";
+export type ArtifactKind = "skills" | "prompt" | "agent";
 
 export interface ArtifactRecord {
   id: string;

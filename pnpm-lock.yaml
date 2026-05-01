@@ -20,28 +20,28 @@ importers:
 
   apps/cli:
     dependencies:
-      '@skillos/config':
+      '@skillsos/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@skillos/handlers':
+      '@skillsos/handlers':
         specifier: workspace:*
         version: link:../../packages/handlers
-      '@skillos/loader':
+      '@skillsos/loader':
         specifier: workspace:*
         version: link:../../packages/loader
-      '@skillos/registry-client':
+      '@skillsos/registry-client':
         specifier: workspace:*
         version: link:../../packages/registry-client
-      '@skillos/services':
+      '@skillsos/services':
         specifier: workspace:*
         version: link:../../packages/services
-      '@skillos/storage':
+      '@skillsos/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       commander:
@@ -53,19 +53,19 @@ importers:
       '@fastify/multipart':
         specifier: ^8.3.0
         version: 8.3.1
-      '@skillos/config':
+      '@skillsos/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@skillos/services':
+      '@skillsos/services':
         specifier: workspace:*
         version: link:../../packages/services
-      '@skillos/storage':
+      '@skillsos/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       fastify:
@@ -102,13 +102,13 @@ importers:
 
   packages/config:
     dependencies:
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/core:
     dependencies:
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../utils
       zod:
@@ -117,7 +117,7 @@ importers:
 
   packages/handlers:
     dependencies:
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -126,7 +126,7 @@ importers:
 
   packages/loader:
     dependencies:
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../core
       tar:
@@ -135,40 +135,40 @@ importers:
 
   packages/registry-client:
     dependencies:
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../core
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/services:
     dependencies:
-      '@skillos/config':
+      '@skillsos/config':
         specifier: workspace:*
         version: link:../config
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../core
-      '@skillos/registry-client':
+      '@skillsos/registry-client':
         specifier: workspace:*
         version: link:../registry-client
-      '@skillos/storage':
+      '@skillsos/storage':
         specifier: workspace:*
         version: link:../storage
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/storage:
     dependencies:
-      '@skillos/config':
+      '@skillsos/config':
         specifier: workspace:*
         version: link:../config
-      '@skillos/core':
+      '@skillsos/core':
         specifier: workspace:*
         version: link:../core
-      '@skillos/utils':
+      '@skillsos/utils':
         specifier: workspace:*
         version: link:../utils
       better-sqlite3:

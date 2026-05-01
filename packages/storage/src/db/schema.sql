@@ -3,7 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS artifacts (
   id            TEXT PRIMARY KEY,            -- latest kind:name@version
-  kind          TEXT NOT NULL,               -- skill | prompt | agent
+  kind          TEXT NOT NULL,               -- skills | prompt | agent
   name          TEXT NOT NULL,
   version       TEXT NOT NULL,
   description   TEXT,

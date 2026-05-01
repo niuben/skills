@@ -1,9 +1,9 @@
 import type { FastifyInstance } from "fastify";
-import type { ArtifactKind, ArtifactManifest } from "@skillos/core";
-import { validateManifest } from "@skillos/core";
-import type { PublishService, SearchService } from "@skillos/services";
-import type { FileStorage } from "@skillos/storage";
-import type { ArtifactRepository } from "@skillos/storage";
+import type { ArtifactKind, ArtifactManifest } from "@skillsos/core";
+import { validateManifest } from "@skillsos/core";
+import type { PublishService, SearchService } from "@skillsos/services";
+import type { FileStorage } from "@skillsos/storage";
+import type { ArtifactRepository } from "@skillsos/storage";
 
 export interface ArtifactRouteDeps {
   publishService: PublishService;

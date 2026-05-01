@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/server",
+  "name": "@skillsos/server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,11 +10,11 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
-    "@skillos/config": "workspace:*",
-    "@skillos/core": "workspace:*",
-    "@skillos/services": "workspace:*",
-    "@skillos/storage": "workspace:*",
-    "@skillos/utils": "workspace:*",
+    "@skillsos/config": "workspace:*",
+    "@skillsos/core": "workspace:*",
+    "@skillsos/services": "workspace:*",
+    "@skillsos/storage": "workspace:*",
+    "@skillsos/utils": "workspace:*",
     "fastify": "^4.28.1",
     "@fastify/multipart": "^8.3.0"
   }

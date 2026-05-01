@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/services",
+  "name": "@skillsos/services",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,10 +17,10 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillos/config": "workspace:*",
-    "@skillos/core": "workspace:*",
-    "@skillos/registry-client": "workspace:*",
-    "@skillos/storage": "workspace:*",
-    "@skillos/utils": "workspace:*"
+    "@skillsos/config": "workspace:*",
+    "@skillsos/core": "workspace:*",
+    "@skillsos/registry-client": "workspace:*",
+    "@skillsos/storage": "workspace:*",
+    "@skillsos/utils": "workspace:*"
   }
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { ArtifactHandler, FileEntry } from "@skillos/core";
+import type { ArtifactHandler, FileEntry } from "@skillsos/core";
 
 const schema = z.object({
   name: z.string().min(1),

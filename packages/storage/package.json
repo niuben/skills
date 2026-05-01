@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/storage",
+  "name": "@skillsos/storage",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,9 +17,9 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillos/config": "workspace:*",
-    "@skillos/core": "workspace:*",
-    "@skillos/utils": "workspace:*",
+    "@skillsos/config": "workspace:*",
+    "@skillsos/core": "workspace:*",
+    "@skillsos/utils": "workspace:*",
     "better-sqlite3": "^11.1.2"
   },
   "devDependencies": {

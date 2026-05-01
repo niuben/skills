@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/cli",
+  "name": "@skillsos/cli",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,14 +12,14 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
-    "@skillos/config": "workspace:*",
-    "@skillos/core": "workspace:*",
-    "@skillos/handlers": "workspace:*",
-    "@skillos/loader": "workspace:*",
-    "@skillos/registry-client": "workspace:*",
-    "@skillos/services": "workspace:*",
-    "@skillos/storage": "workspace:*",
-    "@skillos/utils": "workspace:*",
+    "@skillsos/config": "workspace:*",
+    "@skillsos/core": "workspace:*",
+    "@skillsos/handlers": "workspace:*",
+    "@skillsos/loader": "workspace:*",
+    "@skillsos/registry-client": "workspace:*",
+    "@skillsos/services": "workspace:*",
+    "@skillsos/storage": "workspace:*",
+    "@skillsos/utils": "workspace:*",
     "commander": "^12.1.0"
   }
 }

@@ -1,4 +1,4 @@
-# @skillos/loader
+# @skillsos/loader
 
 Artifact loader for directory, tarball, and buffer sources.
 
@@ -21,8 +21,8 @@ Artifact loader for directory, tarball, and buffer sources.
 ## Usage
 
 ```ts
-import { ArtifactLoader } from "@skillos/loader";
-import { registerBuiltinHandlers } from "@skillos/handlers";
+import { ArtifactLoader } from "@skillsos/loader";
+import { registerBuiltinHandlers } from "@skillsos/handlers";
 
 registerBuiltinHandlers();
 

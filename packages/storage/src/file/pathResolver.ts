@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { ArtifactKind, ArtifactManifest } from "@skillos/core";
+import type { ArtifactKind, ArtifactManifest } from "@skillsos/core";
 
 export interface PathResolver {
   /** Absolute path of the artifact storage root */

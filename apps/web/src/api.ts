@@ -49,8 +49,8 @@ export async function getArtifact(id: string): Promise<ArtifactRecord | null> {
 /* ---------- Mock data (used when server is offline) ---------- */
 export const MOCK: ArtifactRecord[] = [
   {
-    id: "skill:team/code-review@1.2.0",
-    kind: "skill",
+    id: "skills:team/code-review@1.2.0",
+    kind: "skills",
     name: "team/code-review",
     version: "1.2.0",
     description:
@@ -60,12 +60,12 @@ export const MOCK: ArtifactRecord[] = [
     license: "Apache-2.0",
     contentHash: "8e7c5b2a4d1f0a6b3c9e8d7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b",
     size: 24851,
-    storagePath: "skill/team/code-review/1.2.0.tgz",
+    storagePath: "skills/team/code-review/1.2.0.tgz",
     publishedAt: "2026-04-12T08:21:00Z",
   },
   {
-    id: "skill:team/release-runbook@0.4.1",
-    kind: "skill",
+    id: "skills:team/release-runbook@0.4.1",
+    kind: "skills",
     name: "team/release-runbook",
     version: "0.4.1",
     description: "标准发布流程与回滚剧本：含发布前检查清单、灰度策略与紧急回滚步骤。",
@@ -73,7 +73,7 @@ export const MOCK: ArtifactRecord[] = [
     author: { name: "SRE" },
     contentHash: "1234abcd",
     size: 8123,
-    storagePath: "skill/team/release-runbook/0.4.1.tgz",
+    storagePath: "skills/team/release-runbook/0.4.1.tgz",
     publishedAt: "2026-04-09T03:15:00Z",
   },
   {
@@ -103,8 +103,8 @@ export const MOCK: ArtifactRecord[] = [
     publishedAt: "2026-03-29T14:50:00Z",
   },
   {
-    id: "skill:design/ui-review@0.9.0",
-    kind: "skill",
+    id: "skills:design/ui-review@0.9.0",
+    kind: "skills",
     name: "design/ui-review",
     version: "0.9.0",
     description: "UI 评审清单：信息架构、对比度、可达性、动效节奏与品牌一致性。",
@@ -112,7 +112,7 @@ export const MOCK: ArtifactRecord[] = [
     author: { name: "Design Ops" },
     contentHash: "ddddeeee",
     size: 6781,
-    storagePath: "skill/design/ui-review/0.9.0.tgz",
+    storagePath: "skills/design/ui-review/0.9.0.tgz",
     publishedAt: "2026-04-22T02:11:00Z",
   },
   {

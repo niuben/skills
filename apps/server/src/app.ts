@@ -1,14 +1,14 @@
 import Fastify, { type FastifyInstance } from "fastify";
 import multipart from "@fastify/multipart";
-import { loadConfig } from "@skillos/config";
+import { loadConfig } from "@skillsos/config";
 import {
   createArtifactRepository,
   createFileStorage,
   createPathResolver,
   openDatabase,
-} from "@skillos/storage";
-import { PublishService, SearchService } from "@skillos/services";
-import { createLogger } from "@skillos/utils";
+} from "@skillsos/storage";
+import { PublishService, SearchService } from "@skillsos/services";
+import { createLogger } from "@skillsos/utils";
 import { registerArtifactRoutes } from "./routes/artifact.js";
 
 export interface AppDeps {

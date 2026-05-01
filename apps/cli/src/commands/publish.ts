@@ -8,9 +8,9 @@ import {
   type ArtifactKind,
   type ArtifactManifest,
   type ArtifactType,
-} from "@skillos/core";
-import { registerBuiltinHandlers } from "@skillos/handlers";
-import { ArtifactLoader, createTarballFromDir } from "@skillos/loader";
+} from "@skillsos/core";
+import { registerBuiltinHandlers } from "@skillsos/handlers";
+import { ArtifactLoader, createTarballFromDir } from "@skillsos/loader";
 import { buildContext, fail } from "../utils.js";
 
 export function registerPublishCommand(program: Command): void {

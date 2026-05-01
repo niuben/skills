@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ArtifactKindSchema = z.enum(["skill", "prompt", "agent"]);
+export const ArtifactKindSchema = z.enum(["skills", "prompt", "agent"]);
 
 export const ArtifactAuthorSchema = z.object({
   name: z.string().min(1),

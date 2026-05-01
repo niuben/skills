@@ -1,4 +1,4 @@
-# @skillos/services
+# @skillsos/services
 
 Application services that orchestrate repository, storage, and registry operations.
 

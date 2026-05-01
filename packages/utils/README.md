@@ -1,4 +1,4 @@
-# @skillos/utils
+# @skillsos/utils
 
 Shared low-level helpers used across the monorepo.
 
@@ -16,7 +16,7 @@ Shared low-level helpers used across the monorepo.
 ## Example
 
 ```ts
-import { createLogger, sha256Buffer } from "@skillos/utils";
+import { createLogger, sha256Buffer } from "@skillsos/utils";
 
 const log = createLogger("example");
 log.info("ready");

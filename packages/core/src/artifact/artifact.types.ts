@@ -6,7 +6,7 @@
  * 2) Convention-driven loading (files + handler parser)
  */
 
-export type ArtifactType = "skill" | "prompt" | "agent";
+export type ArtifactType = "skills" | "prompt" | "agent";
 export type ArtifactKind = ArtifactType;
 
 export interface FileEntry {

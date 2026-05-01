@@ -1,5 +1,5 @@
 {
-  "name": "@skillos/registry-client",
+  "name": "@skillsos/registry-client",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillos/core": "workspace:*",
-    "@skillos/utils": "workspace:*"
+    "@skillsos/core": "workspace:*",
+    "@skillsos/utils": "workspace:*"
   }
 }

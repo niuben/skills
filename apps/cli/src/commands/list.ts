@@ -1,12 +1,12 @@
 import type { Command } from "commander";
-import type { ArtifactKind } from "@skillos/core";
+import type { ArtifactKind } from "@skillsos/core";
 import { buildContext } from "../utils.js";
 
 export function registerListCommand(program: Command): void {
   program
     .command("list")
     .description("List local artifacts")
-    .option("-k, --kind <kind>", "Filter by kind (skill|prompt|agent)")
+    .option("-k, --kind <kind>", "Filter by kind (skills|prompt|agent)")
     .option("-q, --query <text>", "Free-text search")
     .option("--limit <n>", "Max results", (v) => parseInt(v, 10), 50)
     .action(async (opts: { kind?: ArtifactKind; query?: string; limit: number }) => {

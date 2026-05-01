@@ -1,10 +1,10 @@
-# @skillos/handlers
+# @skillsos/handlers
 
 Built-in artifact handlers for convention-driven parsing.
 
 ## Included Handlers
 
-- `skillHandler`: detects and parses `skills.md`
+- `skillsHandler`: detects and parses `skills.md`
 - `promptHandler`: detects and parses `prompt.md`
 - `agentHandler`: detects and parses `agent.yaml|agent.yml|agent.json`
 
@@ -13,7 +13,7 @@ Built-in artifact handlers for convention-driven parsing.
 Use `registerBuiltinHandlers` to register all built-in handlers into a registry.
 
 ```ts
-import { registerBuiltinHandlers } from "@skillos/handlers";
+import { registerBuiltinHandlers } from "@skillsos/handlers";
 
 registerBuiltinHandlers();
 ```
@@ -21,10 +21,10 @@ registerBuiltinHandlers();
 ## Main Exports
 
 - `promptHandler`
-- `skillHandler`
+- `skillsHandler`
 - `agentHandler`
 - `registerBuiltinHandlers`
 
 ## Notes
 
-Handlers are intentionally simple and safe defaults for local development. You can register your own handlers with the same interface from `@skillos/core`.
+Handlers are intentionally simple and safe defaults for local development. You can register your own handlers with the same interface from `@skillsos/core`.

@@ -4,6 +4,6 @@ export * from "./artifact/artifact.validator.js";
 export * from "./artifact/artifact.factory.js";
 export * from "./handler.js";
 export * from "./registry.js";
-export * from "./skill/skill.js";
-export * from "./skill/skill.schema.js";
+export * from "./skills/skills.js";
+export * from "./skills/skills.schema.js";
 export * from "./prompt/prompt.js";

@@ -1,7 +1,7 @@
-import type { ArtifactRecord } from "@skillos/core";
-import type { ArtifactRepository, FileStorage } from "@skillos/storage";
-import type { RegistryClient } from "@skillos/registry-client";
-import { createLogger, sha256Buffer } from "@skillos/utils";
+import type { ArtifactRecord } from "@skillsos/core";
+import type { ArtifactRepository, FileStorage } from "@skillsos/storage";
+import type { RegistryClient } from "@skillsos/registry-client";
+import { createLogger, sha256Buffer } from "@skillsos/utils";
 
 export interface SyncServiceDeps {
   repository: ArtifactRepository;

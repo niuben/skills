@@ -1,5 +1,5 @@
-import type { ArtifactRecord } from "@skillos/core";
-import type { ArtifactQuery, ArtifactRepository } from "@skillos/storage";
+import type { ArtifactRecord } from "@skillsos/core";
+import type { ArtifactQuery, ArtifactRepository } from "@skillsos/storage";
 
 export interface SearchServiceDeps {
   repository: ArtifactRepository;

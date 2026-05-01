@@ -17,8 +17,7 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
     "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": "."
+    "rootDir": "src"
   },
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

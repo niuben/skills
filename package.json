@@ -1,5 +1,5 @@
 {
-  "name": "skillos",
+  "name": "skillsos",
   "version": "0.1.0",
   "private": true,
   "description": "Enterprise skills/prompts/agents artifact management platform",
@@ -7,10 +7,10 @@
     "build": "pnpm -r build",
     "dev": "pnpm -r --parallel dev",
     "clean": "pnpm -r exec rm -rf dist",
-    "cli": "pnpm --filter @skillos/cli start",
-    "server": "pnpm --filter @skillos/server start",
-    "web": "pnpm --filter @skillos/web dev",
-    "web:build": "pnpm --filter @skillos/web build",
+    "cli": "pnpm --filter @skillsos/cli start",
+    "server": "pnpm --filter @skillsos/server start",
+    "web": "pnpm --filter @skillsos/web dev",
+    "web:build": "pnpm --filter @skillsos/web build",
     "lint": "echo \"(configure linter here)\"",
     "test": "pnpm -r test"
   },

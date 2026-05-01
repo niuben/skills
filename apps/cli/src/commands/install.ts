@@ -1,12 +1,12 @@
 import type { Command } from "commander";
-import type { ArtifactKind } from "@skillos/core";
+import type { ArtifactKind } from "@skillsos/core";
 import { buildContext, fail } from "../utils.js";
 
 export function registerInstallCommand(program: Command): void {
   program
     .command("install <nameOrId>")
-    .description("Install by name (default kind: skill) or explicit id (kind:name@version)")
-    .option("-k, --kind <kind>", "Artifact kind when installing by name (skill|prompt|agent)")
+    .description("Install by name (default kind: skills) or explicit id (kind:name@version)")
+    .option("-k, --kind <kind>", "Artifact kind when installing by name (skills|prompt|agent)")
     .action(async (nameOrId: string, opts: { kind?: ArtifactKind }) => {
       const ctx = await buildContext();
       let result;
@@ -20,7 +20,7 @@ export function registerInstallCommand(program: Command): void {
       } catch (err) {
         const msg = (err as Error).message;
         if (msg.includes("Invalid artifact id")) {
-          fail(`Invalid artifact id: ${nameOrId}. Expected format: skill:name@version, prompt:name@version, or agent:name@version`);
+          fail(`Invalid artifact id: ${nameOrId}. Expected format: skills:name@version, prompt:name@version, or agent:name@version`);
         }
         fail(msg);
       }
@@ -33,8 +33,8 @@ export function registerInstallCommand(program: Command): void {
 
 function normalizeKind(kind?: string): ArtifactKind | undefined {
   if (!kind) return undefined;
-  if (kind === "skill" || kind === "prompt" || kind === "agent") {
+  if (kind === "skills" || kind === "prompt" || kind === "agent") {
     return kind;
   }
-  fail(`invalid kind: ${kind}. Expected one of: skill, prompt, agent`);
+  fail(`invalid kind: ${kind}. Expected one of: skills, prompt, agent`);
 }
