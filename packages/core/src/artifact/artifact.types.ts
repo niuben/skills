@@ -21,7 +21,7 @@ export interface FileEntry {
 export interface Artifact<T = unknown> {
   id: string;
   name: string;
-  version: string;
+  version?: string;
   type: ArtifactType;
   manifest: T;
   files: FileEntry[];

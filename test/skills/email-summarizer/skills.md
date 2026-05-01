@@ -1,6 +1,5 @@
 ---
 name: email-summarizer
-version: 0.2.0
 description: Summarize long emails into concise action-oriented bullet points.
 ---
 

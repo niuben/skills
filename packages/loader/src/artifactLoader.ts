@@ -35,16 +35,16 @@ async function readDirRecursive(dir: string, base = dir): Promise<FileEntry[]> {
   return entries;
 }
 
-function inferIdentity(type: string, manifest: unknown): { id: string; name: string; version: string } {
+function inferIdentity(type: string, manifest: unknown): { id: string; name: string; version?: string } {
   const candidate = manifest as Partial<{ name: string; version: string }>;
   const name = candidate.name;
   const version = candidate.version;
 
-  if (!name || !version) {
-    throw new Error(`Parsed ${type} manifest must include name and version`);
+  if (!name) {
+    throw new Error(`Parsed ${type} manifest must include name`);
   }
 
-  return { id: `${name}@${version}`, name, version };
+  return { id: version ? `${name}@${version}` : name, name, version };
 }
 
 export class ArtifactLoader {

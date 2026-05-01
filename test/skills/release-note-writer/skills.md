@@ -1,6 +1,5 @@
 ---
 name: release-note-writer
-version: 0.1.0
 description: Turn raw engineering changes into structured release notes for product teams.
 ---
 

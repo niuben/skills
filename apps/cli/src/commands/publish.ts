@@ -2,7 +2,13 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import type { Command } from "commander";
-import { validateManifest, type ArtifactManifest, type ArtifactType } from "@skillos/core";
+import {
+  makeArtifactId,
+  validateManifest,
+  type ArtifactKind,
+  type ArtifactManifest,
+  type ArtifactType,
+} from "@skillos/core";
 import { registerBuiltinHandlers } from "@skillos/handlers";
 import { ArtifactLoader, createTarballFromDir } from "@skillos/loader";
 import { buildContext, fail } from "../utils.js";
@@ -14,7 +20,8 @@ export function registerPublishCommand(program: Command): void {
     .option("-m, --manifest <file>", "Path to manifest.json (legacy mode)")
     .option("-p, --payload <file>", "Path to packaged payload (e.g. tarball, legacy mode)")
     .option("-s, --source <dir>", "Path to source directory (auto detect type + auto pack)")
-    .action(async (opts: { manifest?: string; payload?: string; source?: string }) => {
+    .option("-v, --version <version>", "Version to publish")
+    .action(async (opts: { manifest?: string; payload?: string; source?: string; version?: string }) => {
       const ctx = await buildContext();
       let manifest: ArtifactManifest;
       let payload: Buffer;
@@ -24,16 +31,17 @@ export function registerPublishCommand(program: Command): void {
         const sourceDir = path.resolve(opts.source);
         const loader = new ArtifactLoader();
         const artifact = await loader.loadFromDir(sourceDir);
+        const version = opts.version ?? nextGeneratedVersion(ctx.repository, artifact.type, artifact.name);
 
         const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "skillos-publish-"));
         try {
-          const tarFile = await createTarballFromDir(sourceDir, path.join(tmpDir, `${artifact.name}-${artifact.version}.tgz`));
+          const tarFile = await createTarballFromDir(sourceDir, path.join(tmpDir, `${artifact.name}-${version}.tgz`));
           payload = await fs.readFile(tarFile);
         } finally {
           await fs.rm(tmpDir, { recursive: true, force: true });
         }
 
-        manifest = toPublishManifest(artifact.type, artifact.manifest);
+        manifest = toPublishManifest(artifact.type, artifact.manifest, version);
       } else {
         if (!opts.manifest || !opts.payload) {
           fail("Either --source or both --manifest and --payload are required");
@@ -41,7 +49,9 @@ export function registerPublishCommand(program: Command): void {
 
         const manifestRaw = await fs.readFile(path.resolve(opts.manifest), "utf8");
         try {
-          manifest = validateManifest(JSON.parse(manifestRaw)) as ArtifactManifest;
+          const parsed = JSON.parse(manifestRaw) as Record<string, unknown>;
+          if (opts.version) parsed.version = opts.version;
+          manifest = validateManifest(parsed) as ArtifactManifest;
         } catch (err) {
           fail(`invalid manifest: ${(err as Error).message}`);
         }
@@ -62,13 +72,12 @@ export function registerPublishCommand(program: Command): void {
     });
 }
 
-function toPublishManifest(type: ArtifactType, manifest: unknown): ArtifactManifest {
+function toPublishManifest(type: ArtifactType, manifest: unknown, version: string): ArtifactManifest {
   const m = manifest as Record<string, unknown>;
   const name = String(m.name ?? "");
-  const version = String(m.version ?? "");
 
-  if (!name || !version) {
-    throw new Error(`parsed ${type} manifest missing name/version`);
+  if (!name) {
+    throw new Error(`parsed ${type} manifest missing name`);
   }
 
   return validateManifest({
@@ -81,4 +90,22 @@ function toPublishManifest(type: ArtifactType, manifest: unknown): ArtifactManif
     entry: typeof m.entry === "string" ? m.entry : undefined,
     metadata: m,
   }) as ArtifactManifest;
+}
+
+function nextGeneratedVersion(
+  repository: { findById(id: string): ArtifactManifest | null },
+  kind: ArtifactKind,
+  name: string
+): string {
+  const now = new Date();
+  const base = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`;
+
+  let candidate = base;
+  let suffix = 0;
+  while (repository.findById(makeArtifactId(kind, name, candidate))) {
+    suffix += 1;
+    candidate = `${base}-${suffix}`;
+  }
+
+  return candidate;
 }

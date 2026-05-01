@@ -21,8 +21,8 @@ export const SkillSectionsSchema = z.object({
 
 export const SkillMarkdownManifestSchema = z.object({
   name: z.string().min(1),
-  version: z.string().min(1),
-  description: z.string().optional(),
+  version: z.string().min(1).optional(),
+  description: z.string().min(1),
   rawMarkdown: z.string(),
   sections: SkillSectionsSchema,
 });
