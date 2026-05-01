@@ -21,6 +21,7 @@
     "@skillsos/core": "workspace:*",
     "@skillsos/registry-client": "workspace:*",
     "@skillsos/storage": "workspace:*",
-    "@skillsos/utils": "workspace:*"
+    "@skillsos/utils": "workspace:*",
+    "tar": "^7.4.3"
   }
 }

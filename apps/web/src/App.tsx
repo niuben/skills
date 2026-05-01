@@ -4,6 +4,7 @@ import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
 import { ListPage } from "./pages/ListPage";
 import { DetailPage } from "./pages/DetailPage";
+import { PublishPage } from "./pages/PublishPage";
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/explore" element={<ListPage />} />
           <Route path="/skills/:id" element={<DetailPage />} />
+          <Route path="/publish" element={<PublishPage />} />
         </Routes>
       </main>
       <Footer />

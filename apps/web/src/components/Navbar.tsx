@@ -18,12 +18,13 @@ export function Navbar() {
           >
             浏览
           </NavLink>
-          <a className="nav-link" href="https://github.com" target="_blank" rel="noreferrer">
-            文档
-          </a>
-          <a className="nav-link" href="https://github.com" target="_blank" rel="noreferrer">
+
+          <NavLink
+            to="/publish"
+            className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}
+          >
             发布
-          </a>
+          </NavLink>
         </nav>
         <div className="nav-spacer" />
         <button className="nav-cta" type="button">

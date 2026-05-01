@@ -1,5 +1,6 @@
 import path from "node:path";
 import fs from "node:fs/promises";
+import * as tar from "tar";
 import {
   makeArtifactId,
   parseArtifactId,
@@ -157,12 +158,24 @@ export class InstallService {
   ): Promise<InstallResult> {
     const id = makeArtifactId(kind, name, version);
 
-    const installPath = path.join(this.deps.installRoot, kind, name, version);
+    // Install into a stable path without version nesting.
+    const installPath = path.join(this.deps.installRoot, kind, name);
+    await fs.rm(installPath, { recursive: true, force: true });
     await ensureDir(installPath);
-    // For now we drop the raw payload at the install location.
-    // Real implementation would extract a tarball.
-    await fs.writeFile(path.join(installPath, "payload.bin"), payload);
-    await fs.writeFile(path.join(installPath, "manifest.json"), JSON.stringify(record, null, 2));
+
+    const payloadFile = path.join(installPath, "payload.bin");
+    const manifestFile = path.join(installPath, "manifest.json");
+    await fs.writeFile(payloadFile, payload);
+    await fs.writeFile(manifestFile, JSON.stringify(record, null, 2));
+
+    try {
+      await tar.x({ file: payloadFile, cwd: installPath, gzip: true });
+    } catch (err) {
+      throw new Error(`failed to extract payload for ${id}: ${(err as Error).message}`);
+    }
+
+    await fs.unlink(payloadFile);
+    await fs.unlink(manifestFile);
 
     this.log.info(`installed ${id} -> ${installPath}`);
     return { record, installPath };

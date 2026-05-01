@@ -159,6 +159,9 @@ importers:
       '@skillsos/utils':
         specifier: workspace:*
         version: link:../utils
+      tar:
+        specifier: ^7.4.3
+        version: 7.5.13
 
   packages/storage:
     dependencies:
