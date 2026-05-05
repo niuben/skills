@@ -1,4 +1,5 @@
 import path from "node:path";
+import type { AgentPlatformInfo } from "@skillsos/services";
 import { loadConfig, type SkillosConfig } from "@skillsos/config";
 import {
   createArtifactRepository,
@@ -29,7 +30,9 @@ export interface CliContext {
   syncService?: SyncService;
 }
 
-export async function buildContext(): Promise<CliContext> {
+export async function buildContext(
+  selectInstallPath?: (options: AgentPlatformInfo[]) => Promise<string | null>
+): Promise<CliContext> {
   const config = await loadConfig();
   const db = await openDatabase({ file: config.storage.dbFile });
   const repository = createArtifactRepository(db);
@@ -47,6 +50,7 @@ export async function buildContext(): Promise<CliContext> {
     storage,
     registry,
     installRoot: path.join(config.dataDir, "installed"),
+    selectInstallPath,
   });
   const searchService = new SearchService({ repository });
   const syncService = registry ? new SyncService({ repository, storage, registry }) : undefined;

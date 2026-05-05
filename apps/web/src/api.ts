@@ -1,5 +1,18 @@
 import type { ArtifactKind, ArtifactRecord, SearchResult } from "./types";
 
+export interface PublishArtifactInput {
+  manifest: {
+    kind: ArtifactKind;
+    name: string;
+    version: string;
+    description?: string;
+    readme?: string;
+    tags?: string[];
+  };
+  payload: Blob;
+  payloadName?: string;
+}
+
 const BASE = "/api";
 
 async function safeFetch<T>(path: string): Promise<T | null> {
@@ -44,6 +57,35 @@ export async function getArtifact(id: string): Promise<ArtifactRecord | null> {
   const data = await safeFetch<ArtifactRecord>(`/artifacts/${encodeURIComponent(id)}`);
   if (data) return data;
   return MOCK.find((a) => a.id === id) ?? null;
+}
+
+export async function publishArtifact(input: PublishArtifactInput): Promise<ArtifactRecord> {
+  const form = new FormData();
+  form.append("manifest", JSON.stringify(input.manifest));
+  form.append(
+    "payload",
+    input.payload,
+    input.payloadName ?? `${input.manifest.name}-${input.manifest.version}.tgz`
+  );
+
+  const res = await fetch(`${BASE}/artifacts`, {
+    method: "POST",
+    body: form,
+  });
+
+  if (!res.ok) {
+    let message = `publish failed: ${res.status}`;
+    try {
+      const data = (await res.json()) as { error?: string; message?: string };
+      if (data?.message) message = data.message;
+      else if (data?.error) message = data.error;
+    } catch {
+      // keep fallback message
+    }
+    throw new Error(message);
+  }
+
+  return (await res.json()) as ArtifactRecord;
 }
 
 /* ---------- Mock data (used when server is offline) ---------- */

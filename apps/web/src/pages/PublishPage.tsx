@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import type { ChangeEvent, DragEvent, FormEvent } from "react";
+import { publishArtifact } from "../api";
 import type { ArtifactKind } from "../types";
 
 type PublishFile = {
@@ -53,6 +54,7 @@ export function PublishPage() {
   const [files, setFiles] = useState<PublishFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [status, setStatus] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const dropzoneRef = useRef<HTMLDivElement | null>(null);
 
@@ -67,20 +69,14 @@ export function PublishPage() {
     // 监听全局 Ctrl+V 事件
     function onKeyDown(event: KeyboardEvent) {
       if ((event.ctrlKey || event.metaKey) && event.key === "v") {
+        const target = event.target as HTMLElement | null;
+        if (target?.tagName === "INPUT" || target?.tagName === "TEXTAREA") return;
         event.preventDefault();
         onPasteFromClipboard();
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  useEffect(() => {
-    // 让 dropzone 本身可点击
-    const zone = dropzoneRef.current;
-    if (!zone) return;
-    zone.addEventListener("click", () => fileInputRef.current?.click());
-    return () => zone.removeEventListener("click", () => fileInputRef.current?.click());
   }, []);
 
   function appendFiles(nextFiles: PublishFile[]) {
@@ -181,7 +177,7 @@ export function PublishPage() {
     setTagsInput(Array.from(current).join(", "));
   }
 
-  function submit(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
     const nameValid = name.trim() !== "";
     const descValid = description.trim() !== "";
@@ -202,7 +198,32 @@ export function PublishPage() {
       return;
     }
 
-    setStatus(`✓ 已准备发布 ${name}，共 ${totalFiles} 个上传条目。当前页面为前端流程展示，尚未接入后端发布接口。`);
+    const preferredFile = files.find((f) => f.name.endsWith(".zip") || f.name.endsWith(".tgz")) ?? files[0];
+    const payload = preferredFile?.file ?? new Blob([textPayload], { type: "text/plain" });
+    const payloadName = preferredFile?.name ?? `${slugifyName(name)}.txt`;
+
+    try {
+      setIsSubmitting(true);
+      setStatus("发布中...");
+      const record = await publishArtifact({
+        manifest: {
+          kind,
+          name: name.trim(),
+          version: version.trim(),
+          description: description.trim(),
+          tags,
+          readme: textPayload.trim() || undefined,
+        },
+        payload,
+        payloadName,
+      });
+
+      setStatus(`✓ 发布成功：${record.id}`);
+    } catch (err) {
+      setStatus(`❌ 发布失败：${(err as Error).message}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -314,6 +335,7 @@ export function PublishPage() {
               <div
                 ref={dropzoneRef}
                 className={`dropzone${isDragging ? " is-dragging" : ""}`}
+                onClick={() => fileInputRef.current?.click()}
                 onDragEnter={(event) => {
                   event.preventDefault();
                   setIsDragging(true);
@@ -347,8 +369,8 @@ export function PublishPage() {
             </div>
 
             <div className="publish-footer-row">
-              <button className="btn btn-primary" type="submit">
-                提交发布
+              <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "发布中..." : "提交发布"}
               </button>
               <button className="btn" type="button" onClick={() => setVersion(buildDefaultVersion())}>
                 重置版本号
