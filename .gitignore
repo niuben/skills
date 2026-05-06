@@ -8,3 +8,4 @@ storage/artifacts/
 storage/db.sqlite
 storage/db.sqlite-journal
 *.tsbuildinfo
+.github/
