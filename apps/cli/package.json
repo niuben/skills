@@ -20,6 +20,10 @@
     "@skillsos/services": "workspace:*",
     "@skillsos/storage": "workspace:*",
     "@skillsos/utils": "workspace:*",
-    "commander": "^12.1.0"
+    "@types/node": "^20.19.39",
+    "@types/prompts": "^2.4.9",
+    "axios": "^1.16.0",
+    "commander": "^12.1.0",
+    "prompts": "^2.4.2"
   }
 }

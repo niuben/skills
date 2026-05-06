@@ -1,11 +1,18 @@
 #!/usr/bin/env node
+import { registerSyncCommand } from "./commands/sync.js";
 import { Command } from "commander";
+
 import { registerInstallCommand } from "./commands/install.js";
 import { registerPublishCommand } from "./commands/publish.js";
 import { registerListCommand } from "./commands/list.js";
-import { registerSyncCommand } from "./commands/sync.js";
 
 const program = new Command();
+
+import { loginCommand } from './commands/login.js';
+program
+  .command('login')
+  .description('Login to SkillOS server')
+  .action(loginCommand);
 
 program
   .name("skillos")

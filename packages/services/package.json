@@ -22,6 +22,7 @@
     "@skillsos/registry-client": "workspace:*",
     "@skillsos/storage": "workspace:*",
     "@skillsos/utils": "workspace:*",
+    "bcryptjs": "^3.0.3",
     "tar": "^7.4.3"
   }
 }

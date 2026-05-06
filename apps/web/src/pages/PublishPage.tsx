@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type { ChangeEvent, DragEvent, FormEvent } from "react";
 import { publishArtifact } from "../api";
 import type { ArtifactKind } from "../types";
@@ -55,6 +56,8 @@ export function PublishPage() {
   const [isDragging, setIsDragging] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const dropzoneRef = useRef<HTMLDivElement | null>(null);
 
@@ -219,6 +222,7 @@ export function PublishPage() {
       });
 
       setStatus(`✓ 发布成功：${record.id}`);
+      setShowSuccessModal(true);
     } catch (err) {
       setStatus(`❌ 发布失败：${(err as Error).message}`);
     } finally {
@@ -228,6 +232,7 @@ export function PublishPage() {
 
   return (
     <div className="publish-shell">
+      {/* ...existing code... */}
       <section className="publish-hero">
         <div className="container">
           <span className="hero-eyebrow">发布制品</span>
@@ -241,12 +246,14 @@ export function PublishPage() {
       <section className="section publish-section">
         <div className="container publish-form-wrapper">
           <form className="publish-form-card" onSubmit={submit}>
+            {/* ...existing code... */}
             <div className="publish-form-grid">
+              {/* ...existing code... */}
               <label className="field field-span-2">
                 <span className="field-label">名称 <span className="field-required">*</span></span>
                 <input value={name} onChange={(event) => setName(event.target.value)} placeholder="例如：team/email-summarizer" />
               </label>
-
+              {/* ...existing code... */}
               <label className="field">
                 <span className="field-label">类型</span>
                 <select value={kind} onChange={(event) => setKind(event.target.value as ArtifactKind)}>
@@ -257,12 +264,12 @@ export function PublishPage() {
                   ))}
                 </select>
               </label>
-
+              {/* ...existing code... */}
               <label className="field">
                 <span className="field-label">版本</span>
                 <input value={version} onChange={(event) => setVersion(event.target.value)} />
               </label>
-
+              {/* ...existing code... */}
               <label className="field field-span-2">
                 <span className="field-label">描述 <span className="field-required">*</span></span>
                 <textarea
@@ -272,7 +279,7 @@ export function PublishPage() {
                   placeholder="概述能力用途、适用场景、依赖约束和建议使用方式。"
                 />
               </label>
-
+              {/* ...existing code... */}
               <label className="field field-span-2">
                 <span className="field-label">标签</span>
                 <input
@@ -289,15 +296,16 @@ export function PublishPage() {
                 </div>
               </label>
             </div>
-
+            {/* ...existing code... */}
             <div className="upload-block">
+              {/* ...existing code... */}
               <div className="upload-head">
                 <div>
                   <h2>上传或文本内容 <span className="field-required">*</span></h2>
                   <p>拖拽文件、点击选择或按 <kbd>Ctrl+V</kbd> 粘贴，支持多文件与 ZIP 包。</p>
                 </div>
               </div>
-
+              {/* ...existing code... */}
               {files.length > 0 && (
                 <div className="publish-file-preview-list">
                   <div className="publish-file-list-head">
@@ -322,7 +330,7 @@ export function PublishPage() {
                   ))}
                 </div>
               )}
-
+              {/* ...existing code... */}
               <input
                 ref={fileInputRef}
                 className="sr-only"
@@ -331,7 +339,7 @@ export function PublishPage() {
                 accept=".zip,.md,.txt,.json,.yaml,.yml,.tgz,.tar.gz"
                 onChange={onInputFiles}
               />
-
+              {/* ...existing code... */}
               <div
                 ref={dropzoneRef}
                 className={`dropzone${isDragging ? " is-dragging" : ""}`}
@@ -351,7 +359,7 @@ export function PublishPage() {
                 <div className="dropzone-title">拖动文件到这里</div>
                 <div className="dropzone-subtitle">或点击选择、按 Ctrl+V 粘贴</div>
               </div>
-
+              {/* ...existing code... */}
               <div className="text-upload-panel">
                 <div className="text-upload-head">
                   <h3>文本内容</h3>
@@ -367,7 +375,7 @@ export function PublishPage() {
                 />
               </div>
             </div>
-
+            {/* ...existing code... */}
             <div className="publish-footer-row">
               <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "发布中..." : "提交发布"}
@@ -376,11 +384,28 @@ export function PublishPage() {
                 重置版本号
               </button>
             </div>
-
+            {/* ...existing code... */}
             {status ? <div className="publish-status">{status}</div> : null}
           </form>
         </div>
       </section>
+      {/* 情感化发布成功弹窗 */}
+      {showSuccessModal && (
+        <div className="modal-backdrop" style={{position:'fixed',left:0,top:0,right:0,bottom:0,background:'rgba(0,0,0,0.35)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <div className="modal-content" style={{background:'#fff',borderRadius:16,padding:40,minWidth:320,maxWidth:400,boxShadow:'0 8px 32px rgba(0,0,0,0.18)',textAlign:'center',animation:'pop-in 0.3s'}}>
+            <div style={{ fontSize: 64, marginBottom: 16 }}>🎉</div>
+            <h2 style={{marginBottom:8}}>发布成功！</h2>
+            <p style={{color:'#666',marginBottom:24}}>恭喜你，能力包已成功发布！<br/>快去个人中心看看吧～</p>
+            <button
+              className="btn btn-primary"
+              style={{padding:'10px 32px',fontSize:18,borderRadius:8}}
+              onClick={() => navigate("/me")}
+            >
+              去个人中心
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

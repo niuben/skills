@@ -1,3 +1,12 @@
+export async function login(username: string, password: string) {
+  const res = await fetch('/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return await res.json();
+}
 import type { ArtifactKind, ArtifactRecord, SearchResult } from "./types";
 
 export interface PublishArtifactInput {

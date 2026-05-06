@@ -10,6 +10,7 @@ import {
 import { PublishService, SearchService } from "@skillsos/services";
 import { createLogger } from "@skillsos/utils";
 import { registerArtifactRoutes } from "./routes/artifact.js";
+import loginRoutes from './routes/login.js';
 
 export interface AppDeps {
   app: FastifyInstance;
@@ -34,9 +35,10 @@ export async function buildApp(): Promise<AppDeps> {
   const app = Fastify({ logger: false });
   await app.register(multipart, { limits: { fileSize: 100 * 1024 * 1024 } }); // 100MB
 
-  app.get("/healthz", async () => ({ ok: true }));
 
+  app.get("/healthz", async () => ({ ok: true }));
   registerArtifactRoutes(app, { publishService, searchService, storage, repository });
+  await app.register(loginRoutes, { prefix: '/login' });
 
   log.info(`server initialized (data dir: ${config.dataDir})`);
   return { app, publishService, searchService, storage, repository };

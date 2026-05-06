@@ -10,12 +10,14 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
+    "@fastify/multipart": "^8.3.0",
     "@skillsos/config": "workspace:*",
     "@skillsos/core": "workspace:*",
     "@skillsos/services": "workspace:*",
     "@skillsos/storage": "workspace:*",
     "@skillsos/utils": "workspace:*",
-    "fastify": "^4.28.1",
-    "@fastify/multipart": "^8.3.0"
+    "@types/express": "^5.0.6",
+    "express": "^5.2.1",
+    "fastify": "^4.28.1"
   }
 }

@@ -5,6 +5,7 @@ import { HomePage } from "./pages/HomePage";
 import { ListPage } from "./pages/ListPage";
 import { DetailPage } from "./pages/DetailPage";
 import { PublishPage } from "./pages/PublishPage";
+import LoginPage from "./pages/LoginPage";
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
           <Route path="/explore" element={<ListPage />} />
           <Route path="/skills/:id" element={<DetailPage />} />
           <Route path="/publish" element={<PublishPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
       <Footer />

@@ -1,3 +1,125 @@
+/* ===== Login page ===== */
+
+/* ===== Login layout ===== */
+.login-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background: linear-gradient(120deg, #fef3c7 0%, #faf9f5 100%);
+}
+
+.login-left {
+  flex: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  box-shadow: 0 0 32px 0 rgba(217, 119, 6, 0.06) inset;
+}
+
+.login-brand {
+  text-align: left;
+  max-width: 420px;
+  margin-left: 8vw;
+}
+.login-logo {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 24px;
+}
+.login-brand-title {
+  font-size: 40px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.login-brand-desc {
+  font-size: 20px;
+  color: #b45309;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(20, 18, 14, 0.08);
+  padding: 44px 36px 36px 36px;
+  max-width: 380px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 18px 0;
+  text-align: center;
+  color: var(--accent);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+  transition: border-color 120ms;
+}
+.login-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.08);
+}
+
+.login-btn {
+  padding: 12px 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 120ms;
+}
+.login-btn:hover {
+  background: var(--accent-hover);
+}
+
+.login-error {
+  color: #dc2626;
+  font-size: 14px;
+  margin-top: 6px;
+  text-align: center;
+}
 /* ===== Claude-inspired theme ===== */
 :root {
   --bg: #faf9f5;

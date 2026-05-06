@@ -38,7 +38,16 @@ CREATE TABLE IF NOT EXISTS artifact_versions (
   size          INTEGER NOT NULL,
   storage_path  TEXT NOT NULL,
   published_at  TEXT NOT NULL,
+
   UNIQUE(kind, name, version)
+);
+
+-- 用户表
+CREATE TABLE IF NOT EXISTS users (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  username      TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at    TEXT NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_artifacts_kind_name ON artifacts(kind, name);
