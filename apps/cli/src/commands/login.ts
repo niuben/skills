@@ -2,6 +2,7 @@ import prompts from 'prompts';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
+import { loadConfig, saveConfig } from '@skillsos/config';
 
 export async function loginCommand() {
   const { username, password } = await prompts([
@@ -9,8 +10,15 @@ export async function loginCommand() {
     { type: 'password', name: 'password', message: 'Password:' }
   ]);
   try {
-    const res = await axios.post('http://localhost:3000/login', { username, password });
+    const config = await loadConfig();
+    const registry = config.registries.find((item) => item.name === config.defaultRegistry) ?? config.registries[0];
+    const baseUrl = (registry?.url ?? 'http://127.0.0.1:7421').replace(/\/+$/, '');
+    const res = await axios.post(`${baseUrl}/api/auth/login`, { username, password });
     const token = res.data.token || '';
+    if (registry) {
+      registry.token = token;
+      await saveConfig(config);
+    }
     const configPath = path.join(process.env.HOME || '', '.skillsrc');
     fs.writeFileSync(configPath, JSON.stringify({ token }, null, 2));
     console.log('Login successful!');

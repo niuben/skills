@@ -4,6 +4,7 @@ import type { ArtifactKind, ArtifactRecord } from "@skillsos/core";
 export interface ArtifactQuery {
   kind?: ArtifactKind;
   name?: string;
+  approvalStatus?: ArtifactRecord["approvalStatus"];
   /** Free-text search across name/description/tags */
   text?: string;
   limit?: number;
@@ -16,6 +17,10 @@ export interface ArtifactRepository {
   findLatest(kind: ArtifactKind, name: string): ArtifactRecord | null;
   findVersions(kind: ArtifactKind, name: string): ArtifactRecord[];
   list(query?: ArtifactQuery): ArtifactRecord[];
+  updateApprovalStatus(id: string, status: NonNullable<ArtifactRecord["approvalStatus"]>): ArtifactRecord | null;
+  countByKind(kind: ArtifactKind): number;
+  countPublishedSince(isoDate: string): number;
+  countByApprovalStatus(status: NonNullable<ArtifactRecord["approvalStatus"]>): number;
   remove(id: string): boolean;
 }
 
@@ -36,6 +41,7 @@ interface Row {
   size: number;
   storage_path: string;
   published_at: string;
+  approval_status?: string | null;
 }
 
 function rowToRecord(r: Row): ArtifactRecord {
@@ -55,6 +61,7 @@ function rowToRecord(r: Row): ArtifactRecord {
     size: r.size,
     storagePath: r.storage_path,
     publishedAt: r.published_at,
+    approvalStatus: (r.approval_status ?? "approved") as ArtifactRecord["approvalStatus"],
   };
 }
 
@@ -63,11 +70,11 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
     INSERT INTO artifact_versions
       (id, kind, name, version, description, readme, tags,
        author_name, author_email, license, entry, metadata,
-       content_hash, size, storage_path, published_at)
+       content_hash, size, storage_path, published_at, approval_status)
     VALUES
       (@id, @kind, @name, @version, @description, @readme, @tags,
        @author_name, @author_email, @license, @entry, @metadata,
-       @content_hash, @size, @storage_path, @published_at)
+       @content_hash, @size, @storage_path, @published_at, @approval_status)
     ON CONFLICT(id) DO UPDATE SET
        description = excluded.description,
        readme      = excluded.readme,
@@ -80,18 +87,19 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
        content_hash= excluded.content_hash,
        size        = excluded.size,
        storage_path= excluded.storage_path,
-       published_at= excluded.published_at
+       published_at= excluded.published_at,
+       approval_status = excluded.approval_status
   `);
 
   const upsertLatest = db.prepare(`
     INSERT INTO artifacts
       (id, kind, name, version, description, readme, tags,
        author_name, author_email, license, entry, metadata,
-       content_hash, size, storage_path, published_at)
+       content_hash, size, storage_path, published_at, approval_status)
     VALUES
       (@id, @kind, @name, @version, @description, @readme, @tags,
        @author_name, @author_email, @license, @entry, @metadata,
-       @content_hash, @size, @storage_path, @published_at)
+       @content_hash, @size, @storage_path, @published_at, @approval_status)
     ON CONFLICT(kind, name) DO UPDATE SET
        id          = excluded.id,
        version     = excluded.version,
@@ -106,7 +114,8 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
        content_hash= excluded.content_hash,
        size        = excluded.size,
        storage_path= excluded.storage_path,
-       published_at= excluded.published_at
+       published_at= excluded.published_at,
+       approval_status = excluded.approval_status
   `);
 
   const selectById = db.prepare<[string]>(`SELECT * FROM artifact_versions WHERE id = ?`);
@@ -116,6 +125,12 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
   );
   const deleteVersionById = db.prepare<[string]>(`DELETE FROM artifact_versions WHERE id = ?`);
   const deleteLatestByName = db.prepare<[string, string]>(`DELETE FROM artifacts WHERE kind = ? AND name = ?`);
+  const updateVersionApproval = db.prepare<[string, string]>(
+    `UPDATE artifact_versions SET approval_status = ? WHERE id = ?`
+  );
+  const updateLatestApproval = db.prepare<[string, string]>(
+    `UPDATE artifacts SET approval_status = ? WHERE id = ?`
+  );
 
   const save = db.transaction((record: ArtifactRecord) => {
     const row = toRow(record);
@@ -180,6 +195,10 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
         where.push(`name = @name`);
         params.name = query.name;
       }
+      if (query.approvalStatus) {
+        where.push(`approval_status = @approvalStatus`);
+        params.approvalStatus = query.approvalStatus;
+      }
       if (query.text) {
         where.push(`(name LIKE @q OR description LIKE @q OR tags LIKE @q)`);
         params.q = `%${query.text}%`;
@@ -196,6 +215,36 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
 
       const rows = db.prepare(sql).all(params) as Row[];
       return rows.map(rowToRecord);
+    },
+
+    updateApprovalStatus(id, status) {
+      const current = selectById.get(id) as Row | undefined;
+      if (!current) return null;
+      updateVersionApproval.run(status, id);
+      updateLatestApproval.run(status, id);
+      const updated = selectById.get(id) as Row | undefined;
+      return updated ? rowToRecord(updated) : null;
+    },
+
+    countByKind(kind) {
+      const row = db.prepare<[string]>(`SELECT COUNT(*) AS count FROM artifacts WHERE kind = ?`).get(kind) as
+        | { count: number }
+        | undefined;
+      return row?.count ?? 0;
+    },
+
+    countPublishedSince(isoDate) {
+      const row = db.prepare<[string]>(`SELECT COUNT(*) AS count FROM artifacts WHERE published_at >= ?`).get(isoDate) as
+        | { count: number }
+        | undefined;
+      return row?.count ?? 0;
+    },
+
+    countByApprovalStatus(status) {
+      const row = db.prepare<[string]>(`SELECT COUNT(*) AS count FROM artifacts WHERE approval_status = ?`).get(status) as
+        | { count: number }
+        | undefined;
+      return row?.count ?? 0;
     },
 
     remove(id) {
@@ -222,5 +271,6 @@ function toRow(record: ArtifactRecord): Record<string, unknown> {
     size: record.size,
     storage_path: record.storagePath,
     published_at: record.publishedAt,
+    approval_status: record.approvalStatus ?? "approved",
   };
 }

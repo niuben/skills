@@ -21,6 +21,7 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
     const items = deps.searchService.list({
       kind,
       text: q,
+      approvalStatus: "approved",
       limit: limit ? parseInt(limit, 10) : undefined,
       offset: offset ? parseInt(offset, 10) : undefined,
     });
@@ -31,7 +32,9 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
   app.get<{ Params: { kind: ArtifactKind; name: string } }>(
     "/api/artifacts/:kind/:name/versions",
     async (req, reply) => {
-      const versions = deps.repository.findVersions(req.params.kind, req.params.name);
+      const versions = deps.repository
+        .findVersions(req.params.kind, req.params.name)
+        .filter((record) => !record.approvalStatus || record.approvalStatus === "approved");
       if (versions.length === 0) return reply.code(404).send({ error: "not_found" });
       return versions;
     }
@@ -41,6 +44,9 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
   app.get<{ Params: { id: string } }>("/api/artifacts/:id", async (req, reply) => {
     const record = deps.repository.findById(req.params.id);
     if (!record) return reply.code(404).send({ error: "not_found" });
+    if (record.approvalStatus && record.approvalStatus !== "approved") {
+      return reply.code(404).send({ error: "not_found" });
+    }
     return record;
   });
 
@@ -48,6 +54,9 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
   app.get<{ Params: { id: string } }>("/api/artifacts/:id/download", async (req, reply) => {
     const record = deps.repository.findById(req.params.id);
     if (!record) return reply.code(404).send({ error: "not_found" });
+    if (record.approvalStatus && record.approvalStatus !== "approved") {
+      return reply.code(404).send({ error: "not_found" });
+    }
     if (!(await deps.storage.has(record.storagePath))) {
       return reply.code(404).send({ error: "blob_missing" });
     }

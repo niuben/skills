@@ -71,6 +71,8 @@ export interface ArtifactRecord extends ArtifactManifest {
   publishedAt: string;
   /** Storage path (relative to artifactsDir) */
   storagePath: string;
+  /** Review status used by the admin system */
+  approvalStatus?: "approved" | "pending" | "rejected";
 }
 
 export interface ArtifactPublishInput {

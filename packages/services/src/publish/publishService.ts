@@ -10,6 +10,7 @@ export interface PublishServiceDeps {
   repository: ArtifactRepository;
   storage: FileStorage;
   resolver: PathResolver;
+  getDefaultApprovalStatus?: () => NonNullable<ArtifactRecord["approvalStatus"]>;
 }
 
 export class PublishService {
@@ -21,6 +22,7 @@ export class PublishService {
     const storagePath = this.deps.resolver.buildStoragePath(input.manifest);
 
     const record = createArtifactRecord(input, { storagePath });
+    record.approvalStatus = this.deps.getDefaultApprovalStatus?.() ?? "approved";
     this.log.info(`publishing ${record.id} (${record.size} bytes)`);
 
     await this.deps.storage.put(storagePath, input.payload);

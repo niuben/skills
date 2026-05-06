@@ -11,6 +11,8 @@
     "server": "pnpm --filter @skillsos/server start",
     "web": "pnpm --filter @skillsos/web dev",
     "web:build": "pnpm --filter @skillsos/web build",
+    "admin": "pnpm --filter @skillsos/admin dev",
+    "admin:build": "pnpm --filter @skillsos/admin build",
     "lint": "echo \"(configure linter here)\"",
     "test": "pnpm -r test"
   },

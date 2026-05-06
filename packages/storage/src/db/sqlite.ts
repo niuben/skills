@@ -21,6 +21,7 @@ export async function openDatabase(opts: SqliteOptions): Promise<DB> {
   db.pragma("foreign_keys = ON");
   migrateLegacySchema(db);
   applySchema(db);
+  applyIncrementalMigrations(db);
   return db;
 }
 
@@ -172,4 +173,19 @@ function getTableSql(db: DB, tableName: string): string | undefined {
     .prepare<[string]>("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = ?")
     .get(tableName) as { sql?: string } | undefined;
   return row?.sql;
+}
+
+function applyIncrementalMigrations(db: DB): void {
+  ensureColumn(db, "artifacts", "approval_status", "TEXT NOT NULL DEFAULT 'approved'");
+  ensureColumn(db, "artifact_versions", "approval_status", "TEXT NOT NULL DEFAULT 'approved'");
+  ensureColumn(db, "users", "role", "TEXT NOT NULL DEFAULT 'member'");
+  ensureColumn(db, "users", "disabled_at", "TEXT");
+}
+
+function ensureColumn(db: DB, tableName: string, columnName: string, definition: string): void {
+  const columns = db.prepare(`PRAGMA table_info(${tableName})`).all() as { name: string }[];
+  if (columns.some((column) => column.name === columnName)) {
+    return;
+  }
+  db.exec(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${definition}`);
 }
