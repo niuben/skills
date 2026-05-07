@@ -1,8 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
 import { api } from "../api";
 import type { SystemSettings } from "../types";
+import { useTranslation } from "react-i18next";
 
 export function SettingsPage() {
+  const { t } = useTranslation();
   const [settings, setSettings] = useState<SystemSettings | null>(null);
 
   useEffect(() => {
@@ -20,23 +22,23 @@ export function SettingsPage() {
     setSettings(await api.uploadLogo(file));
   }
 
-  if (!settings) return <section className="page">加载中...</section>;
+  if (!settings) return <section className="page">{t('settings.loading')}</section>;
 
   return (
     <section className="page">
       <header className="page-header">
         <div>
-          <span className="eyebrow">Settings</span>
-          <h1>系统设置</h1>
+          <span className="eyebrow">{t('settings.title')}</span>
+          <h1>{t('settings.title')}</h1>
         </div>
       </header>
       <form className="panel settings-form" onSubmit={submit}>
         <label>
-          系统名称
+          {t('settings.siteName')}
           <input value={settings.siteName} onChange={(event) => setSettings({ ...settings, siteName: event.target.value })} />
         </label>
         <label>
-          主色
+          {t('settings.primaryColor')}
           <input
             value={settings.primaryColor}
             onChange={(event) => setSettings({ ...settings, primaryColor: event.target.value })}
@@ -49,14 +51,14 @@ export function SettingsPage() {
             onChange={(event) => setSettings({ ...settings, requireApproval: event.target.checked })}
             type="checkbox"
           />
-          发布资源需要审批
+          {t('settings.requireApproval')}
         </label>
         <label>
-          上传 Logo
+          {t('settings.uploadLogo')}
           <input type="file" accept="image/*" onChange={(event) => upload(event.target.files?.[0])} />
         </label>
         {settings.logoPath ? <img className="logo-preview" src={settings.logoPath} alt="Logo" /> : null}
-        <button className="primary-button" type="submit">保存设置</button>
+        <button className="primary-button" type="submit">{t('settings.save')}</button>
       </form>
     </section>
   );

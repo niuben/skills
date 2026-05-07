@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "artifacts": "アーティファクト",
+    "my": "マイ公開",
+    "publish": "公開",
+    "about": "概要"
+  },
+  "hero": {
+    "eyebrow": "発見",
+    "title": "エンタープライズスキルハブ",
+    "search_placeholder": "スキル、プロンプト、エージェントを検索...",
+    "subtitle": "組織内でスキルとプロンプトを発見、共有、管理します。"
+  },
+  "home": {
+    "recommended_title": "おすすめスキル",
+    "recommended_subtitle": "チームの最近のリリースや頻繁に使用されるスキル",
+    "view_all": "すべてを見る →"
+  },
+  "publish": {
+    "eyebrow": "公開",
+    "title": "アーティファクトを公開",
+    "subtitle": "Skills、Prompts、Agents を組織内で配布するためにパッケージ化します。",
+    "status": {
+      "added_local": "ローカルファイルを追加しました。",
+      "dropped": "ドラッグ＆ドロップで受信しました。",
+      "clipboard_empty": "クリップボードにインポート可能なコンテンツがありません。",
+      "clipboard_imported": "クリップボードからコンテンツをインポートしました。",
+      "clipboard_forbidden": "クリップボードへのアクセスが利用できません。ドラッグまたは貼り付けを使用してください。",
+      "submitting": "公開中...",
+      "success": "✓ 公開されました：{{id}}",
+      "failed": "❌ 公開に失敗しました：{{message}}"
+    },
+    "field": {
+      "name": "名前",
+      "kind": "種類",
+      "version": "バージョン",
+      "description": "説明",
+      "tags": "タグ"
+    },
+    "placeholder": {
+      "name": "例：team/email-summarizer",
+      "description": "用途、シナリオ、依存関係、使用方法を要約してください。",
+      "tags": "カンマ区切り、例: internal, review, automation",
+      "text": "YAML、JSON、README、またはその他のプレーンテキストを貼り付けてください。"
+    },
+    "upload_title": "アップロードまたはテキスト",
+    "upload_instructions": "ファイルをドラッグ、クリックして選択、または Ctrl+V で貼り付けます。複数ファイルと ZIP をサポートします。",
+    "drop_title": "ここにファイルをドロップ",
+    "drop_subtitle": "またはクリックして選択、Ctrl+V で貼り付け",
+    "text_title": "テキスト",
+    "text_add": "ファイルとして追加",
+    "action": {
+      "submit": "公開を送信",
+      "reset_version": "バージョンをリセット"
+    },
+    "modal": {
+      "success_title": "公開に成功しました！",
+      "success_body": "アーティファクトが公開されました。プロフィールで確認してください！",
+      "go_to_profile": "プロフィールへ"
+    }
+  },
+  "login": {
+    "title": "おかえりなさい",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "submit": "サインイン"
+  }
+  ,
+  "profile": {
+    "title": "マイ公開",
+    "empty": "まだ公開したアーティファクトがありません。",
+    "publish_cta": "最初のアーティファクトを公開する"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "artifacts": "Artifacts",
+    "my": "My uploads",
+    "publish": "Publish",
+    "about": "About"
+  },
+  "hero": {
+    "eyebrow": "Explore",
+    "title": "Enterprise Skills Hub",
+    "search_placeholder": "Search skills, prompts, agents...",
+    "subtitle": "Discover, share and manage skills and prompts across your organization."
+  },
+  "home": {
+    "recommended_title": "Recommended Skills",
+    "recommended_subtitle": "From recent and frequently used team skills",
+    "view_all": "View all →"
+  },
+  "publish": {
+    "eyebrow": "Publish",
+    "title": "Publish an artifact",
+    "subtitle": "Package Skills, Prompts and Agents for distribution within your organization.",
+    "status": {
+      "added_local": "Added local files.",
+      "dropped": "Files received via drag-and-drop.",
+      "clipboard_empty": "No importable content in clipboard.",
+      "clipboard_imported": "Imported content from clipboard.",
+      "clipboard_forbidden": "Clipboard access not available. Use drag or paste.",
+      "submitting": "Publishing...",
+      "success": "✓ Published: {{id}}",
+      "failed": "❌ Publish failed: {{message}}"
+    },
+    "field": {
+      "name": "Name",
+      "kind": "Kind",
+      "version": "Version",
+      "description": "Description",
+      "tags": "Tags"
+    },
+    "placeholder": {
+      "name": "e.g. team/email-summarizer",
+      "description": "Summarize purpose, scenarios, dependencies and usage.",
+      "tags": "comma separated, e.g. internal, review, automation",
+      "text": "Paste YAML, JSON, README or other plain text content."
+    },
+    "upload_title": "Upload or text payload",
+    "upload_instructions": "Drag files, click to choose, or press Ctrl+V to paste. Supports multiple files and ZIP packages.",
+    "drop_title": "Drop files here",
+    "drop_subtitle": "Or click to choose, or press Ctrl+V to paste",
+    "text_title": "Text payload",
+    "text_add": "Add as file",
+    "action": {
+      "submit": "Submit Publish",
+      "reset_version": "Reset version"
+    },
+    "modal": {
+      "success_title": "Published successfully!",
+      "success_body": "Your artifact has been published. Check your profile for details!",
+      "go_to_profile": "Go to profile"
+    }
+  },
+  "login": {
+    "title": "Welcome back",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in"
+  }
+  ,
+  "profile": {
+    "title": "My uploads",
+    "empty": "You have not published any artifacts yet.",
+    "publish_cta": "Publish your first artifact"
+  }
+}

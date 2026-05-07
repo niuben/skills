@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { searchArtifacts } from "../api";
 import type { ArtifactRecord } from "../types";
 import { ArtifactCard } from "../components/ArtifactCard";
+import { useTranslation } from "react-i18next";
 
 const SUGGEST_TAGS = ["代码评审", "发布剧本", "Prompt 工程", "数据分析", "故障复盘", "UI 评审"];
 
 export function HomePage() {
+  const { t } = useTranslation();
   const nav = useNavigate();
   const [q, setQ] = useState("");
   const [recommended, setRecommended] = useState<ArtifactRecord[]>([]);
@@ -24,13 +26,12 @@ export function HomePage() {
     <>
       <section className="hero">
         <div className="container">
-          <span className="hero-eyebrow">Skills · Prompts · Agents</span>
+          <span className="hero-eyebrow">{t('hero.eyebrow')}</span>
           <h1 className="hero-title">
-            企业级 <em>AI 能力</em> 的统一中心
+            {t('hero.title')}
           </h1>
           <p className="hero-subtitle">
-            搜索、发现、安装并复用经过团队验证的 Skills、Prompts 与 Agents。
-            像管理依赖一样管理你的 AI 能力。
+            {t('hero.subtitle')}
           </p>
 
           <form className="hero-search" onSubmit={submit}>
@@ -39,7 +40,7 @@ export function HomePage() {
               autoFocus
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="搜索 skills、prompts、agents…"
+              placeholder={t('hero.search_placeholder', 'Search skills, prompts, agents...')}
             />
             <button type="submit">搜索</button>
           </form>
@@ -63,11 +64,11 @@ export function HomePage() {
         <div className="container">
           <div className="section-head">
             <div>
-              <h2 className="section-title">推荐 Skills</h2>
-              <p className="section-subtitle">来自团队近期发布与高频使用的能力</p>
+              <h2 className="section-title">{t('home.recommended_title', 'Recommended Skills')}</h2>
+              <p className="section-subtitle">{t('home.recommended_subtitle', 'From recent and frequently used team skills')}</p>
             </div>
             <a href="/explore" className="section-link">
-              查看全部 →
+              {t('home.view_all', 'View all →')}
             </a>
           </div>
 

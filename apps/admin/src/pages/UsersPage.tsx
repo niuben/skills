@@ -1,8 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
 import { api } from "../api";
 import type { AdminUser, UserRole } from "../types";
+import { useTranslation } from "react-i18next";
 
 export function UsersPage() {
+  const { t, i18n } = useTranslation();
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,45 +36,45 @@ export function UsersPage() {
     <section className="page">
       <header className="page-header">
         <div>
-          <span className="eyebrow">Users</span>
-          <h1>人员管理</h1>
+          <span className="eyebrow">{t('users.title')}</span>
+          <h1>{t('users.title')}</h1>
         </div>
       </header>
       <form className="panel user-form" onSubmit={submit}>
-        <input placeholder="用户名" value={username} onChange={(event) => setUsername(event.target.value)} required />
+        <input placeholder={t('users.form.username')} value={username} onChange={(event) => setUsername(event.target.value)} required />
         <input
-          placeholder="初始密码"
+          placeholder={t('users.form.password')}
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           type="password"
           required
         />
         <select value={role} onChange={(event) => setRole(event.target.value as UserRole)}>
-          <option value="member">成员</option>
-          <option value="admin">管理员</option>
+          <option value="member">{t('users.form.role_member')}</option>
+          <option value="admin">{t('users.form.role_admin')}</option>
         </select>
-        <button className="primary-button" type="submit">新建用户</button>
+        <button className="primary-button" type="submit">{t('users.form.create')}</button>
       </form>
       <div className="panel table-wrap">
         <table>
           <thead>
             <tr>
-              <th>用户</th>
-              <th>角色</th>
-              <th>状态</th>
-              <th>创建时间</th>
-              <th>操作</th>
+              <th>{t('users.table.user')}</th>
+              <th>{t('users.table.role')}</th>
+              <th>{t('users.table.status')}</th>
+              <th>{t('users.table.createdAt')}</th>
+              <th>{t('users.table.actions')}</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
                 <td>{user.username}</td>
-                <td>{user.role === "admin" ? "管理员" : "成员"}</td>
-                <td>{user.disabledAt ? "已禁用" : "正常"}</td>
-                <td>{new Date(user.createdAt).toLocaleString("zh-CN")}</td>
+                <td>{user.role === "admin" ? t('users.form.role_admin') : t('users.form.role_member')}</td>
+                <td>{user.disabledAt ? t('users.table.disabled') : t('users.table.active')}</td>
+                <td>{new Intl.DateTimeFormat(i18n.language).format(new Date(user.createdAt))}</td>
                 <td>
-                  <button disabled={Boolean(user.disabledAt)} onClick={() => disable(user.id)}>禁用</button>
+                  <button disabled={Boolean(user.disabledAt)} onClick={() => disable(user.id)}>{t('users.table.disable')}</button>
                 </td>
               </tr>
             ))}

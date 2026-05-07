@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import { StatCard } from "../components/StatCard";
 import type { DashboardStats } from "../types";
+import { useTranslation } from "react-i18next";
 
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -10,36 +11,50 @@ export function DashboardPage() {
     api.dashboard().then(setStats).catch(() => setStats(null));
   }, []);
 
+  const { t, i18n } = useTranslation();
+
+  function labelStatus(status = "approved") {
+    return status === "pending" ? t("status.pending") : status === "rejected" ? t("status.rejected") : t("status.approved");
+  }
+
+  function formatDate(value: string) {
+    try {
+      return new Intl.DateTimeFormat(i18n.language).format(new Date(value));
+    } catch {
+      return new Date(value).toLocaleString();
+    }
+  }
+
   return (
     <section className="page">
       <header className="page-header">
         <div>
-          <span className="eyebrow">Overview</span>
-          <h1>数字大盘</h1>
+          <span className="eyebrow">{t('dashboard.eyebrow', 'Overview')}</span>
+          <h1>{t('dashboard.title')}</h1>
         </div>
       </header>
 
       <div className="stats-grid">
-        <StatCard label="Skills" value={stats?.skills ?? 0} />
-        <StatCard label="Prompts" value={stats?.prompts ?? 0} />
-        <StatCard label="Agents" value={stats?.agents ?? 0} />
-        <StatCard label="本日新建" value={stats?.createdToday ?? 0} />
-        <StatCard label="本月新建" value={stats?.createdThisMonth ?? 0} />
-        <StatCard label="人员数量" value={stats?.users ?? 0} />
-        <StatCard label="待审批" value={stats?.pendingApprovals ?? 0} tone="warn" />
+        <StatCard label={t('dashboard.stats.skills')} value={stats?.skills ?? 0} />
+        <StatCard label={t('dashboard.stats.prompts')} value={stats?.prompts ?? 0} />
+        <StatCard label={t('dashboard.stats.agents')} value={stats?.agents ?? 0} />
+        <StatCard label={t('dashboard.stats.createdToday')} value={stats?.createdToday ?? 0} />
+        <StatCard label={t('dashboard.stats.createdThisMonth')} value={stats?.createdThisMonth ?? 0} />
+        <StatCard label={t('dashboard.stats.users')} value={stats?.users ?? 0} />
+        <StatCard label={t('dashboard.stats.pendingApprovals')} value={stats?.pendingApprovals ?? 0} tone="warn" />
       </div>
 
       <div className="panel">
-        <div className="panel-title">最近资源</div>
+        <div className="panel-title">{t('dashboard.recent_title')}</div>
         <div className="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>名称</th>
-                <th>类型</th>
-                <th>版本</th>
-                <th>状态</th>
-                <th>发布时间</th>
+                <th>{t('dashboard.table.name')}</th>
+                <th>{t('dashboard.table.kind')}</th>
+                <th>{t('dashboard.table.version')}</th>
+                <th>{t('dashboard.table.status')}</th>
+                <th>{t('dashboard.table.publishedAt')}</th>
               </tr>
             </thead>
             <tbody>
@@ -60,10 +75,4 @@ export function DashboardPage() {
   );
 }
 
-function labelStatus(status = "approved") {
-  return status === "pending" ? "未审批" : status === "rejected" ? "已拒绝" : "已审批";
-}
 
-function formatDate(value: string) {
-  return new Date(value).toLocaleString("zh-CN");
-}

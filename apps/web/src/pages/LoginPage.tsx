@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { login } from '../api';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,6 +14,7 @@ export default function LoginPage() {
     try {
       const res = await login(username, password);
       localStorage.setItem('token', res.token);
+      localStorage.setItem('username', username);
       window.location.href = '/';
     } catch (err: any) {
       setError(err.response?.data?.error || 'Login failed');
@@ -29,14 +32,14 @@ export default function LoginPage() {
       </div>
       <div className="login-right">
         <div className="login-card">
-          <h2 className="login-title">登录 SkillOS</h2>
+          <h2 className="login-title">{t('login.title')}</h2>
           <form className="login-form" onSubmit={handleSubmit} autoComplete="on">
             <label className="login-label">
-              用户名
+              {t('login.username')}
               <input
                 className="login-input"
                 type="text"
-                placeholder="请输入用户名"
+                placeholder={t('login.username')}
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 required
@@ -45,18 +48,18 @@ export default function LoginPage() {
               />
             </label>
             <label className="login-label">
-              密码
+              {t('login.password')}
               <input
                 className="login-input"
                 type="password"
-                placeholder="请输入密码"
+                placeholder={t('login.password')}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
               />
             </label>
-            <button className="login-btn" type="submit">登录</button>
+            <button className="login-btn" type="submit">{t('login.submit')}</button>
             {error && <div className="login-error">{error}</div>}
           </form>
         </div>

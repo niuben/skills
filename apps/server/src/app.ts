@@ -14,6 +14,8 @@ import { createLogger } from "@skillsos/utils";
 import { registerArtifactRoutes } from "./routes/artifact.js";
 import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 export interface AppDeps {
   app: FastifyInstance;
@@ -62,8 +64,35 @@ export async function buildApp(): Promise<AppDeps> {
     jwtSecret,
     dataDir: config.dataDir,
   });
+  // theme endpoints (CSS variables + JSON)
+  const { registerThemeRoutes } = await import("./routes/theme.js");
+  registerThemeRoutes(app, settingsRepository);
 
   log.info(`server initialized (data dir: ${config.dataDir})`);
+
+  // Serve SPA index pages with inlined critical theme variables to avoid FOUC
+  const webIndex = path.join(process.cwd(), "apps/web/dist/index.html");
+  const adminIndex = path.join(process.cwd(), "apps/admin/dist/index.html");
+  app.get("/", async (req, reply) => {
+    try {
+      let html = await fs.readFile(webIndex, "utf8");
+      const css = `:root{--accent:${settingsRepository.getSettings().primaryColor};}`;
+      html = html.replace("</head>", `<style>${css}</style></head>`);
+      reply.type("text/html").send(html);
+    } catch (err) {
+      reply.code(500).send("web index not available");
+    }
+  });
+  app.get("/admin", async (req, reply) => {
+    try {
+      let html = await fs.readFile(adminIndex, "utf8");
+      const css = `:root{--accent:${settingsRepository.getSettings().primaryColor};}`;
+      html = html.replace("</head>", `<style>${css}</style></head>`);
+      reply.type("text/html").send(html);
+    } catch (err) {
+      reply.code(500).send("admin index not available");
+    }
+  });
   return { app, publishService, searchService, storage, repository };
 }
 

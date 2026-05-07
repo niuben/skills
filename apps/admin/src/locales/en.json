@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "artifacts": "Artifacts",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "admin": {
+    "console": "Admin Console",
+    "currentUser": "Current user",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "eyebrow": "Overview",
+    "title": "Dashboard",
+    "stats": {
+      "skills": "Skills",
+      "prompts": "Prompts",
+      "agents": "Agents",
+      "createdToday": "Created Today",
+      "createdThisMonth": "Created This Month",
+      "users": "Users",
+      "pendingApprovals": "Pending Approvals"
+    },
+    "recent_title": "Recent Artifacts",
+    "table": {
+      "name": "Name",
+      "kind": "Kind",
+      "version": "Version",
+      "status": "Status",
+      "publishedAt": "Published At"
+    }
+  },
+  "status": {
+    "pending": "Pending",
+    "rejected": "Rejected",
+    "approved": "Approved"
+  },
+  "artifacts": {
+    "title": "Artifacts",
+    "filters": {
+      "all": "All",
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "resource": "Resource",
+      "type": "Type",
+      "version": "Version",
+      "status": "Status",
+      "author": "Author",
+      "actions": "Actions",
+      "no_description": "No description"
+    },
+    "actions": {
+      "approve": "Approve",
+      "mark_pending": "Mark Pending",
+      "reject": "Reject"
+    }
+  },
+  "users": {
+    "title": "User Management",
+    "form": {
+      "username": "Username",
+      "password": "Initial Password",
+      "role_member": "Member",
+      "role_admin": "Admin",
+      "create": "Create User"
+    },
+    "table": {
+      "user": "User",
+      "role": "Role",
+      "status": "Status",
+      "createdAt": "Created At",
+      "actions": "Actions",
+      "disabled": "Disabled",
+      "active": "Active",
+      "disable": "Disable"
+    }
+  },
+  "login": {
+    "hero_title": "Manage your organization's AI assets",
+    "hero_desc": "Approve Skills, Prompts, and Agents; manage users and system branding.",
+    "panel_title": "Admin Sign In",
+    "no_permission": "This account does not have admin access",
+    "loading": "Signing in...",
+    "failed": "Sign in failed"
+  },
+  "settings": {
+    "title": "System Settings",
+    "loading": "Loading...",
+    "siteName": "Site Name",
+    "primaryColor": "Primary Color",
+    "requireApproval": "Require approval for publishing",
+    "uploadLogo": "Upload Logo",
+    "save": "Save Settings"
+  }
+}

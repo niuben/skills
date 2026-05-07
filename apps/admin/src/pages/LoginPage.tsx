@@ -1,8 +1,10 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login, setToken } from "../api";
+import { useTranslation } from "react-i18next";
 
 export function LoginPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("admin123");
@@ -16,13 +18,13 @@ export function LoginPage() {
     try {
       const data = await login(username, password);
       if (data.user.role !== "admin") {
-        setError("当前账号没有后台权限");
+        setError(t('login.no_permission'));
         return;
       }
       setToken(data.token);
       navigate("/", { replace: true });
     } catch (err) {
-      setError((err as Error).message || "登录失败");
+      setError((err as Error).message || t('login.failed'));
     } finally {
       setLoading(false);
     }
@@ -31,18 +33,18 @@ export function LoginPage() {
   return (
     <div className="login-screen">
       <section className="login-hero">
-        <span className="eyebrow">Admin Console</span>
-        <h1>统一管理企业内部 AI 能力资产</h1>
-        <p>审批 Skills、Prompts、Agents，管理成员与系统品牌配置。</p>
+        <span className="eyebrow">{t('admin.console')}</span>
+        <h1>{t('login.hero_title')}</h1>
+        <p>{t('login.hero_desc')}</p>
       </section>
       <form className="login-panel" onSubmit={submit}>
-        <h2>后台登录</h2>
+        <h2>{t('login.panel_title')}</h2>
         <label>
-          用户名
+          {t('users.form.username')}
           <input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" />
         </label>
         <label>
-          密码
+          {t('users.form.password')}
           <input
             value={password}
             onChange={(event) => setPassword(event.target.value)}
@@ -51,7 +53,7 @@ export function LoginPage() {
           />
         </label>
         <button className="primary-button" type="submit" disabled={loading}>
-          {loading ? "登录中..." : "登录"}
+          {loading ? t('login.loading') : t('login.panel_title')}
         </button>
         {error ? <div className="form-error">{error}</div> : null}
       </form>

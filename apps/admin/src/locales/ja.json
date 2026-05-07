@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "artifacts": "アーティファクト",
+    "users": "ユーザー管理",
+    "settings": "設定"
+  },
+  "admin": {
+    "console": "管理コンソール",
+    "currentUser": "現在のユーザー",
+    "logout": "ログアウト"
+  }
+  ,
+  "dashboard": {
+    "title": "ダッシュボード",
+    "stats": {
+      "skills": "Skills",
+      "prompts": "Prompts",
+      "agents": "Agents",
+      "createdToday": "本日作成",
+      "createdThisMonth": "今月作成",
+      "users": "ユーザー数",
+      "pendingApprovals": "承認待ち"
+    },
+    "recent_title": "最近のアーティファクト",
+    "table": {
+      "name": "名前",
+      "kind": "種類",
+      "version": "バージョン",
+      "status": "ステータス",
+      "publishedAt": "公開日時"
+    }
+  },
+  "status": {
+    "pending": "保留",
+    "rejected": "却下",
+    "approved": "承認済み"
+  },
+  "artifacts": {
+    "title": "アーティファクト",
+    "filters": {
+      "all": "すべて",
+      "approved": "承認済み",
+      "pending": "保留",
+      "rejected": "却下"
+    },
+    "table": {
+      "resource": "リソース",
+      "type": "種類",
+      "version": "バージョン",
+      "status": "ステータス",
+      "author": "作成者",
+      "actions": "アクション",
+      "no_description": "説明なし"
+    },
+    "actions": {
+      "approve": "承認",
+      "mark_pending": "保留にする",
+      "reject": "却下"
+    }
+  },
+  "users": {
+    "title": "ユーザー管理",
+    "form": {
+      "username": "ユーザー名",
+      "password": "初期パスワード",
+      "role_member": "メンバー",
+      "role_admin": "管理者",
+      "create": "ユーザー作成"
+    },
+    "table": {
+      "user": "ユーザー",
+      "role": "役割",
+      "status": "ステータス",
+      "createdAt": "作成日",
+      "actions": "アクション",
+      "disabled": "無効",
+      "active": "有効",
+      "disable": "無効化"
+    }
+  },
+  "login": {
+    "hero_title": "組織の AI 資産を管理",
+    "hero_desc": "Skills、Prompts、Agents を承認し、ユーザーとシステム設定を管理します。",
+    "panel_title": "管理者ログイン",
+    "no_permission": "このアカウントは管理者アクセス権がありません",
+    "loading": "サインイン中...",
+    "failed": "サインインに失敗しました"
+  },
+  "settings": {
+    "title": "システム設定",
+    "loading": "読み込み中...",
+    "siteName": "サイト名",
+    "primaryColor": "メインカラー",
+    "requireApproval": "公開に承認を必要とする",
+    "uploadLogo": "ロゴをアップロード",
+    "save": "設定を保存"
+  }
+}

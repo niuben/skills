@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import type { ApprovalStatus, ArtifactRecord } from "../types";
+import { useTranslation } from "react-i18next";
 
-const FILTERS: { value: ApprovalStatus | "all"; label: string }[] = [
-  { value: "all", label: "全部" },
-  { value: "approved", label: "已审批" },
-  { value: "pending", label: "未审批" },
-  { value: "rejected", label: "已拒绝" },
-];
+const FILTERS = ["all", "approved", "pending", "rejected"] as const;
 
 export function ArtifactsPage() {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<ApprovalStatus | "all">("all");
   const [items, setItems] = useState<ArtifactRecord[]>([]);
 
@@ -26,17 +23,21 @@ export function ArtifactsPage() {
     reload();
   }
 
+  function labelStatus(status = "approved") {
+    return status === "pending" ? t("status.pending") : status === "rejected" ? t("status.rejected") : t("status.approved");
+  }
+
   return (
     <section className="page">
       <header className="page-header">
         <div>
-          <span className="eyebrow">Artifacts</span>
-          <h1>资源管理</h1>
+          <span className="eyebrow">{t('artifacts.title')}</span>
+          <h1>{t('artifacts.title')}</h1>
         </div>
         <div className="segmented">
-          {FILTERS.map((item) => (
-            <button key={item.value} className={filter === item.value ? "active" : ""} onClick={() => setFilter(item.value)}>
-              {item.label}
+          {FILTERS.map((value) => (
+            <button key={value} className={filter === value ? "active" : ""} onClick={() => setFilter(value)}>
+              {t(`artifacts.filters.${value}`)}
             </button>
           ))}
         </div>
@@ -45,12 +46,12 @@ export function ArtifactsPage() {
         <table>
           <thead>
             <tr>
-              <th>资源</th>
-              <th>类型</th>
-              <th>版本</th>
-              <th>状态</th>
-              <th>作者</th>
-              <th>操作</th>
+              <th>{t('artifacts.table.resource')}</th>
+              <th>{t('artifacts.table.type')}</th>
+              <th>{t('artifacts.table.version')}</th>
+              <th>{t('artifacts.table.status')}</th>
+              <th>{t('artifacts.table.author')}</th>
+              <th>{t('artifacts.table.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -58,16 +59,16 @@ export function ArtifactsPage() {
               <tr key={item.id}>
                 <td>
                   <strong>{item.name}</strong>
-                  <small>{item.description || "暂无描述"}</small>
+                  <small>{item.description || t('artifacts.table.no_description')}</small>
                 </td>
                 <td>{item.kind}</td>
                 <td>{item.version}</td>
                 <td><span className={`status ${item.approvalStatus ?? "approved"}`}>{labelStatus(item.approvalStatus)}</span></td>
                 <td>{item.author?.name ?? "-"}</td>
                 <td className="actions">
-                  <button onClick={() => update(item.id, "approved")}>通过</button>
-                  <button onClick={() => update(item.id, "pending")}>待审</button>
-                  <button onClick={() => update(item.id, "rejected")}>拒绝</button>
+                  <button onClick={() => update(item.id, "approved")}>{t('artifacts.actions.approve')}</button>
+                  <button onClick={() => update(item.id, "pending")}>{t('artifacts.actions.mark_pending')}</button>
+                  <button onClick={() => update(item.id, "rejected")}>{t('artifacts.actions.reject')}</button>
                 </td>
               </tr>
             ))}
@@ -76,8 +77,4 @@ export function ArtifactsPage() {
       </div>
     </section>
   );
-}
-
-function labelStatus(status = "approved") {
-  return status === "pending" ? "未审批" : status === "rejected" ? "已拒绝" : "已审批";
 }

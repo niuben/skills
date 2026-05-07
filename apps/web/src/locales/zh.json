@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "首页",
+    "artifacts": "资源",
+    "my": "我的发布",
+    "publish": "发布",
+    "about": "关于"
+  },
+  "hero": {
+    "eyebrow": "发现",
+    "title": "企业技能中心",
+    "search_placeholder": "搜索 skills、prompts、agents…",
+    "subtitle": "在组织内部发现、共享并管理技能与提示（prompts）。"
+  },
+  "home": {
+    "recommended_title": "推荐 Skills",
+    "recommended_subtitle": "来自团队近期发布与高频使用的能力",
+    "view_all": "查看全部 →"
+  },
+  "publish": {
+    "eyebrow": "发布",
+    "title": "将能力包发布至中心",
+    "subtitle": "整理 Skills、Prompts 与 Agents 的元数据、版本和载荷文件，交付发布流水线。",
+    "status": {
+      "added_local": "已添加本地文件。",
+      "dropped": "已接收拖拽文件。",
+      "clipboard_empty": "剪切板中没有可导入的文件内容。",
+      "clipboard_imported": "已从剪切板导入内容。",
+      "clipboard_forbidden": "当前浏览器环境不允许直接读取剪切板，请使用拖拽或文本域粘贴。",
+      "submitting": "发布中...",
+      "success": "✓ 发布成功：{{id}}",
+      "failed": "❌ 发布失败：{{message}}"
+    },
+    "field": {
+      "name": "名称",
+      "kind": "类型",
+      "version": "版本",
+      "description": "描述",
+      "tags": "标签"
+    },
+    "placeholder": {
+      "name": "例如：team/email-summarizer",
+      "description": "概述能力用途、适用场景、依赖约束和建议使用方式。",
+      "tags": "以逗号分隔，例如：internal, review, automation",
+      "text": "粘贴 YAML、JSON、README 或其他纯文本内容。"
+    },
+    "upload_title": "上传或文本内容",
+    "upload_instructions": "拖拽文件、点击选择或按 Ctrl+V 粘贴，支持多文件与 ZIP 包。",
+    "drop_title": "拖动文件到这里",
+    "drop_subtitle": "或点击选择、按 Ctrl+V 粘贴",
+    "text_title": "文本内容",
+    "text_add": "添加为文件",
+    "action": {
+      "submit": "提交发布",
+      "reset_version": "重置版本号"
+    },
+    "modal": {
+      "success_title": "发布成功！",
+      "success_body": "恭喜你，能力包已成功发布！快去个人中心看看吧～",
+      "go_to_profile": "去个人中心"
+    }
+  },
+  "login": {
+    "title": "欢迎回来",
+    "username": "用户名",
+    "password": "密码",
+    "submit": "登录"
+  }
+  ,
+  "profile": {
+    "title": "我的发布",
+    "empty": "你还没有发布任何资源。",
+    "publish_cta": "发布你的第一个能力包"
+  }
+}

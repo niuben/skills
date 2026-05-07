@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { ChangeEvent, DragEvent, FormEvent } from "react";
 import { publishArtifact } from "../api";
 import type { ArtifactKind } from "../types";
+import { useTranslation } from "react-i18next";
 
 type PublishFile = {
   id: string;
@@ -46,6 +47,7 @@ function slugifyName(name: string): string {
 }
 
 export function PublishPage() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [kind, setKind] = useState<ArtifactKind>("skills");
   const [description, setDescription] = useState("");
@@ -98,7 +100,7 @@ export function PublishPage() {
       sizeLabel: formatBytes(file.size),
       source,
       kind: "file",
-      preview: file.type === "application/zip" || file.name.endsWith(".zip") ? "ZIP 包" : undefined,
+      preview: file.type === "application/zip" || file.name.endsWith(".zip") ? "ZIP" : undefined,
     }));
   }
 
@@ -106,7 +108,7 @@ export function PublishPage() {
     if (!event.target.files?.length) return;
     appendFiles(createEntriesFromFileList(event.target.files, "upload"));
     event.target.value = "";
-    setStatus("已添加本地文件，可继续追加更多文件或 ZIP 包。");
+    setStatus(t('publish.status.added_local'));
   }
 
   function onDrop(event: DragEvent<HTMLDivElement>) {
@@ -114,7 +116,7 @@ export function PublishPage() {
     setIsDragging(false);
     if (!event.dataTransfer.files?.length) return;
     appendFiles(createEntriesFromFileList(event.dataTransfer.files, "drop"));
-    setStatus("已接收拖拽文件。");
+    setStatus(t('publish.status.dropped'));
   }
 
   async function onPasteFromClipboard() {
@@ -138,15 +140,15 @@ export function PublishPage() {
         }
       }
 
-      if (pastedFiles.length === 0) {
-        setStatus("剪切板中没有可导入的文件内容。");
+        if (pastedFiles.length === 0) {
+        setStatus(t('publish.status.clipboard_empty'));
         return;
       }
 
       appendFiles(pastedFiles);
-      setStatus("已从剪切板导入内容。");
+      setStatus(t('publish.status.clipboard_imported'));
     } catch {
-      setStatus("当前浏览器环境不允许直接读取剪切板，请使用拖拽或文本域粘贴。");
+      setStatus(t('publish.status.clipboard_forbidden'));
     }
   }
 
@@ -189,15 +191,15 @@ export function PublishPage() {
     const hasPayload = hasFiles || hasText;
 
     if (!nameValid) {
-      setStatus("❌ 名称不能为空");
+      setStatus(t('publish.error.name_required'));
       return;
     }
     if (!descValid) {
-      setStatus("❌ 描述不能为空");
+      setStatus(t('publish.error.desc_required'));
       return;
     }
     if (!hasPayload) {
-      setStatus("❌ 请上传文件或粘贴文本内容");
+      setStatus(t('publish.error.payload_required'));
       return;
     }
 
@@ -207,7 +209,7 @@ export function PublishPage() {
 
     try {
       setIsSubmitting(true);
-      setStatus("发布中...");
+      setStatus(t('publish.status.submitting'));
       const record = await publishArtifact({
         manifest: {
           kind,
@@ -221,10 +223,10 @@ export function PublishPage() {
         payloadName,
       });
 
-      setStatus(`✓ 发布成功：${record.id}`);
+      setStatus(t('publish.status.success', { id: record.id }));
       setShowSuccessModal(true);
     } catch (err) {
-      setStatus(`❌ 发布失败：${(err as Error).message}`);
+      setStatus(t('publish.status.failed', { message: (err as Error).message }));
     } finally {
       setIsSubmitting(false);
     }
@@ -235,11 +237,9 @@ export function PublishPage() {
       {/* ...existing code... */}
       <section className="publish-hero">
         <div className="container">
-          <span className="hero-eyebrow">发布制品</span>
-          <h1 className="publish-title">将能力包发布至中心</h1>
-          <p className="publish-subtitle">
-            整理 Skills、Prompts 与 Agents 的元数据、版本和载荷文件，交付发布流水线。
-          </p>
+              <span className="hero-eyebrow">{t('publish.eyebrow')}</span>
+              <h1 className="publish-title">{t('publish.title')}</h1>
+              <p className="publish-subtitle">{t('publish.subtitle')}</p>
         </div>
       </section>
 
@@ -250,42 +250,42 @@ export function PublishPage() {
             <div className="publish-form-grid">
               {/* ...existing code... */}
               <label className="field field-span-2">
-                <span className="field-label">名称 <span className="field-required">*</span></span>
-                <input value={name} onChange={(event) => setName(event.target.value)} placeholder="例如：team/email-summarizer" />
+                <span className="field-label">{t('publish.field.name')} <span className="field-required">*</span></span>
+                <input value={name} onChange={(event) => setName(event.target.value)} placeholder={t('publish.placeholder.name', 'e.g. team/email-summarizer')} />
               </label>
               {/* ...existing code... */}
               <label className="field">
-                <span className="field-label">类型</span>
+                <span className="field-label">{t('publish.field.kind')}</span>
                 <select value={kind} onChange={(event) => setKind(event.target.value as ArtifactKind)}>
                   {KIND_OPTIONS.map((option) => (
                     <option key={option.value} value={option.value}>
-                      {option.label}
+                      {t(`publish.kind.${option.value}`, option.label)}
                     </option>
                   ))}
                 </select>
               </label>
               {/* ...existing code... */}
               <label className="field">
-                <span className="field-label">版本</span>
+                <span className="field-label">{t('publish.field.version')}</span>
                 <input value={version} onChange={(event) => setVersion(event.target.value)} />
               </label>
               {/* ...existing code... */}
               <label className="field field-span-2">
-                <span className="field-label">描述 <span className="field-required">*</span></span>
+                <span className="field-label">{t('publish.field.description')} <span className="field-required">*</span></span>
                 <textarea
                   rows={4}
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
-                  placeholder="概述能力用途、适用场景、依赖约束和建议使用方式。"
+                  placeholder={t('publish.placeholder.description')}
                 />
               </label>
               {/* ...existing code... */}
               <label className="field field-span-2">
-                <span className="field-label">标签</span>
+                <span className="field-label">{t('publish.field.tags')}</span>
                 <input
                   value={tagsInput}
                   onChange={(event) => setTagsInput(event.target.value)}
-                  placeholder="以逗号分隔，例如：internal, review, automation"
+                  placeholder={t('publish.placeholder.tags')}
                 />
                 <div className="publish-tag-suggestions">
                   {SUGGEST_TAGS.map((tag) => (
@@ -301,8 +301,8 @@ export function PublishPage() {
               {/* ...existing code... */}
               <div className="upload-head">
                 <div>
-                  <h2>上传或文本内容 <span className="field-required">*</span></h2>
-                  <p>拖拽文件、点击选择或按 <kbd>Ctrl+V</kbd> 粘贴，支持多文件与 ZIP 包。</p>
+                  <h2>{t('publish.upload_title')} <span className="field-required">*</span></h2>
+                  <p>{t('publish.upload_instructions')}</p>
                 </div>
               </div>
               {/* ...existing code... */}
@@ -356,32 +356,32 @@ export function PublishPage() {
                 onDrop={onDrop}
               >
                 <div className="dropzone-icon">⇪</div>
-                <div className="dropzone-title">拖动文件到这里</div>
-                <div className="dropzone-subtitle">或点击选择、按 Ctrl+V 粘贴</div>
+                <div className="dropzone-title">{t('publish.drop_title')}</div>
+                <div className="dropzone-subtitle">{t('publish.drop_subtitle')}</div>
               </div>
               {/* ...existing code... */}
               <div className="text-upload-panel">
                 <div className="text-upload-head">
-                  <h3>文本内容</h3>
+                  <h3>{t('publish.text_title')}</h3>
                   <button className="btn btn-primary" type="button" onClick={addTextPayload}>
-                    添加为文件
+                    {t('publish.text_add')}
                   </button>
                 </div>
                 <textarea
                   rows={6}
                   value={textPayload}
                   onChange={(event) => setTextPayload(event.target.value)}
-                  placeholder="粘贴 YAML、JSON、README 或其他纯文本内容。"
+                  placeholder={t('publish.placeholder.text')}
                 />
               </div>
             </div>
             {/* ...existing code... */}
             <div className="publish-footer-row">
               <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "发布中..." : "提交发布"}
+                {isSubmitting ? t('publish.status.submitting') : t('publish.action.submit')}
               </button>
               <button className="btn" type="button" onClick={() => setVersion(buildDefaultVersion())}>
-                重置版本号
+                {t('publish.action.reset_version')}
               </button>
             </div>
             {/* ...existing code... */}
@@ -394,14 +394,14 @@ export function PublishPage() {
         <div className="modal-backdrop" style={{position:'fixed',left:0,top:0,right:0,bottom:0,background:'rgba(0,0,0,0.35)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center'}}>
           <div className="modal-content" style={{background:'#fff',borderRadius:16,padding:40,minWidth:320,maxWidth:400,boxShadow:'0 8px 32px rgba(0,0,0,0.18)',textAlign:'center',animation:'pop-in 0.3s'}}>
             <div style={{ fontSize: 64, marginBottom: 16 }}>🎉</div>
-            <h2 style={{marginBottom:8}}>发布成功！</h2>
-            <p style={{color:'#666',marginBottom:24}}>恭喜你，能力包已成功发布！<br/>快去个人中心看看吧～</p>
+            <h2 style={{marginBottom:8}}>{t('publish.modal.success_title')}</h2>
+            <p style={{color:'#666',marginBottom:24}}>{t('publish.modal.success_body')}</p>
             <button
               className="btn btn-primary"
               style={{padding:'10px 32px',fontSize:18,borderRadius:8}}
               onClick={() => navigate("/me")}
             >
-              去个人中心
+              {t('publish.modal.go_to_profile')}
             </button>
           </div>
         </div>
