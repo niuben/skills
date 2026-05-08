@@ -16,6 +16,7 @@ import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";
 import fs from "node:fs/promises";
 import path from "node:path";
+import fastifyStatic from "@fastify/static";
 
 export interface AppDeps {
   app: FastifyInstance;
@@ -69,21 +70,29 @@ export async function buildApp(): Promise<AppDeps> {
   registerThemeRoutes(app, settingsRepository);
 
   log.info(`server initialized (data dir: ${config.dataDir})`);
+  // Serve built static assets for web and admin (production)
+  const webDist = path.join(process.cwd(), "apps/web/dist");
+  const adminDist = path.join(process.cwd(), "apps/admin/dist");
+  const webIndex = path.join(webDist, "index.html");
+  const adminIndex = path.join(adminDist, "index.html");
 
-  // Serve SPA index pages with inlined critical theme variables to avoid FOUC
-  const webIndex = path.join(process.cwd(), "apps/web/dist/index.html");
-  const adminIndex = path.join(process.cwd(), "apps/admin/dist/index.html");
-  app.get("/", async (req, reply) => {
-    try {
-      let html = await fs.readFile(webIndex, "utf8");
-      const css = `:root{--accent:${settingsRepository.getSettings().primaryColor};}`;
-      html = html.replace("</head>", `<style>${css}</style></head>`);
-      reply.type("text/html").send(html);
-    } catch (err) {
-      reply.code(500).send("web index not available");
-    }
+  // register admin static first (prefixed)
+  await app.register(fastifyStatic, {
+    root: adminDist,
+    prefix: "/admin/",
+    wildcard: false,
   });
-  app.get("/admin", async (req, reply) => {
+
+  // register web static for root
+  await app.register(fastifyStatic, {
+    root: webDist,
+    prefix: "/",
+    wildcard: false,
+    decorateReply: false,
+  });
+
+  // SPA fallbacks that inline critical CSS variables to avoid FOUC
+  app.get("/admin/*", async (req, reply) => {
     try {
       let html = await fs.readFile(adminIndex, "utf8");
       const css = `:root{--accent:${settingsRepository.getSettings().primaryColor};}`;
@@ -91,6 +100,17 @@ export async function buildApp(): Promise<AppDeps> {
       reply.type("text/html").send(html);
     } catch (err) {
       reply.code(500).send("admin index not available");
+    }
+  });
+
+  app.get("/*", async (req, reply) => {
+    try {
+      let html = await fs.readFile(webIndex, "utf8");
+      const css = `:root{--accent:${settingsRepository.getSettings().primaryColor};}`;
+      html = html.replace("</head>", `<style>${css}</style></head>`);
+      reply.type("text/html").send(html);
+    } catch (err) {
+      reply.code(500).send("web index not available");
     }
   });
   return { app, publishService, searchService, storage, repository };

@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, Link } from "react-router-dom";
 import { clearToken, getToken } from "../api";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -46,12 +46,13 @@ export function AdminLayout() {
   return (
     <div className="admin-shell">
       <aside className="admin-sidebar">
-        <div className="admin-brand">
+        <Link to="/" className="admin-brand">
           <div className="admin-brand-mark">S</div>
           <div>
             <strong>SkillOS</strong>
             <span>{t("admin.console")}</span>
           </div>
+        </Link>
           <select
             aria-label="Language"
             value={lang}

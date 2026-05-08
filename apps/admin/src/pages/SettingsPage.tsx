@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { api } from "../api";
 import type { SystemSettings } from "../types";
 import { useTranslation } from "react-i18next";
+import { showToast } from "../components/Toast";
 
 export function SettingsPage() {
   const { t } = useTranslation();
@@ -14,7 +15,13 @@ export function SettingsPage() {
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (!settings) return;
-    setSettings(await api.updateSettings(settings));
+    try {
+      const updated = await api.updateSettings(settings);
+      setSettings(updated);
+      showToast(t("settings.saved"));
+    } catch (err) {
+      showToast(t("settings.saveError"), "error");
+    }
   }
 
   async function upload(file: File | undefined) {

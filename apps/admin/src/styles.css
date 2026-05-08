@@ -123,3 +123,24 @@ input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px r
   .admin-nav { grid-template-columns: 1fr; }
   .login-hero h1 { font-size: 42px; }
 }
+
+/* Toast styles */
+.toast-container {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1200;
+}
+.toast {
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-weight: 600;
+}
+.toast-success { background: var(--accent); }
+.toast-error { background: #b91c1c; }
