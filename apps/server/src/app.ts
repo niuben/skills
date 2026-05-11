@@ -16,6 +16,7 @@ import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import fastifyStatic from "@fastify/static";
 
 export interface AppDeps {
@@ -65,25 +66,30 @@ export async function buildApp(): Promise<AppDeps> {
     jwtSecret,
     dataDir: config.dataDir,
   });
+
   // theme endpoints (CSS variables + JSON)
   const { registerThemeRoutes } = await import("./routes/theme.js");
   registerThemeRoutes(app, settingsRepository);
 
   log.info(`server initialized (data dir: ${config.dataDir})`);
+
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  const workspaceRoot = path.resolve(currentDir, "../../..");
+
   // Serve built static assets for web and admin (production)
-  const webDist = path.join(process.cwd(), "apps/web/dist");
-  const adminDist = path.join(process.cwd(), "apps/admin/dist");
+  const webDist = path.join(workspaceRoot, "apps/web/dist");
+  const adminDist = path.join(workspaceRoot, "apps/admin/dist");
   const webIndex = path.join(webDist, "index.html");
   const adminIndex = path.join(adminDist, "index.html");
 
-  // register admin static first (prefixed)
+  // Register admin static first (prefixed)
   await app.register(fastifyStatic, {
     root: adminDist,
     prefix: "/admin/",
     wildcard: false,
   });
 
-  // register web static for root
+  // Register web static for root
   await app.register(fastifyStatic, {
     root: webDist,
     prefix: "/",
@@ -98,7 +104,7 @@ export async function buildApp(): Promise<AppDeps> {
       const css = `:root{--accent:${settingsRepository.getSettings().primaryColor};}`;
       html = html.replace("</head>", `<style>${css}</style></head>`);
       reply.type("text/html").send(html);
-    } catch (err) {
+    } catch {
       reply.code(500).send("admin index not available");
     }
   });
@@ -114,6 +120,7 @@ export async function buildApp(): Promise<AppDeps> {
       reply.code(500).send("web index not available");
     }
   });
+
   return { app, publishService, searchService, storage, repository };
 }
 
