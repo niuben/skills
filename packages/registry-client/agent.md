@@ -1,5 +1,5 @@
 
-**@skillsos/registry-client — Package Overview**
+**@skillshub/registry-client — Package Overview**
 
 - **Purpose**: HTTP client for interacting with remote registries for publishing, searching, and fetching artifacts.
 - **Main files**: `src/registryClient.ts`, `src/index.ts`.

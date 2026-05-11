@@ -2,9 +2,9 @@ import {
   createArtifactRecord,
   type ArtifactPublishInput,
   type ArtifactRecord,
-} from "@skillsos/core";
-import type { ArtifactRepository, FileStorage, PathResolver } from "@skillsos/storage";
-import { createLogger } from "@skillsos/utils";
+} from "@skillshub/core";
+import type { ArtifactRepository, FileStorage, PathResolver } from "@skillshub/storage";
+import { createLogger } from "@skillshub/utils";
 
 export interface PublishServiceDeps {
   repository: ArtifactRepository;

@@ -1,5 +1,5 @@
 import type { Database as DB } from "better-sqlite3";
-import type { ArtifactKind, ArtifactRecord } from "@skillsos/core";
+import type { ArtifactKind, ArtifactRecord } from "@skillshub/core";
 
 export interface ArtifactQuery {
   kind?: ArtifactKind;

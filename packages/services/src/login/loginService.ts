@@ -1,4 +1,4 @@
-import { UserRepository, type UserRole } from '@skillsos/storage';
+import { UserRepository, type UserRole } from '@skillshub/storage';
 import * as bcrypt from 'bcryptjs';
 
 export class LoginService {

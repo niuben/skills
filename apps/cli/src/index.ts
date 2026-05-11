@@ -11,7 +11,7 @@ const program = new Command();
 import { loginCommand } from './commands/login.js';
 program
   .command('login')
-  .description('Login to SkillOS server')
+  .description('Login to Skills Hub server')
   .action(loginCommand);
 
 program

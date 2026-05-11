@@ -2,10 +2,10 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import type { ArtifactRecord } from "@skillsos/core";
-import type { ArtifactRepository, SettingsRepository, UserRepository } from "@skillsos/storage";
-import { LoginService } from "@skillsos/services";
-import { ensureDir } from "@skillsos/utils";
+import type { ArtifactRecord } from "@skillshub/core";
+import type { ArtifactRepository, SettingsRepository, UserRepository } from "@skillshub/storage";
+import { LoginService } from "@skillshub/services";
+import { ensureDir } from "@skillshub/utils";
 import { createRequireAdmin } from "../auth.js";
 
 export interface AdminRouteDeps {

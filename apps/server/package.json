@@ -1,5 +1,5 @@
 {
-  "name": "@skillsos/server",
+  "name": "@skillshub/server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,11 +12,11 @@
   "dependencies": {
     "@fastify/multipart": "^8.3.0",
     "@fastify/static": "^6.8.0",
-    "@skillsos/config": "workspace:*",
-    "@skillsos/core": "workspace:*",
-    "@skillsos/services": "workspace:*",
-    "@skillsos/storage": "workspace:*",
-    "@skillsos/utils": "workspace:*",
+    "@skillshub/config": "workspace:*",
+    "@skillshub/core": "workspace:*",
+    "@skillshub/services": "workspace:*",
+    "@skillshub/storage": "workspace:*",
+    "@skillshub/utils": "workspace:*",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.7",
     "express": "^5.2.1",

@@ -6,11 +6,11 @@ import {
   parseArtifactId,
   type ArtifactKind,
   type ArtifactRecord,
-} from "@skillsos/core";
-import type { ArtifactRepository, FileStorage } from "@skillsos/storage";
-import type { RegistryClient } from "@skillsos/registry-client";
-import { createLogger, ensureDir, sha256Buffer } from "@skillsos/utils";
-import { AGENT_DIR_CONFIG, expandPath, findPlatformByProjectDir } from "@skillsos/config";
+} from "@skillshub/core";
+import type { ArtifactRepository, FileStorage } from "@skillshub/storage";
+import type { RegistryClient } from "@skillshub/registry-client";
+import { createLogger, ensureDir, sha256Buffer } from "@skillshub/utils";
+import { AGENT_DIR_CONFIG, expandPath, findPlatformByProjectDir } from "@skillshub/config";
 
 /**
  * Find the actual project root by walking up directories looking for .git

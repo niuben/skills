@@ -1,4 +1,4 @@
-# @skillsos/config
+# @skillshub/config
 
 Configuration loading and persistence for Skillos.
 
@@ -24,7 +24,7 @@ Configuration loading and persistence for Skillos.
 ## Example
 
 ```ts
-import { loadConfig } from "@skillsos/config";
+import { loadConfig } from "@skillshub/config";
 
 const cfg = await loadConfig();
 console.log(cfg.defaultRegistry);

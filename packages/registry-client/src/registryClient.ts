@@ -1,4 +1,4 @@
-import type { ArtifactKind, ArtifactRecord } from "@skillsos/core";
+import type { ArtifactKind, ArtifactRecord } from "@skillshub/core";
 import type {
   PublishRequest,
   RegistryClientOptions,

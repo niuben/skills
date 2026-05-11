@@ -1,4 +1,4 @@
-import { handlerRegistry, type HandlerRegistry } from "@skillsos/core";
+import { handlerRegistry, type HandlerRegistry } from "@skillshub/core";
 import { promptHandler } from "./promptHandler.js";
 import { skillsHandler } from "./skillsHandler.js";
 import { agentHandler } from "./agentHandler.js";

@@ -69,7 +69,7 @@ export function DetailPage() {
 
         <div className="detail-section">
           <h2>安装</h2>
-          <p style={{ color: "var(--text-muted)" }}>使用 SkillOS CLI 一键安装：</p>
+          <p style={{ color: "var(--text-muted)" }}>使用 Skills Hub CLI 一键安装：</p>
           <pre className="code">{installCmd}</pre>
         </div>
 
@@ -80,7 +80,7 @@ export function DetailPage() {
           ) : (
             <p style={{ color: "var(--text-muted)" }}>
               该制品未提供 README。包含完整的元数据、内容哈希校验与版本控制；
-              通过 SkillOS 安装后可直接被本地 runtime 加载。
+              通过 Skills Hub 安装后可直接被本地 runtime 加载。
             </p>
           )}
         </div>

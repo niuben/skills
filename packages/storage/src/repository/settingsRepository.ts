@@ -8,7 +8,7 @@ export interface SystemSettings {
 }
 
 const DEFAULT_SETTINGS: SystemSettings = {
-  siteName: "SkillOS Admin",
+  siteName: "Skills Hub Admin",
   logoPath: "",
   primaryColor: "#d97706",
   requireApproval: false,

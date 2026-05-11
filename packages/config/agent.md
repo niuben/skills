@@ -1,5 +1,5 @@
 
-**@skillsos/config — Package Overview**
+**@skillshub/config — Package Overview**
 
 - **Purpose**: Provide application configuration loading and type definitions. Centralizes reading environment variables and config files and exposes a unified `loadConfig()`.
 - **Main files**: `src/loadConfig.ts`, `src/config.ts`, `src/types.ts`.

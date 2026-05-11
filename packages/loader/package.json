@@ -1,5 +1,5 @@
 {
-  "name": "@skillsos/loader",
+  "name": "@skillshub/loader",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillsos/core": "workspace:*",
+    "@skillshub/core": "workspace:*",
     "tar": "^7.4.3"
   }
 }

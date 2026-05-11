@@ -1,5 +1,5 @@
 {
-  "name": "@skillsos/services",
+  "name": "@skillshub/services",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,11 +17,11 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillsos/config": "workspace:*",
-    "@skillsos/core": "workspace:*",
-    "@skillsos/registry-client": "workspace:*",
-    "@skillsos/storage": "workspace:*",
-    "@skillsos/utils": "workspace:*",
+    "@skillshub/config": "workspace:*",
+    "@skillshub/core": "workspace:*",
+    "@skillshub/registry-client": "workspace:*",
+    "@skillshub/storage": "workspace:*",
+    "@skillshub/utils": "workspace:*",
     "bcryptjs": "^3.0.3",
     "tar": "^7.4.3"
   }

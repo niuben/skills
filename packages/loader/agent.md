@@ -1,5 +1,5 @@
 
-**@skillsos/loader — Package Overview**
+**@skillshub/loader — Package Overview**
 
 - **Purpose**: Load artifacts from disk or remote sources and produce normalized artifact objects (artifact loader). Responsible for manifest parsing and filesystem interaction.
 - **Main files**: `src/artifactLoader.ts`, `src/index.ts`.

@@ -1,5 +1,5 @@
 {
-  "name": "@skillsos/handlers",
+  "name": "@skillshub/handlers",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillsos/core": "workspace:*",
+    "@skillshub/core": "workspace:*",
     "zod": "^3.23.8"
   }
 }

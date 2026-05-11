@@ -2,7 +2,7 @@ import prompts from 'prompts';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
-import { loadConfig, saveConfig } from '@skillsos/config';
+import { loadConfig, saveConfig } from '@skillshub/config';
 
 export async function loginCommand() {
   const { username, password } = await prompts([

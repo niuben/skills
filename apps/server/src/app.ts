@@ -1,6 +1,6 @@
 import Fastify, { type FastifyInstance } from "fastify";
 import multipart from "@fastify/multipart";
-import { loadConfig } from "@skillsos/config";
+import { loadConfig } from "@skillshub/config";
 import {
   createArtifactRepository,
   createFileStorage,
@@ -8,9 +8,9 @@ import {
   SettingsRepository,
   openDatabase,
   UserRepository,
-} from "@skillsos/storage";
-import { LoginService, PublishService, SearchService } from "@skillsos/services";
-import { createLogger } from "@skillsos/utils";
+} from "@skillshub/storage";
+import { LoginService, PublishService, SearchService } from "@skillshub/services";
+import { createLogger } from "@skillshub/utils";
 import { registerArtifactRoutes } from "./routes/artifact.js";
 import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";

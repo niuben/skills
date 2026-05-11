@@ -1,5 +1,5 @@
 
-**@skillsos/core — Package Overview**
+**@skillshub/core — Package Overview**
 
 - **Purpose**: Core domain models and utilities. Defines types, factories, and validation logic for artifacts, prompts, and skills.
 - **Main files**: `src/artifact/*` (types, factory, validator), `src/prompt/prompt.ts`, `src/registry.ts`.

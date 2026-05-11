@@ -1,4 +1,4 @@
-# @skillsos/core
+# @skillshub/core
 
 Core domain model and contracts for artifacts.
 

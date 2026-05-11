@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import type { LoginService } from "@skillsos/services";
+import type { LoginService } from "@skillshub/services";
 import { createToken } from "../auth.js";
 
 export interface AuthRouteDeps {

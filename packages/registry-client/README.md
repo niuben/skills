@@ -1,4 +1,4 @@
-# @skillsos/registry-client
+# @skillshub/registry-client
 
 HTTP client for Skillos registry APIs.
 
@@ -19,7 +19,7 @@ HTTP client for Skillos registry APIs.
 ## Example
 
 ```ts
-import { RegistryClient } from "@skillsos/registry-client";
+import { RegistryClient } from "@skillshub/registry-client";
 
 const client = new RegistryClient({ baseUrl: "http://localhost:3000" });
 const result = await client.search({ kind: "skills", text: "translate" });

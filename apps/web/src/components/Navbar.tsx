@@ -18,7 +18,7 @@ export function Navbar() {
       <div className="container nav-inner">
         <NavLink to="/" className="brand">
           <span className="brand-mark">S</span>
-          <span>SkillOS</span>
+          <span>Skills Hub</span>
         </NavLink>
         <nav className="nav-links">
           <NavLink to="/" end className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}>{t('nav.home')}</NavLink>

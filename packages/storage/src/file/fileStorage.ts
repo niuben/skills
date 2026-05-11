@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { ensureDir, pathExists } from "@skillsos/utils";
+import { ensureDir, pathExists } from "@skillshub/utils";
 import type { PathResolver } from "./pathResolver.js";
 
 export interface FileStorage {

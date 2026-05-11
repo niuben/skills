@@ -24,14 +24,17 @@ export default function LoginPage() {
 
   return (
     <div className="login-layout">
-      <div className="login-card" style={{ margin: '48px auto', maxWidth: 420 }}>
+      <div className="login-left">
         <div className="login-brand">
-          <img src="/logo.svg" alt="SkillOS" className="login-logo" />
-          <h1 className="login-brand-title">SkillOS</h1>
+          <img src="/logo.svg" alt="Skills Hub" className="login-logo" />
+          <h1 className="login-brand-title">Skills Hub</h1>
           <p className="login-brand-desc">{t('login.brandDesc') || ''}</p>
         </div>
-        <h2 className="login-title">{t('login.title')}</h2>
-        <form className="login-form" onSubmit={handleSubmit} autoComplete="on">
+      </div>
+      <div className="login-right">
+        <div className="login-card">
+          <h2 className="login-title">{t('login.title')}</h2>
+          <form className="login-form" onSubmit={handleSubmit} autoComplete="on">
           <label className="login-label">
             {t('login.username')}
             <input
@@ -59,7 +62,8 @@ export default function LoginPage() {
           </label>
           <button className="login-btn" type="submit">{t('login.submit')}</button>
           {error && <div className="login-error">{error}</div>}
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import path from "node:path";
-import type { AgentPlatformInfo } from "@skillsos/services";
-import { loadConfig, type SkillosConfig } from "@skillsos/config";
+import type { AgentPlatformInfo } from "@skillshub/services";
+import { loadConfig, type SkillosConfig } from "@skillshub/config";
 import {
   createArtifactRepository,
   createFileStorage,
@@ -9,14 +9,14 @@ import {
   type ArtifactRepository,
   type FileStorage,
   type PathResolver,
-} from "@skillsos/storage";
-import { RegistryClient } from "@skillsos/registry-client";
+} from "@skillshub/storage";
+import { RegistryClient } from "@skillshub/registry-client";
 import {
   InstallService,
   PublishService,
   SearchService,
   SyncService,
-} from "@skillsos/services";
+} from "@skillshub/services";
 
 export interface CliContext {
   config: SkillosConfig;

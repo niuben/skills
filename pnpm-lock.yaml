@@ -55,28 +55,28 @@ importers:
 
   apps/cli:
     dependencies:
-      '@skillsos/config':
+      '@skillshub/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@skillsos/handlers':
+      '@skillshub/handlers':
         specifier: workspace:*
         version: link:../../packages/handlers
-      '@skillsos/loader':
+      '@skillshub/loader':
         specifier: workspace:*
         version: link:../../packages/loader
-      '@skillsos/registry-client':
+      '@skillshub/registry-client':
         specifier: workspace:*
         version: link:../../packages/registry-client
-      '@skillsos/services':
+      '@skillshub/services':
         specifier: workspace:*
         version: link:../../packages/services
-      '@skillsos/storage':
+      '@skillshub/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       '@types/node':
@@ -103,19 +103,19 @@ importers:
       '@fastify/static':
         specifier: ^6.8.0
         version: 6.12.0
-      '@skillsos/config':
+      '@skillshub/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@skillsos/services':
+      '@skillshub/services':
         specifier: workspace:*
         version: link:../../packages/services
-      '@skillsos/storage':
+      '@skillshub/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       '@types/express':
@@ -170,13 +170,13 @@ importers:
 
   packages/config:
     dependencies:
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/core:
     dependencies:
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../utils
       zod:
@@ -185,7 +185,7 @@ importers:
 
   packages/handlers:
     dependencies:
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -194,7 +194,7 @@ importers:
 
   packages/loader:
     dependencies:
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../core
       tar:
@@ -203,28 +203,28 @@ importers:
 
   packages/registry-client:
     dependencies:
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../core
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/services:
     dependencies:
-      '@skillsos/config':
+      '@skillshub/config':
         specifier: workspace:*
         version: link:../config
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../core
-      '@skillsos/registry-client':
+      '@skillshub/registry-client':
         specifier: workspace:*
         version: link:../registry-client
-      '@skillsos/storage':
+      '@skillshub/storage':
         specifier: workspace:*
         version: link:../storage
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../utils
       bcryptjs:
@@ -236,13 +236,13 @@ importers:
 
   packages/storage:
     dependencies:
-      '@skillsos/config':
+      '@skillshub/config':
         specifier: workspace:*
         version: link:../config
-      '@skillsos/core':
+      '@skillshub/core':
         specifier: workspace:*
         version: link:../core
-      '@skillsos/utils':
+      '@skillshub/utils':
         specifier: workspace:*
         version: link:../utils
       better-sqlite3:

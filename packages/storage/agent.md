@@ -1,5 +1,5 @@
 
-**@skillsos/storage — Package Overview**
+**@skillshub/storage — Package Overview**
 
 - **Purpose**: Provide the local persistence layer (SQLite + file storage) and repository abstractions to manage artifact metadata and binary storage on disk.
 - **Main files**: `src/db/sqlite.ts`, `src/db/schema.sql`, `src/repository/*`, `src/file/fileStorage.ts`, `src/file/pathResolver.ts`.

@@ -3,7 +3,7 @@ import {
   type ArtifactHandler,
   matchSkillFiles,
   parseSkillMarkdownManifest,
-} from "@skillsos/core";
+} from "@skillshub/core";
 
 const schema = z.object({
   name: z.string().min(1),

@@ -50,7 +50,7 @@ export function AdminLayout() {
           <Link to="/" className="admin-brand-link">
             <div className="admin-brand-mark">S</div>
             <div>
-              <strong>SkillOS</strong>
+              <strong>Skills Hub</strong>
               <span>{t("admin.console")}</span>
             </div>
           </Link>
