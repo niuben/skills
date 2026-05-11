@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
 import { ListPage } from "./pages/ListPage";
@@ -11,6 +12,7 @@ export function App() {
   return (
     <div className="app">
       <main style={{ flex: 1 }}>
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/explore" element={<ListPage />} />
