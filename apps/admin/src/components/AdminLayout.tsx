@@ -46,13 +46,14 @@ export function AdminLayout() {
   return (
     <div className="admin-shell">
       <aside className="admin-sidebar">
-        <Link to="/" className="admin-brand">
-          <div className="admin-brand-mark">S</div>
-          <div>
-            <strong>SkillOS</strong>
-            <span>{t("admin.console")}</span>
-          </div>
-        </Link>
+        <div className="admin-brand">
+          <Link to="/" className="admin-brand-link">
+            <div className="admin-brand-mark">S</div>
+            <div>
+              <strong>SkillOS</strong>
+              <span>{t("admin.console")}</span>
+            </div>
+          </Link>
           <select
             aria-label="Language"
             value={lang}

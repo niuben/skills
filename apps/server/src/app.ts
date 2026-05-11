@@ -110,6 +110,7 @@ export async function buildApp(): Promise<AppDeps> {
       html = html.replace("</head>", `<style>${css}</style></head>`);
       reply.type("text/html").send(html);
     } catch (err) {
+      console.log("error serving web index.html:", err);
       reply.code(500).send("web index not available");
     }
   });
