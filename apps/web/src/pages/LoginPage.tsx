@@ -37,8 +37,8 @@ export default function LoginPage() {
         <img src="/assets/login.png" alt="" className="login-left-image" />
         <div className="login-brand">
           
-          <h1 className="login-brand-title">Skills Hub</h1>
-          <p className="login-brand-desc">{t('login.brandDesc') || ''}</p>
+          {/* <h1 className="login-brand-title">Skills Hub</h1>
+          <p className="login-brand-desc">{t('login.brandDesc') || ''}</p> */}
         </div>
       </div>
       <div className="login-right">
