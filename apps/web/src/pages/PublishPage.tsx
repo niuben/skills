@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { ChangeEvent, DragEvent, FormEvent } from "react";
+import type { ChangeEvent, DragEvent as ReactDragEvent, FormEvent } from "react";
 import { publishArtifact } from "../api";
 import type { ArtifactKind } from "../types";
 import { useTranslation } from "react-i18next";
@@ -62,6 +62,7 @@ export function PublishPage() {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const dropzoneRef = useRef<HTMLDivElement | null>(null);
+  const dragDepthRef = useRef(0);
 
   const tags = useMemo(
     () => tagsInput.split(",").map((tag) => tag.trim()).filter(Boolean),
@@ -71,18 +72,52 @@ export function PublishPage() {
   const totalFiles = files.length;
 
   useEffect(() => {
-    // 监听全局 Ctrl+V 事件
-    function onKeyDown(event: KeyboardEvent) {
-      if ((event.ctrlKey || event.metaKey) && event.key === "v") {
-        const target = event.target as HTMLElement | null;
-        if (target?.tagName === "INPUT" || target?.tagName === "TEXTAREA") return;
-        event.preventDefault();
-        onPasteFromClipboard();
+    function onPaste(event: ClipboardEvent) {
+      const target = event.target as HTMLElement | null;
+      if (target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable) {
+        return;
       }
+
+      const clipboardData = event.clipboardData;
+      if (!clipboardData) return;
+
+      const fromFiles = Array.from(clipboardData.files || []);
+      const fromItems = Array.from(clipboardData.items || [])
+        .filter((item) => item.kind === "file")
+        .map((item) => item.getAsFile())
+        .filter((file): file is File => Boolean(file));
+
+      const mergedFiles = [...fromFiles];
+      for (const file of fromItems) {
+        const duplicated = mergedFiles.some(
+          (existing) => existing.name === file.name && existing.size === file.size && existing.type === file.type,
+        );
+        if (!duplicated) mergedFiles.push(file);
+      }
+
+      if (!mergedFiles.length) return;
+
+      event.preventDefault();
+      appendFiles(createEntriesFromFiles(mergedFiles, "clipboard"));
+      setStatus(t("publish.status.clipboard_imported"));
     }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+
+    // Prevent browser from opening dropped files outside the dropzone.
+    function blockWindowFileDrop(event: DragEvent) {
+      if (!event.dataTransfer?.types?.includes("Files")) return;
+      event.preventDefault();
+    }
+
+    window.addEventListener("paste", onPaste);
+    window.addEventListener("dragover", blockWindowFileDrop);
+    window.addEventListener("drop", blockWindowFileDrop);
+
+    return () => {
+      window.removeEventListener("paste", onPaste);
+      window.removeEventListener("dragover", blockWindowFileDrop);
+      window.removeEventListener("drop", blockWindowFileDrop);
+    };
+  }, [t]);
 
   function appendFiles(nextFiles: PublishFile[]) {
     setFiles((current) => {
@@ -92,8 +127,8 @@ export function PublishPage() {
     });
   }
 
-  function createEntriesFromFileList(fileList: FileList, source: PublishFile["source"]): PublishFile[] {
-    return Array.from(fileList).map((file) => ({
+  function createEntriesFromFiles(fileList: File[], source: PublishFile["source"]): PublishFile[] {
+    return fileList.map((file) => ({
       id: `${file.name}-${file.lastModified}-${source}`,
       file,
       name: file.name,
@@ -104,6 +139,10 @@ export function PublishPage() {
     }));
   }
 
+  function createEntriesFromFileList(fileList: FileList, source: PublishFile["source"]): PublishFile[] {
+    return createEntriesFromFiles(Array.from(fileList), source);
+  }
+
   function onInputFiles(event: ChangeEvent<HTMLInputElement>) {
     if (!event.target.files?.length) return;
     appendFiles(createEntriesFromFileList(event.target.files, "upload"));
@@ -111,45 +150,13 @@ export function PublishPage() {
     setStatus(t('publish.status.added_local'));
   }
 
-  function onDrop(event: DragEvent<HTMLDivElement>) {
+  function onDrop(event: ReactDragEvent<HTMLDivElement>) {
     event.preventDefault();
+    dragDepthRef.current = 0;
     setIsDragging(false);
     if (!event.dataTransfer.files?.length) return;
     appendFiles(createEntriesFromFileList(event.dataTransfer.files, "drop"));
     setStatus(t('publish.status.dropped'));
-  }
-
-  async function onPasteFromClipboard() {
-    try {
-      const clipboardItems = await navigator.clipboard.read();
-      const pastedFiles: PublishFile[] = [];
-
-      for (const item of clipboardItems) {
-        for (const type of item.types) {
-          const blob = await item.getType(type);
-          const ext = type === "application/zip" ? "zip" : type.startsWith("text/") ? "txt" : "bin";
-          pastedFiles.push({
-            id: `${type}-${blob.size}-${Date.now()}`,
-            file: new File([blob], `clipboard-${Date.now()}.${ext}`, { type: blob.type }),
-            name: `clipboard-${Date.now()}.${ext}`,
-            sizeLabel: formatBytes(blob.size),
-            source: "clipboard",
-            kind: "file",
-            preview: type.startsWith("image/") ? "剪切板文件" : type,
-          });
-        }
-      }
-
-        if (pastedFiles.length === 0) {
-        setStatus(t('publish.status.clipboard_empty'));
-        return;
-      }
-
-      appendFiles(pastedFiles);
-      setStatus(t('publish.status.clipboard_imported'));
-    } catch {
-      setStatus(t('publish.status.clipboard_forbidden'));
-    }
   }
 
   function addTextPayload() {
@@ -344,14 +351,25 @@ export function PublishPage() {
                 ref={dropzoneRef}
                 className={`dropzone${isDragging ? " is-dragging" : ""}`}
                 onClick={() => fileInputRef.current?.click()}
-                onDragEnter={(event) => {
+                onDragEnter={(event: ReactDragEvent<HTMLDivElement>) => {
                   event.preventDefault();
+                  if (!event.dataTransfer.types.includes("Files")) return;
+                  dragDepthRef.current += 1;
                   setIsDragging(true);
                 }}
-                onDragOver={(event) => event.preventDefault()}
-                onDragLeave={(event) => {
+                onDragOver={(event: ReactDragEvent<HTMLDivElement>) => {
                   event.preventDefault();
-                  setIsDragging(false);
+                  if (event.dataTransfer) event.dataTransfer.dropEffect = "copy";
+                  if (!isDragging && event.dataTransfer?.types.includes("Files")) {
+                    setIsDragging(true);
+                  }
+                }}
+                onDragLeave={(event: ReactDragEvent<HTMLDivElement>) => {
+                  event.preventDefault();
+                  dragDepthRef.current = Math.max(0, dragDepthRef.current - 1);
+                  if (dragDepthRef.current === 0) {
+                    setIsDragging(false);
+                  }
                 }}
                 onDrop={onDrop}
               >
