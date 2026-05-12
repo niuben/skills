@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { login } from '../api';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,15 @@ export default function LoginPage() {
       setError(err.response?.data?.error || 'Login failed');
     }
   };
+
+  useEffect(() => {
+    // Add a fallback body class to hide nav and disable scrolling
+    // for browsers that don't support :has(). Clean up on unmount.
+    document.body.classList.add('login-no-scroll', 'hide-top-nav');
+    return () => {
+      document.body.classList.remove('login-no-scroll', 'hide-top-nav');
+    };
+  }, []);
 
   return (
     <div className="login-layout">
