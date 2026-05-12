@@ -62,6 +62,7 @@
   },
   "login": {
     "title": "Welcome back",
+    "brandDesc": "Share and manage skills, prompts and agents across your organization.",
     "username": "Username",
     "password": "Password",
     "submit": "Sign in"

@@ -34,8 +34,9 @@ export default function LoginPage() {
   return (
     <div className="login-layout">
       <div className="login-left">
+        <img src="/assets/login.png" alt="" className="login-left-image" />
         <div className="login-brand">
-          <img src="/logo.svg" alt="Skills Hub" className="login-logo" />
+          
           <h1 className="login-brand-title">Skills Hub</h1>
           <p className="login-brand-desc">{t('login.brandDesc') || ''}</p>
         </div>

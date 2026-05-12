@@ -62,6 +62,7 @@
   },
   "login": {
     "title": "欢迎回来",
+    "brandDesc": "在组织内部共享并管理 Skills、Prompts 与 Agents。",
     "username": "用户名",
     "password": "密码",
     "submit": "登录"
