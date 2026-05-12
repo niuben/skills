@@ -5,12 +5,12 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 export default defineConfig({
   plugins: [
     react(),
-    // copy all files under src/assets into the final build under /assets
+    // copy all files under src/asset into the final build under /asset
     viteStaticCopy({
       targets: [
         {
-          src: "src/assets/**/*",
-          dest: "assets",
+          src: "src/asset/**/*",
+          dest: "asset",
         },
       ],
     }),

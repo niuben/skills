@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import type { ArtifactRecord } from "@skillshub/core";
 import type { ArtifactRepository, SettingsRepository, UserRepository } from "@skillshub/storage";
@@ -17,6 +17,16 @@ export interface AdminRouteDeps {
 }
 
 type ApprovalStatus = NonNullable<ArtifactRecord["approvalStatus"]>;
+
+function generateRandomPassword(length = 12): string {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
+  const bytes = randomBytes(length);
+  let result = "";
+  for (let i = 0; i < length; i += 1) {
+    result += alphabet[bytes[i] % alphabet.length];
+  }
+  return result;
+}
 
 export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps): void {
   const requireAdmin = createRequireAdmin(deps.userRepository, deps.jwtSecret);
@@ -89,6 +99,23 @@ export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps):
     if (!user) return reply.code(404).send({ error: "not_found" });
     return toSafeUser(user);
   });
+
+  app.post<{ Params: { id: string }; Body: { password?: string } }>(
+    "/api/admin/users/:id/reset-password",
+    { preHandler: guard },
+    async (req, reply) => {
+      const userId = Number(req.params.id);
+      if (!Number.isFinite(userId) || userId <= 0) return reply.code(400).send({ error: "invalid_user_id" });
+
+      const password = req.body.password?.trim() || generateRandomPassword(12);
+      if (password.length < 8) return reply.code(400).send({ error: "password_too_short" });
+
+      const user = new LoginService(deps.userRepository).resetPassword(userId, password);
+      if (!user) return reply.code(404).send({ error: "not_found" });
+
+      return { user: toSafeUser(user), password };
+    }
+  );
 
   app.get("/api/admin/settings", { preHandler: guard }, async () => deps.settingsRepository.getSettings());
 

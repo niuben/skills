@@ -54,6 +54,11 @@ export class UserRepository {
     return this.getUserById(id);
   }
 
+  updatePasswordHash(id: number, password_hash: string): User | null {
+    this.db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(password_hash, id);
+    return this.getUserById(id);
+  }
+
   hasUsers(): boolean {
     return this.countUsers() > 0;
   }

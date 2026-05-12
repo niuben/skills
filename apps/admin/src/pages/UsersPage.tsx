@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { api } from "../api";
 import type { AdminUser, UserRole } from "../types";
 import { useTranslation } from "react-i18next";
+import { showToast } from "../components/Toast";
 
 export function UsersPage() {
   const { t, i18n } = useTranslation();
@@ -9,6 +10,16 @@ export function UsersPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<UserRole>("member");
+  const [resetPasswords, setResetPasswords] = useState<Record<number, string>>({});
+
+  function generateRandomPassword(length = 12): string {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
+    let out = "";
+    for (let i = 0; i < length; i += 1) {
+      out += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return out;
+  }
 
   function reload() {
     api.users().then((data) => setUsers(data.items));
@@ -29,6 +40,14 @@ export function UsersPage() {
 
   async function disable(id: number) {
     await api.disableUser(id);
+    reload();
+  }
+
+  async function resetPassword(user: AdminUser) {
+    const draft = (resetPasswords[user.id] ?? "").trim();
+    const result = await api.resetPassword(user.id, draft || undefined);
+    setResetPasswords((prev) => ({ ...prev, [user.id]: "" }));
+    showToast(`${t('users.table.passwordReset')}: ${result.password}`);
     reload();
   }
 
@@ -74,7 +93,25 @@ export function UsersPage() {
                 <td>{user.disabledAt ? t('users.table.disabled') : t('users.table.active')}</td>
                 <td>{new Intl.DateTimeFormat(i18n.language).format(new Date(user.createdAt))}</td>
                 <td>
-                  <button disabled={Boolean(user.disabledAt)} onClick={() => disable(user.id)}>{t('users.table.disable')}</button>
+                  <div className="actions">
+                    <button disabled={Boolean(user.disabledAt)} onClick={() => disable(user.id)}>{t('users.table.disable')}</button>
+                    <input
+                      placeholder={t('users.table.newPassword')}
+                      value={resetPasswords[user.id] ?? ""}
+                      onChange={(event) =>
+                        setResetPasswords((prev) => ({ ...prev, [user.id]: event.target.value }))
+                      }
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setResetPasswords((prev) => ({ ...prev, [user.id]: generateRandomPassword(12) }))
+                      }
+                    >
+                      {t('users.table.generate')}
+                    </button>
+                    <button type="button" onClick={() => resetPassword(user)}>{t('users.table.resetPassword')}</button>
+                  </div>
                 </td>
               </tr>
             ))}

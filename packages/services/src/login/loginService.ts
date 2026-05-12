@@ -18,4 +18,9 @@ export class LoginService {
     // 这里可生成 JWT token，暂返回 user
     return user;
   }
+
+  resetPassword(userId: number, password: string) {
+    const password_hash = bcrypt.hashSync(password, 10);
+    return this.userRepository.updatePasswordHash(userId, password_hash);
+  }
 }

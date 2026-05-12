@@ -76,7 +76,11 @@
       "actions": "アクション",
       "disabled": "無効",
       "active": "有効",
-      "disable": "無効化"
+      "disable": "無効化",
+      "newPassword": "新しいパスワード",
+      "generate": "ランダム生成",
+      "resetPassword": "パスワードをリセット",
+      "passwordReset": "パスワードをリセットしました"
     }
   },
   "login": {

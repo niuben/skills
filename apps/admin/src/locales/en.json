@@ -76,7 +76,11 @@
       "actions": "Actions",
       "disabled": "Disabled",
       "active": "Active",
-      "disable": "Disable"
+      "disable": "Disable",
+      "newPassword": "New Password",
+      "generate": "Generate",
+      "resetPassword": "Reset Password",
+      "passwordReset": "Password reset"
     }
   },
   "login": {

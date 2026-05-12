@@ -10,6 +10,11 @@ export interface AdminUser {
   createdAt: string;
 }
 
+export interface ResetPasswordResult {
+  user: AdminUser;
+  password: string;
+}
+
 export interface ArtifactRecord {
   id: string;
   kind: ArtifactKind;

@@ -1,4 +1,4 @@
-import type { AdminUser, ApprovalStatus, ArtifactRecord, DashboardStats, SystemSettings, UserRole } from "./types";
+import type { AdminUser, ApprovalStatus, ArtifactRecord, DashboardStats, ResetPasswordResult, SystemSettings, UserRole } from "./types";
 
 const TOKEN_KEY = "skillos_admin_token";
 
@@ -57,6 +57,11 @@ export const api = {
   createUser: (input: { username: string; password: string; role: UserRole }) =>
     request<AdminUser>("/api/admin/users", { method: "POST", body: JSON.stringify(input) }),
   disableUser: (id: number) => request<AdminUser>(`/api/admin/users/${id}/disable`, { method: "PATCH" }),
+  resetPassword: (id: number, password?: string) =>
+    request<ResetPasswordResult>(`/api/admin/users/${id}/reset-password`, {
+      method: "POST",
+      body: JSON.stringify(password ? { password } : {}),
+    }),
   settings: () => request<SystemSettings>("/api/admin/settings"),
   updateSettings: (input: Partial<SystemSettings>) =>
     request<SystemSettings>("/api/admin/settings", { method: "PUT", body: JSON.stringify(input) }),

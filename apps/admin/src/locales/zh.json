@@ -76,7 +76,11 @@
       "actions": "操作",
       "disabled": "已禁用",
       "active": "正常",
-      "disable": "禁用"
+      "disable": "禁用",
+      "newPassword": "新密码",
+      "generate": "生成随机密码",
+      "resetPassword": "重置密码",
+      "passwordReset": "密码已重置"
     }
   },
   "login": {
