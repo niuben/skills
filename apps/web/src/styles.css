@@ -399,6 +399,47 @@ button {
   box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1), var(--shadow-md);
 }
 
+/* ===== Responsive: mobile login only ===== */
+@media (max-width: 640px) {
+  .login-layout {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--bg);
+  }
+
+  /* hide the left hero image/pane entirely on small screens */
+  .login-left {
+    display: none !important;
+  }
+
+  /* make the right pane take full width and center the card */
+  .login-right {
+    flex: 1 1 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .login-card {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 28px 20px;
+  }
+
+  /* ensure no page scrolling and content fits viewport */
+  body:has(.login-layout),
+  body.login-no-scroll {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
 .hero-search input {
   flex: 1;
   border: none;
