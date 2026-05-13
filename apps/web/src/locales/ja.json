@@ -4,7 +4,8 @@
     "artifacts": "アーティファクト",
     "my": "マイ公開",
     "publish": "公開",
-    "about": "概要"
+    "about": "概要",
+    "logout": "ログアウト"
   },
   "hero": {
     "eyebrow": "発見",

@@ -16,11 +16,13 @@ export function MyPage() {
     async function load() {
       setLoading(true);
       try {
-        const res = await searchArtifacts({ limit: 200 });
         const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null;
-        let filtered = res.items;
-        if (username) filtered = res.items.filter((a) => (a.author?.name ?? "") === username);
-        if (mounted) setItems(filtered);
+        const res = await searchArtifacts({ 
+          username: username ?? undefined,
+          limit: 200 
+        });
+        const items = res.items;
+        if (mounted) setItems(items);
       } catch {
         if (mounted) setItems([]);
       } finally {

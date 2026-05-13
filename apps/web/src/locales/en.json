@@ -4,7 +4,8 @@
     "artifacts": "Artifacts",
     "my": "My uploads",
     "publish": "Publish",
-    "about": "About"
+    "about": "About",
+    "logout": "Logout"
   },
   "hero": {
     "eyebrow": "Explore",

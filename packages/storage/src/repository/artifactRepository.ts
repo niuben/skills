@@ -5,6 +5,8 @@ export interface ArtifactQuery {
   kind?: ArtifactKind;
   name?: string;
   approvalStatus?: ArtifactRecord["approvalStatus"];
+  /** Filter by author name (exact match against author_name column) */
+  authorName?: string;
   /** Free-text search across name/description/tags */
   text?: string;
   limit?: number;
@@ -202,6 +204,10 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
       if (query.text) {
         where.push(`(name LIKE @q OR description LIKE @q OR tags LIKE @q)`);
         params.q = `%${query.text}%`;
+      }
+      if (query.authorName) {
+        where.push(`author_name = @authorName`);
+        params.authorName = query.authorName;
       }
 
       const sql = `

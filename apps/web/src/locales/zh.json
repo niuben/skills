@@ -4,7 +4,8 @@
     "artifacts": "资源",
     "my": "我的发布",
     "publish": "发布",
-    "about": "关于"
+    "about": "关于",
+    "logout": "退出登录"
   },
   "hero": {
     "eyebrow": "发现",

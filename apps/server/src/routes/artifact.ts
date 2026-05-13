@@ -15,9 +15,21 @@ export interface ArtifactRouteDeps {
 export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRouteDeps): void {
   // List / search
   app.get<{
-    Querystring: { kind?: ArtifactKind; q?: string; limit?: string; offset?: string };
+    Querystring: { kind?: ArtifactKind; q?: string; limit?: string; offset?: string; username?: string };
   }>("/api/artifacts", async (req) => {
-    const { kind, q, limit, offset } = req.query;
+    const { kind, q, limit, offset, username } = req.query;
+    // If username provided, query repository directly to allow exact author_name match
+    if (username) {
+      const items = deps.repository.list({
+        kind,
+        text: q,
+        limit: limit ? parseInt(limit, 10) : undefined,
+        offset: offset ? parseInt(offset, 10) : undefined,
+        authorName: username,
+      });
+      return { total: items.length, items };
+    }
+
     const items = deps.searchService.list({
       kind,
       text: q,

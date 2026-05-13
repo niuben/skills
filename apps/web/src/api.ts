@@ -17,6 +17,7 @@ export interface PublishArtifactInput {
     description?: string;
     readme?: string;
     tags?: string[];
+    author?: { name: string; email?: string };
   };
   payload: Blob;
   payloadName?: string;
@@ -38,16 +39,19 @@ export async function searchArtifacts(opts: {
   kind?: ArtifactKind;
   text?: string;
   limit?: number;
+  username?: string;
 } = {}): Promise<SearchResult> {
   const params = new URLSearchParams();
   if (opts.kind) params.set("kind", opts.kind);
   if (opts.text) params.set("q", opts.text);
+  if (opts.username) params.set("username", opts.username);
   if (opts.limit != null) params.set("limit", String(opts.limit));
   const data = await safeFetch<SearchResult>(`/artifacts?${params}`);
   if (data) return data;
   // fallback to mock data so UI still demos when server is offline
   const items = MOCK.filter((a) => {
     if (opts.kind && a.kind !== opts.kind) return false;
+    if (opts.username && (a.author?.name ?? "") !== opts.username) return false;
     if (opts.text) {
       const t = opts.text.toLowerCase();
       if (

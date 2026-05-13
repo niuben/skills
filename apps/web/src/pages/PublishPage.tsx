@@ -217,6 +217,7 @@ export function PublishPage() {
     try {
       setIsSubmitting(true);
       setStatus(t('publish.status.submitting'));
+      const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null;
       const record = await publishArtifact({
         manifest: {
           kind,
@@ -225,6 +226,7 @@ export function PublishPage() {
           description: description.trim(),
           tags,
           readme: textPayload.trim() || undefined,
+          author: username ? { name: username } : undefined,
         },
         payload,
         payloadName,
