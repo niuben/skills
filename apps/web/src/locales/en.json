@@ -45,7 +45,10 @@
   "home": {
     "recommended_title": "Recommended Skills",
     "recommended_subtitle": "From recent and frequently used team skills",
-    "view_all": "View all →"
+    "view_all": "View all →",
+    "search_button": "Search",
+    "empty": "No recommendations",
+    "suggest_tags": ["Code Review", "Publish Playbook", "Prompt Engineering", "Data Analysis", "Incident RCA", "UI Review"]
   },
   "publish": {
     "eyebrow": "Publish",

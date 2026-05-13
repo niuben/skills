@@ -45,7 +45,10 @@
   "home": {
     "recommended_title": "おすすめスキル",
     "recommended_subtitle": "チームの最近のリリースや頻繁に使用されるスキル",
-    "view_all": "すべてを見る →"
+    "view_all": "すべてを見る →",
+    "search_button": "検索",
+    "empty": "おすすめはありません",
+    "suggest_tags": ["コードレビュー", "公開プレイブック", "プロンプトエンジニアリング", "データ分析", "障害振り返り", "UIレビュー"]
   },
   "publish": {
     "eyebrow": "公開",

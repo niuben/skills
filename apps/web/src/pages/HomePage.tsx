@@ -5,13 +5,14 @@ import type { ArtifactRecord } from "../types";
 import { ArtifactCard } from "../components/ArtifactCard";
 import { useTranslation } from "react-i18next";
 
-const SUGGEST_TAGS = ["代码评审", "发布剧本", "Prompt 工程", "数据分析", "故障复盘", "UI 评审"];
+// Suggest tags moved to i18n
 
 export function HomePage() {
   const { t } = useTranslation();
   const nav = useNavigate();
   const [q, setQ] = useState("");
   const [recommended, setRecommended] = useState<ArtifactRecord[]>([]);
+  const SUGGEST_TAGS: string[] = t('home.suggest_tags', { returnObjects: true }) as string[];
 
   useEffect(() => {
     searchArtifacts({ limit: 6 }).then((r) => setRecommended(r.items));
@@ -42,18 +43,18 @@ export function HomePage() {
               onChange={(e) => setQ(e.target.value)}
               placeholder={t('hero.search_placeholder', 'Search skills, prompts, agents...')}
             />
-            <button type="submit">搜索</button>
+            <button type="submit">{t('home.search_button', 'Search')}</button>
           </form>
 
           <div className="hero-tags">
-            {SUGGEST_TAGS.map((t) => (
+            {SUGGEST_TAGS.map((tag) => (
               <button
-                key={t}
+                key={tag}
                 type="button"
                 className="hero-tag"
-                onClick={() => nav(`/explore?q=${encodeURIComponent(t)}`)}
+                onClick={() => nav(`/explore?q=${encodeURIComponent(tag)}`)}
               >
-                {t}
+                {tag}
               </button>
             ))}
           </div>
@@ -73,7 +74,7 @@ export function HomePage() {
           </div>
 
           {recommended.length === 0 ? (
-            <div className="empty">暂无推荐内容</div>
+            <div className="empty">{t('home.empty', 'No recommendations')}</div>
           ) : (
             <div className="cards">
               {recommended.map((a) => (

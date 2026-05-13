@@ -45,7 +45,10 @@
   "home": {
     "recommended_title": "推荐 Skills",
     "recommended_subtitle": "来自团队近期发布与高频使用的能力",
-    "view_all": "查看全部 →"
+    "view_all": "查看全部 →",
+    "search_button": "搜索",
+    "empty": "暂无推荐内容",
+    "suggest_tags": ["代码评审", "发布剧本", "Prompt 工程", "数据分析", "故障复盘", "UI 评审"]
   },
   "publish": {
     "eyebrow": "发布",
