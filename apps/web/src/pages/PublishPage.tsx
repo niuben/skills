@@ -226,7 +226,7 @@ export function PublishPage() {
           description: description.trim(),
           tags,
           readme: textPayload.trim() || undefined,
-          author: username ? { name: username } : undefined,
+          author_name: username ?? undefined,
         },
         payload,
         payloadName,

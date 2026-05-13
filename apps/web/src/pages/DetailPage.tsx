@@ -119,7 +119,7 @@ export function DetailPage() {
         <div className="aside-row">
           <span className="aside-label">作者</span>
           <span className="aside-value" style={{ fontFamily: "var(--font-sans)" }}>
-            {item.author?.name ?? "—"}
+            {item.author_name ?? "—"}
           </span>
         </div>
         <div className="aside-row">

@@ -2,11 +2,6 @@ import { z } from "zod";
 
 export const ArtifactKindSchema = z.enum(["skills", "prompt", "agent"]);
 
-export const ArtifactAuthorSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email().optional(),
-});
-
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 const NAME_RE = /^[a-z0-9][a-z0-9._-]*(?:\/[a-z0-9][a-z0-9._-]*)?$/;
 
@@ -17,7 +12,7 @@ export const ArtifactManifestSchema = z.object({
   description: z.string().max(500).optional(),
   readme: z.string().optional(),
   tags: z.array(z.string().min(1)).optional(),
-  author: ArtifactAuthorSchema.optional(),
+  author_name: z.string().min(1).optional(),
   license: z.string().optional(),
   entry: z.string().optional(),
   metadata: z.record(z.unknown()).optional(),

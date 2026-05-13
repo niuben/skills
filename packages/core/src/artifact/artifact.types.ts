@@ -50,8 +50,8 @@ export interface ArtifactManifest {
   readme?: string;
   /** Tags for search */
   tags?: string[];
-  /** Author info */
-  author?: ArtifactAuthor;
+  /** Author name */
+  author_name?: string;
   /** License identifier (SPDX) */
   license?: string;
   /** Entry file relative to the artifact root */

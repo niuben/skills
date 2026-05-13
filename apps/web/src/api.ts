@@ -17,7 +17,7 @@ export interface PublishArtifactInput {
     description?: string;
     readme?: string;
     tags?: string[];
-    author?: { name: string; email?: string };
+    author_name?: string;
   };
   payload: Blob;
   payloadName?: string;
@@ -48,10 +48,9 @@ export async function searchArtifacts(opts: {
   if (opts.limit != null) params.set("limit", String(opts.limit));
   const data = await safeFetch<SearchResult>(`/artifacts?${params}`);
   if (data) return data;
-  // fallback to mock data so UI still demos when server is offline
   const items = MOCK.filter((a) => {
     if (opts.kind && a.kind !== opts.kind) return false;
-    if (opts.username && (a.author?.name ?? "") !== opts.username) return false;
+    if (opts.username && (a.author_name ?? "") !== opts.username) return false;
     if (opts.text) {
       const t = opts.text.toLowerCase();
       if (
@@ -111,7 +110,7 @@ export const MOCK: ArtifactRecord[] = [
     description:
       "高质量 TypeScript / React 代码评审：聚焦正确性、可维护性、性能与安全。自动列出阻断项与建议项。",
     tags: ["code", "review", "typescript", "react"],
-    author: { name: "Platform Team" },
+    author_name: "Platform Team",
     license: "Apache-2.0",
     contentHash: "8e7c5b2a4d1f0a6b3c9e8d7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b",
     size: 24851,
@@ -125,7 +124,7 @@ export const MOCK: ArtifactRecord[] = [
     version: "0.4.1",
     description: "标准发布流程与回滚剧本：含发布前检查清单、灰度策略与紧急回滚步骤。",
     tags: ["release", "ops", "runbook"],
-    author: { name: "SRE" },
+    author_name: "SRE",
     contentHash: "1234abcd",
     size: 8123,
     storagePath: "skills/team/release-runbook/0.4.1.tgz",
@@ -138,7 +137,7 @@ export const MOCK: ArtifactRecord[] = [
     version: "1.0.0",
     description: "按 Claude 官网风格输出中文：先结论后步骤，结构化、克制、可执行。",
     tags: ["prompt", "writing", "claude", "zh"],
-    author: { name: "DX Guild" },
+    author_name: "DX Guild",
     contentHash: "abcd1234",
     size: 2381,
     storagePath: "prompt/writing/zh-claude-style/1.0.0.tgz",
@@ -151,7 +150,7 @@ export const MOCK: ArtifactRecord[] = [
     version: "0.2.0",
     description: "把复杂 SQL 翻译成中文步骤说明，支持给出执行计划要点与潜在性能风险。",
     tags: ["agent", "sql", "data"],
-    author: { name: "Data Platform" },
+    author_name: "Data Platform",
     contentHash: "9999aaaa",
     size: 15422,
     storagePath: "agent/data/sql-explainer/0.2.0.tgz",
@@ -164,7 +163,7 @@ export const MOCK: ArtifactRecord[] = [
     version: "0.9.0",
     description: "UI 评审清单：信息架构、对比度、可达性、动效节奏与品牌一致性。",
     tags: ["design", "ui", "a11y"],
-    author: { name: "Design Ops" },
+    author_name: "Design Ops",
     contentHash: "ddddeeee",
     size: 6781,
     storagePath: "skills/design/ui-review/0.9.0.tgz",
@@ -177,7 +176,7 @@ export const MOCK: ArtifactRecord[] = [
     version: "1.1.0",
     description: "故障复盘模板：时间线、影响面、根因、改进项与负责人。",
     tags: ["incident", "ops", "template"],
-    author: { name: "SRE" },
+    author_name: "SRE",
     contentHash: "ffffgggg",
     size: 3122,
     storagePath: "prompt/eng/incident-postmortem/1.1.0.tgz",
