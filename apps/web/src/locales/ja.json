@@ -1,11 +1,40 @@
 {
   "nav": {
     "home": "ホーム",
-    "artifacts": "アーティファクト",
+    "artifacts": "Skills",
     "my": "マイ公開",
     "publish": "公開",
     "about": "概要",
     "logout": "ログアウト"
+  },
+  "list": {
+    "section": {
+      "kind": "種類",
+      "tag": "タグ"
+    },
+    "kind": {
+      "all": "すべて",
+      "skills": "Skills",
+      "prompt": "Prompts",
+      "agent": "Agents"
+    },
+    "tag": {
+      "all": "すべてのタグ",
+      "code": "コード",
+      "review": "レビュー",
+      "ops": "運用",
+      "design": "デザイン",
+      "data": "データ",
+      "writing": "ライティング"
+    },
+    "search": {
+      "placeholder": "名前、説明、タグで検索..."
+    },
+    "status": {
+      "loading": "読み込み中...",
+      "count": "{{total}} 件の結果",
+      "empty": "一致する結果がありません。別のキーワードをお試しください"
+    }
   },
   "hero": {
     "eyebrow": "発見",

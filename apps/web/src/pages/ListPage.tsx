@@ -1,26 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { searchArtifacts } from "../api";
 import type { ArtifactKind, ArtifactRecord } from "../types";
 import { ArtifactCard } from "../components/ArtifactCard";
 
-const KINDS: { key: ArtifactKind | "all"; label: string }[] = [
-  { key: "all", label: "全部" },
-  { key: "skills", label: "Skills" },
-  { key: "prompt", label: "Prompts" },
-  { key: "agent", label: "Agents" },
+const KINDS: { key: ArtifactKind | "all"; labelKey: string }[] = [
+  { key: "all", labelKey: "list.kind.all" },
+  { key: "skills", labelKey: "list.kind.skills" },
+  { key: "prompt", labelKey: "list.kind.prompt" },
+  { key: "agent", labelKey: "list.kind.agent" },
 ];
 
-const TAG_GROUPS: { key: string; label: string }[] = [
-  { key: "code", label: "代码" },
-  { key: "review", label: "评审" },
-  { key: "ops", label: "运维" },
-  { key: "design", label: "设计" },
-  { key: "data", label: "数据" },
-  { key: "writing", label: "写作" },
+const TAG_GROUPS: { key: string; labelKey: string }[] = [
+  { key: "code", labelKey: "list.tag.code" },
+  { key: "review", labelKey: "list.tag.review" },
+  { key: "ops", labelKey: "list.tag.ops" },
+  { key: "design", labelKey: "list.tag.design" },
+  { key: "data", labelKey: "list.tag.data" },
+  { key: "writing", labelKey: "list.tag.writing" },
 ];
 
 export function ListPage() {
+  const { t } = useTranslation();
   const [params, setParams] = useSearchParams();
   const initialKind = (params.get("kind") as ArtifactKind | null) ?? "all";
   const initialQ = params.get("q") ?? "";
@@ -58,32 +60,32 @@ export function ListPage() {
     <div className="container list-layout">
       <aside className="sidebar">
         <div className="sidebar-group">
-          <h4>类型</h4>
+          <h4>{t("list.section.kind")}</h4>
           {KINDS.map((k) => (
             <div
               key={k.key}
               className={"sidebar-item" + (kind === k.key ? " active" : "")}
               onClick={() => setKind(k.key)}
             >
-              <span>{k.label}</span>
+              <span>{t(k.labelKey)}</span>
             </div>
           ))}
         </div>
         <div className="sidebar-group">
-          <h4>标签</h4>
+          <h4>{t("list.section.tag")}</h4>
           <div
             className={"sidebar-item" + (tag === "" ? " active" : "")}
             onClick={() => setTag("")}
           >
-            <span>所有标签</span>
+            <span>{t("list.tag.all")}</span>
           </div>
-          {TAG_GROUPS.map((t) => (
+          {TAG_GROUPS.map((tagItem) => (
             <div
-              key={t.key}
-              className={"sidebar-item" + (tag === t.key ? " active" : "")}
-              onClick={() => setTag(t.key)}
+              key={tagItem.key}
+              className={"sidebar-item" + (tag === tagItem.key ? " active" : "")}
+              onClick={() => setTag(tagItem.key)}
             >
-              <span>#{t.label}</span>
+              <span>#{t(tagItem.labelKey)}</span>
             </div>
           ))}
         </div>
@@ -96,16 +98,16 @@ export function ListPage() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="搜索名称、描述、标签…"
+              placeholder={t("list.search.placeholder")}
             />
           </div>
           <span className="list-count">
-            {loading ? "加载中…" : `共 ${counts.total} 个结果`}
+            {loading ? t("list.status.loading") : t("list.status.count", { total: counts.total })}
           </span>
         </div>
 
         {items.length === 0 && !loading ? (
-          <div className="empty">没有匹配的结果，换个关键字试试</div>
+          <div className="empty">{t("list.status.empty")}</div>
         ) : (
           <div className="cards">
             {items.map((a) => (

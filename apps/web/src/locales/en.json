@@ -1,11 +1,40 @@
 {
   "nav": {
     "home": "Home",
-    "artifacts": "Artifacts",
+    "artifacts": "Skills",
     "my": "My uploads",
     "publish": "Publish",
     "about": "About",
     "logout": "Logout"
+  },
+  "list": {
+    "section": {
+      "kind": "Type",
+      "tag": "Tags"
+    },
+    "kind": {
+      "all": "All",
+      "skills": "Skills",
+      "prompt": "Prompts",
+      "agent": "Agents"
+    },
+    "tag": {
+      "all": "All tags",
+      "code": "Code",
+      "review": "Review",
+      "ops": "Ops",
+      "design": "Design",
+      "data": "Data",
+      "writing": "Writing"
+    },
+    "search": {
+      "placeholder": "Search name, description, tags..."
+    },
+    "status": {
+      "loading": "Loading...",
+      "count": "{{total}} results",
+      "empty": "No matching results, try another keyword"
+    }
   },
   "hero": {
     "eyebrow": "Explore",

@@ -1,11 +1,40 @@
 {
   "nav": {
     "home": "首页",
-    "artifacts": "资源",
+    "artifacts": "Skills",
     "my": "我的发布",
     "publish": "发布",
     "about": "关于",
     "logout": "退出登录"
+  },
+  "list": {
+    "section": {
+      "kind": "类型",
+      "tag": "标签"
+    },
+    "kind": {
+      "all": "全部",
+      "skills": "Skills",
+      "prompt": "Prompts",
+      "agent": "Agents"
+    },
+    "tag": {
+      "all": "所有标签",
+      "code": "代码",
+      "review": "评审",
+      "ops": "运维",
+      "design": "设计",
+      "data": "数据",
+      "writing": "写作"
+    },
+    "search": {
+      "placeholder": "搜索名称、描述、标签..."
+    },
+    "status": {
+      "loading": "加载中...",
+      "count": "共 {{total}} 个结果",
+      "empty": "没有匹配的结果，换个关键字试试"
+    }
   },
   "hero": {
     "eyebrow": "发现",
