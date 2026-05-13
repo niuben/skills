@@ -8,7 +8,7 @@ export interface ArtifactRecord {
   description?: string;
   readme?: string;
   tags?: string[];
-  author?: { name: string; email?: string };
+  author_name?: string;
   license?: string;
   entry?: string;
   metadata?: Record<string, unknown>;

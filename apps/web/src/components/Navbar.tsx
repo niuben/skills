@@ -5,6 +5,7 @@ export function Navbar() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null;
 
   const handleLogin = () => navigate('/login');
   const handleLogout = () => {
@@ -45,9 +46,16 @@ export function Navbar() {
         </nav>
         <div className="nav-spacer" />
         {token ? (
-          <button className="nav-cta" type="button" onClick={handleLogout}>
-            {t('nav.logout')}
-          </button>
+          <div className="nav-account">
+            {username ? (
+              <NavLink to="/me" className="nav-username" title={username}>
+                {username}
+              </NavLink>
+            ) : null}
+            <button className="nav-cta" type="button" onClick={handleLogout}>
+              {t('nav.logout')}
+            </button>
+          </div>
         ) : (
           <button className="nav-cta" type="button" onClick={handleLogin}>
             {t('login.submit')}

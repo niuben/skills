@@ -1,9 +1,10 @@
+import { useTranslation } from 'react-i18next';
+
 export function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="footer">
-      <div className="container">
-        Skills Hub · 企业内部 Skills / Prompts / Agents 制品中心
-      </div>
+      <div className="container">{t('footer')}</div>
     </footer>
   );
 }
