@@ -1149,13 +1149,41 @@ button {
     padding: 0 18px;
   }
 
-  .nav-inner,
   .list-toolbar,
   .upload-head,
   .text-upload-head,
   .publish-file-list-head {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .nav-inner {
+    height: 56px;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .brand {
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .brand span:last-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-spacer {
+    display: none;
+  }
+
+  .nav-cta {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 13px;
   }
 
   .nav-links {

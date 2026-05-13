@@ -46,7 +46,7 @@ export function Navbar() {
         <div className="nav-spacer" />
         {token ? (
           <button className="nav-cta" type="button" onClick={handleLogout}>
-            {t('admin.logout')}
+            {t('nav.logout')}
           </button>
         ) : (
           <button className="nav-cta" type="button" onClick={handleLogin}>
