@@ -1,104 +1,186 @@
-# skillos
+# Skills Hub
 
-Enterprise-grade artifact management for **Skills**, **Prompts**, and **Agents**.
+![Skills Hub icon](apps/web/public/favicon.svg)
 
-A pnpm monorepo with a clean **layered architecture**:
+Skills Hub is an artifact platform for **skills**, **prompts**, and **agents**.
+This repository is a pnpm monorepo that includes a registry server, a CLI, a web UI, and an admin UI.
 
+> [!NOTE]
+> Current artifact schema uses `kind: skills | prompt | agent` and `author_name`.
+
+## What You Can Do
+
+- Publish artifacts to a local or remote registry
+- Search, list, install, and sync artifacts from CLI
+- Browse and publish from web UI
+- Manage approvals, users, and settings from admin UI
+- Persist metadata in SQLite and payloads on local filesystem
+
+## Monorepo Structure
+
+```text
+apps/
+  cli/      CLI entrypoint and commands
+  server/   Fastify API server
+  web/      User-facing React app (Vite)
+  admin/    Admin React app (Vite)
+
+packages/
+  core/            Domain types, validators, factories
+  storage/         SQLite + file storage adapters
+  services/        Publish/search/install/sync/login services
+  registry-client/ HTTP client for registry APIs
+  config/          Config loading and defaults
+  loader/          Artifact loader and packaging
+  handlers/        Builtin artifact handlers
+  utils/           Logger/fs/hash helpers
 ```
-apps/      — entry points (CLI, registry server, future web UI)
-packages/  — reusable building blocks
-  core/           Domain models (Artifact / Skill / Prompt) — the most stable layer
-  storage/        File + SQLite storage with a unified Repository facade
-  services/       Business orchestration (publish, install, sync, search)
-  registry-client/ HTTP client for talking to a remote registry
-  config/         Configuration loading
-  utils/          Shared helpers (logger, fs, hashing)
-runtime/   — future per-host runtimes (node / browser)
-plugins/   — future adapter extension points
-storage/   — local data directory at runtime (artifacts, db, config)
-```
 
-## Quick start
+## Requirements
+
+- Node.js 18+
+- pnpm 9+
+
+## Quick Start
 
 ```bash
-# Install deps
 pnpm install
 
-# Start the local registry server
+# start server (non-watch)
 pnpm server
 
-# In another terminal, publish an artifact
-pnpm cli publish --manifest ./my-skill/manifest.json --payload ./my-skill.tgz
+# start web
+pnpm web
 
-# List local artifacts
-pnpm cli list
-
-# Install an artifact by id
-pnpm cli install skill:team/code-review@1.0.0
-
-# Sync from the configured remote registry
-pnpm cli sync
+# start admin
+pnpm admin
 ```
 
-## Manifest example (`manifest.json`)
+For full workspace development:
+
+```bash
+pnpm dev
+```
+
+Build all packages and apps:
+
+```bash
+pnpm build
+```
+
+## Runtime Data and Config
+
+Default data directory:
+
+- `~/.skillos`
+
+Key files:
+
+- `~/.skillos/config.json`
+- `~/.skillos/db.sqlite`
+- `~/.skillos/artifacts/`
+
+Override data directory with environment variable:
+
+```bash
+export SKILLOS_HOME=/custom/path
+```
+
+## Core Artifact Manifest
 
 ```json
 {
-  "kind": "skill",
+  "kind": "skills",
   "name": "team/code-review",
   "version": "1.0.0",
   "description": "Reviews TypeScript pull requests",
   "tags": ["code", "review", "typescript"],
-  "author": { "name": "Platform Team", "email": "platform@example.com" },
+  "author_name": "Platform Team",
   "license": "Apache-2.0",
   "entry": "SKILL.md",
   "metadata": {
-    "capabilities": ["code-review"],
     "runtime": "any"
   }
 }
 ```
 
-Supported `kind` values: `skill`, `prompt`, `agent`.
+Valid `kind` values:
 
-## Configuration
+- `skills`
+- `prompt`
+- `agent`
 
-Default location: `~/.skillos/config.json` (override with `SKILLOS_HOME`).
-Auto-created on first run with sensible defaults; edit to add registries:
+## CLI Usage
 
-```json
-{
-  "registries": [
-    { "name": "default",  "url": "http://127.0.0.1:7421" },
-    { "name": "internal", "url": "https://skillos.corp.local", "token": "..." }
-  ],
-  "defaultRegistry": "internal"
-}
+Run via root script:
+
+```bash
+pnpm cli --help
 ```
 
-## HTTP API (server)
+Common commands:
 
-| Method | Path                                          | Description                  |
-| ------ | --------------------------------------------- | ---------------------------- |
-| GET    | `/healthz`                                    | Health check                 |
-| GET    | `/api/artifacts?kind=&q=&limit=&offset=`      | List / search artifacts      |
-| GET    | `/api/artifacts/:id`                          | Get artifact metadata        |
-| GET    | `/api/artifacts/:id/download`                 | Download artifact payload    |
-| GET    | `/api/artifacts/:kind/:name/versions`         | List all versions of a name  |
-| POST   | `/api/artifacts`                              | Publish (multipart)          |
+```bash
+# login and save token to default registry config
+pnpm cli login
 
-## Architecture notes
+# publish from source directory (auto detect + pack)
+pnpm cli publish --source ./my-skill
 
-- **`packages/core`** has zero dependencies on storage or HTTP — it only defines
-  domain types and validators (with `zod`). Everything else depends on it.
-- **`packages/storage`** owns persistence; consumers interact through
-  `ArtifactRepository` (the unified entry point).
-- **`packages/services`** composes `core` + `storage` (+ optional
-  `registry-client`) into use-cases. CLI and server depend only on services.
-- **`apps/*`** are thin: they wire dependencies and expose them
-  (CLI commands / HTTP routes).
+# publish in legacy mode (manifest + payload)
+pnpm cli publish --manifest ./manifest.json --payload ./artifact.tgz
 
-## Requirements
+# list local artifacts
+pnpm cli list --limit 50
 
-- Node.js >= 18
-- pnpm >= 9
+# install by full id
+pnpm cli install skills:team/code-review@1.0.0
+
+# install by name (default kind is skills)
+pnpm cli install team/code-review --kind skills
+
+# sync from configured remote registry
+pnpm cli sync
+```
+
+## HTTP API
+
+Base URL defaults to `http://127.0.0.1:7421`.
+
+### Public APIs
+
+- `GET /healthz`
+- `GET /api/artifacts?kind=&q=&limit=&offset=`
+- `GET /api/artifacts?username=&limit=`
+- `GET /api/artifacts/:id`
+- `GET /api/artifacts/:id/download`
+- `GET /api/artifacts/:kind/:name/versions`
+- `POST /api/artifacts` (multipart: `manifest` + `payload`)
+- `POST /api/auth/login`
+
+### Admin APIs (JWT admin)
+
+- `GET /api/admin/dashboard`
+- `GET /api/admin/artifacts`
+- `PATCH /api/admin/artifacts/:id/approval`
+- `GET /api/admin/users`
+- `POST /api/admin/users`
+- `PATCH /api/admin/users/:id/disable`
+- `POST /api/admin/users/:id/reset-password`
+- `GET /api/admin/settings`
+- `PUT /api/admin/settings`
+- `POST /api/admin/settings/logo`
+
+## Architecture Notes
+
+- `packages/core` is the type and validation boundary.
+- `packages/storage` owns all persistence and repository queries.
+- `packages/services` orchestrates use cases and keeps apps thin.
+- `apps/server` wires routes and dependencies.
+- `apps/cli`, `apps/web`, and `apps/admin` consume the service and API layers.
+
+## Security and Dev Defaults
+
+> [!WARNING]
+> If `SKILLOS_JWT_SECRET` is not set, server uses a development secret.
+> Set this env var in production environments.
