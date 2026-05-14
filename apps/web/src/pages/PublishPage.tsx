@@ -245,7 +245,11 @@ export function PublishPage() {
     try {
       setIsSubmitting(true);
       setStatus(t('publish.status.submitting'));
-      const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null;
+      const username = (typeof window !== 'undefined' ? localStorage.getItem('username') : null)?.trim();
+      if (!username) {
+        setStatus(t('publish.error.login_required', '请先登录后再发布'));
+        return;
+      }
       const record = await publishArtifact({
         manifest: {
           kind,
@@ -254,7 +258,7 @@ export function PublishPage() {
           description: description.trim(),
           tags,
           readme: textPayload.trim() || undefined,
-          author_name: username ?? undefined,
+          author_name: username,
         },
         payload,
         payloadName,

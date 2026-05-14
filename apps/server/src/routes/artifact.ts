@@ -87,7 +87,19 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
     for await (const part of parts) {
       if (part.type === "field" && part.fieldname === "manifest") {
         try {
-          manifest = validateManifest(JSON.parse(String(part.value))) as ArtifactManifest;
+          const raw = JSON.parse(String(part.value)) as {
+            author_name?: unknown;
+            author?: { name?: unknown };
+          };
+          if (
+            (!raw.author_name || typeof raw.author_name !== "string") &&
+            raw.author &&
+            typeof raw.author.name === "string" &&
+            raw.author.name.trim()
+          ) {
+            raw.author_name = raw.author.name.trim();
+          }
+          manifest = validateManifest(raw) as ArtifactManifest;
         } catch (err) {
           return reply.code(400).send({ error: "invalid_manifest", message: (err as Error).message });
         }

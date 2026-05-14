@@ -47,6 +47,23 @@ interface Row {
 }
 
 function rowToRecord(r: Row): ArtifactRecord {
+  let metadataObj: Record<string, unknown> | undefined;
+  if (r.metadata) {
+    try {
+      metadataObj = JSON.parse(r.metadata) as Record<string, unknown>;
+    } catch {
+      metadataObj = undefined;
+    }
+  }
+
+  const fallbackAuthorFromMetadata =
+    metadataObj &&
+    typeof metadataObj.author === "object" &&
+    metadataObj.author !== null &&
+    typeof (metadataObj.author as Record<string, unknown>).name === "string"
+      ? ((metadataObj.author as Record<string, unknown>).name as string)
+      : undefined;
+
   return {
     id: r.id,
     kind: r.kind as ArtifactKind,
@@ -55,10 +72,10 @@ function rowToRecord(r: Row): ArtifactRecord {
     description: r.description ?? undefined,
     readme: r.readme ?? undefined,
     tags: r.tags ? (JSON.parse(r.tags) as string[]) : undefined,
-    author_name: r.author_name ?? undefined,
+    author_name: r.author_name ?? fallbackAuthorFromMetadata ?? undefined,
     license: r.license ?? undefined,
     entry: r.entry ?? undefined,
-    metadata: r.metadata ? (JSON.parse(r.metadata) as Record<string, unknown>) : undefined,
+    metadata: metadataObj,
     contentHash: r.content_hash,
     size: r.size,
     storagePath: r.storage_path,

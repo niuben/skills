@@ -19,9 +19,15 @@ export class PublishService {
   constructor(private readonly deps: PublishServiceDeps) {}
 
   async publish(input: ArtifactPublishInput): Promise<ArtifactRecord> {
-    const storagePath = this.deps.resolver.buildStoragePath(input.manifest);
+    const legacyAuthor = (input.manifest as unknown as { author?: { name?: string } }).author?.name;
+    const normalizedManifest = {
+      ...input.manifest,
+      author_name: input.manifest.author_name ?? legacyAuthor,
+    };
 
-    const record = createArtifactRecord(input, { storagePath });
+    const storagePath = this.deps.resolver.buildStoragePath(normalizedManifest);
+
+    const record = createArtifactRecord({ ...input, manifest: normalizedManifest }, { storagePath });
     record.approvalStatus = this.deps.getDefaultApprovalStatus?.() ?? "approved";
     this.log.info(`publishing ${record.id} (${record.size} bytes)`);
 
