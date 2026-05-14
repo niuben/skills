@@ -1,0 +1,8 @@
+# Example agent manifest for CLI publish test
+name: test-agent
+version: 0.1.0
+description: Example agent for CLI upload/download test
+model: gpt-4
+systemPrompt: |
+  You are a helpful assistant.
+tools: [search, code]

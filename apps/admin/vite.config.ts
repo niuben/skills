@@ -6,15 +6,15 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5174,
-    // proxy: {
-    //   "/api": {
-    //     target: "http://127.0.0.1:7421",
-    //     changeOrigin: true,
-    //   },
-    //   "/login": {
-    //     target: "http://127.0.0.1:7421",
-    //     changeOrigin: true,
-    //   },
-    // },
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:7421",
+        changeOrigin: true,
+      },
+      "/login": {
+        target: "http://127.0.0.1:7421",
+        changeOrigin: true,
+      },
+    },
   },
 });
