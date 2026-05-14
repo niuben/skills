@@ -81,9 +81,10 @@ export function PublishPage() {
       const clipboardData = event.clipboardData;
       if (!clipboardData) return;
 
+      // Collect files from clipboard (some browsers expose them via items)
       const fromFiles = Array.from(clipboardData.files || []);
       const fromItems = Array.from(clipboardData.items || [])
-        .filter((item) => item.kind === "file")
+        .filter((item) => item.kind === "file" || (item.type && item.getAsFile))
         .map((item) => item.getAsFile())
         .filter((file): file is File => Boolean(file));
 
@@ -95,16 +96,39 @@ export function PublishPage() {
         if (!duplicated) mergedFiles.push(file);
       }
 
-      if (!mergedFiles.length) return;
+      if (mergedFiles.length) {
+        event.preventDefault();
+        appendFiles(createEntriesFromFiles(mergedFiles, "clipboard"));
+        setStatus(t("publish.status.clipboard_imported"));
+        return;
+      }
 
-      event.preventDefault();
-      appendFiles(createEntriesFromFiles(mergedFiles, "clipboard"));
-      setStatus(t("publish.status.clipboard_imported"));
+      // Fallback: if clipboard has textual content, allow quick-paste as a text file
+      const text = clipboardData.getData("text");
+      if (text && text.trim()) {
+        event.preventDefault();
+        appendFiles([
+          {
+            id: `clipboard-text-${Date.now()}`,
+            name: slugifyName(name || "clipboard"),
+            sizeLabel: formatBytes(new Blob([text]).size),
+            source: "clipboard",
+            kind: "text",
+            preview: text.slice(0, 120),
+            file: undefined,
+          },
+        ]);
+        setStatus(t("publish.status.clipboard_imported"));
+        return;
+      }
+
+      setStatus(t("publish.status.clipboard_empty"));
     }
 
     // Prevent browser from opening dropped files outside the dropzone.
     function blockWindowFileDrop(event: DragEvent) {
-      if (!event.dataTransfer?.types?.includes("Files")) return;
+      const types = Array.from(event.dataTransfer?.types || []);
+      if (!types.includes("Files")) return;
       event.preventDefault();
     }
 
@@ -154,8 +178,12 @@ export function PublishPage() {
     event.preventDefault();
     dragDepthRef.current = 0;
     setIsDragging(false);
-    if (!event.dataTransfer.files?.length) return;
-    appendFiles(createEntriesFromFileList(event.dataTransfer.files, "drop"));
+    const filesList = event.dataTransfer?.files;
+    if (!filesList || !filesList.length) {
+      setStatus(t('publish.status.clipboard_empty'));
+      return;
+    }
+    appendFiles(createEntriesFromFileList(filesList, "drop"));
     setStatus(t('publish.status.dropped'));
   }
 
