@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" role="img" aria-label="Ding logo without text">
+  <defs>
+    <linearGradient id="dingDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#162534" />
+      <stop offset="100%" stop-color="#0f1c28" />
+    </linearGradient>
+    <clipPath id="dingBodyClip">
+      <path d="M216 270 H552 L536 400 Q532 435 500 446 L268 446 Q236 435 232 400 Z" />
+    </clipPath>
+  </defs>
+
+  <!-- Ears -->
+  <path d="M214 208 H246 Q264 208 264 226 V245 H246 Q232 245 232 260 V270 H214 Q206 270 206 262 V216 Q206 208 214 208 Z" fill="url(#dingDark)" />
+  <path d="M554 208 H522 Q504 208 504 226 V245 H522 Q536 245 536 260 V270 H554 Q562 270 562 262 V216 Q562 208 554 208 Z" fill="url(#dingDark)" />
+
+  <!-- Rim -->
+  <rect x="232" y="246" width="304" height="24" rx="4" fill="url(#dingDark)" />
+
+  <!-- Body -->
+  <path d="M216 270 H552 L536 400 Q532 435 500 446 L268 446 Q236 435 232 400 Z" fill="url(#dingDark)" />
+
+  <!-- Center S motif -->
+    <path d="M384 286
+           C422 286 455 304 467 334
+           C471 344 456 347 448 340
+           C435 328 413 320 386 320
+           C347 320 332 333 332 351
+           C332 373 355 381 392 390
+           C442 402 468 420 468 454
+           C468 491 435 517 384 517
+           C341 517 307 500 293 470
+           C288 460 303 456 312 463
+           C327 475 350 484 382 484
+           C414 484 431 472 431 454
+           C431 433 407 426 372 417
+           C324 405 296 388 296 352
+           C296 314 330 286 384 286 Z"
+      fill="#ffffff" clip-path="url(#dingBodyClip)"
+      transform="translate(384 402) scale(0.8) translate(-384 -402)" />
+
+  <!-- Side geometric motifs -->
+  <g clip-path="url(#dingBodyClip)">
+    <path d="M252 316 H332 V336 H280 V352 H316 V372 H280 V388 H332 V410 H252 Z" fill="#ffffff" />
+    <path d="M516 316 H436 V336 H488 V352 H452 V372 H488 V388 H436 V410 H516 Z" fill="#ffffff" />
+  </g>
+
+  <!-- Legs -->
+  <path d="M260 456 H316 C300 490 296 531 300 560 H242 C248 529 252 494 260 456 Z" fill="url(#dingDark)" />
+  <path d="M452 456 H508 C516 494 520 529 526 560 H468 C472 531 468 490 452 456 Z" fill="url(#dingDark)" />
+  <path d="M354 446 H414 C402 482 400 523 406 560 H362 C368 523 366 482 354 446 Z" fill="url(#dingDark)" />
+</svg>
