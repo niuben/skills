@@ -1,9 +1,14 @@
 # Skills Hub
-
-![Skills Hub icon](apps/web/public/favicon.svg)
-
 Skills Hub is an artifact platform for **skills**, **prompts**, and **agents**.
 This repository is a pnpm monorepo that includes a registry server, a CLI, a web UI, and an admin UI.
+
+## Visual Preview
+
+![Current Home Page](apps/web/src/assets/index.png)
+
+![Brand Style Concept](apps/web/src/assets/login.png)
+
+![Ding Logo Without Text](apps/web/src/assets/ding-logo-no-text.svg)
 
 > [!NOTE]
 > Current artifact schema uses `kind: skills | prompt | agent` and `author_name`.
