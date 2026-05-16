@@ -14,6 +14,7 @@ export interface PublishRequest {
 export interface SearchQuery {
   kind?: ArtifactKind;
   text?: string;
+  username?: string;
   limit?: number;
   offset?: number;
 }

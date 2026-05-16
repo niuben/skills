@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getArtifact } from "../api";
+import { downloadArtifactPayload, getArtifact } from "../api";
 import type { ArtifactRecord } from "../types";
 
 function formatBytes(n: number): string {
@@ -13,6 +13,7 @@ export function DetailPage() {
   const { id = "" } = useParams();
   const [item, setItem] = useState<ArtifactRecord | null>(null);
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -38,6 +39,25 @@ export function DetailPage() {
   }
 
   const installCmd = `skillos install ${item.id}`;
+
+  async function handleDownload(): Promise<void> {
+    if (!item || downloading) return;
+    setDownloading(true);
+    try {
+      const blob = await downloadArtifactPayload(item.id);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${item.name.replace(/[\\/:*?"<>|]+/g, "-")}-${item.version}.tgz`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      setItem((prev) => (prev ? { ...prev, downloadCount: (prev.downloadCount ?? 0) + 1 } : prev));
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   return (
     <div className="container detail">
@@ -104,8 +124,8 @@ export function DetailPage() {
         <button className="btn btn-primary" type="button">
           安装到本地
         </button>
-        <button className="btn" type="button">
-          下载源包
+        <button className="btn" type="button" onClick={handleDownload} disabled={downloading}>
+          {downloading ? "下载中..." : "下载源包"}
         </button>
 
         <div className="aside-row">
@@ -132,6 +152,12 @@ export function DetailPage() {
           <span className="aside-label">大小</span>
           <span className="aside-value" style={{ fontFamily: "var(--font-sans)" }}>
             {formatBytes(item.size)}
+          </span>
+        </div>
+        <div className="aside-row">
+          <span className="aside-label">下载量</span>
+          <span className="aside-value" style={{ fontFamily: "var(--font-sans)" }}>
+            {(item.downloadCount ?? 0).toLocaleString()}
           </span>
         </div>
         <div className="aside-row">

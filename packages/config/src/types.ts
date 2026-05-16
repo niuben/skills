@@ -5,6 +5,8 @@ export interface RegistryConfig {
   url: string;
   /** Optional auth token */
   token?: string;
+  /** Optional username associated with the auth token */
+  username?: string;
 }
 
 export interface StorageConfig {

@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS artifacts (
   size          INTEGER NOT NULL,
   storage_path  TEXT NOT NULL,
   published_at  TEXT NOT NULL,
+  download_count INTEGER NOT NULL DEFAULT 0,
   approval_status TEXT NOT NULL DEFAULT 'approved',
   UNIQUE(kind, name)
 );
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS artifact_versions (
   size          INTEGER NOT NULL,
   storage_path  TEXT NOT NULL,
   published_at  TEXT NOT NULL,
+  download_count INTEGER NOT NULL DEFAULT 0,
   approval_status TEXT NOT NULL DEFAULT 'approved',
 
   UNIQUE(kind, name, version)

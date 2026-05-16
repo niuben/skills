@@ -16,6 +16,7 @@ export interface ArtifactQuery {
 export interface ArtifactRepository {
   save(record: ArtifactRecord): void;
   findById(id: string): ArtifactRecord | null;
+  incrementDownloadCount(id: string): ArtifactRecord | null;
   findLatest(kind: ArtifactKind, name: string): ArtifactRecord | null;
   findVersions(kind: ArtifactKind, name: string): ArtifactRecord[];
   list(query?: ArtifactQuery): ArtifactRecord[];
@@ -43,6 +44,7 @@ interface Row {
   size: number;
   storage_path: string;
   published_at: string;
+  download_count: number;
   approval_status?: string | null;
 }
 
@@ -80,6 +82,7 @@ function rowToRecord(r: Row): ArtifactRecord {
     size: r.size,
     storagePath: r.storage_path,
     publishedAt: r.published_at,
+    downloadCount: r.download_count ?? 0,
     approvalStatus: (r.approval_status ?? "approved") as ArtifactRecord["approvalStatus"],
   };
 }
@@ -89,11 +92,11 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
     INSERT INTO artifact_versions
       (id, kind, name, version, description, readme, tags,
        author_name, author_email, license, entry, metadata,
-       content_hash, size, storage_path, published_at, approval_status)
+       content_hash, size, storage_path, published_at, download_count, approval_status)
     VALUES
       (@id, @kind, @name, @version, @description, @readme, @tags,
        @author_name, @author_email, @license, @entry, @metadata,
-       @content_hash, @size, @storage_path, @published_at, @approval_status)
+       @content_hash, @size, @storage_path, @published_at, @download_count, @approval_status)
     ON CONFLICT(id) DO UPDATE SET
        description = excluded.description,
        readme      = excluded.readme,
@@ -107,6 +110,7 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
        size        = excluded.size,
        storage_path= excluded.storage_path,
        published_at= excluded.published_at,
+       download_count = excluded.download_count,
        approval_status = excluded.approval_status
   `);
 
@@ -114,11 +118,11 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
     INSERT INTO artifacts
       (id, kind, name, version, description, readme, tags,
        author_name, author_email, license, entry, metadata,
-       content_hash, size, storage_path, published_at, approval_status)
+       content_hash, size, storage_path, published_at, download_count, approval_status)
     VALUES
       (@id, @kind, @name, @version, @description, @readme, @tags,
        @author_name, @author_email, @license, @entry, @metadata,
-       @content_hash, @size, @storage_path, @published_at, @approval_status)
+       @content_hash, @size, @storage_path, @published_at, @download_count, @approval_status)
     ON CONFLICT(kind, name) DO UPDATE SET
        id          = excluded.id,
        version     = excluded.version,
@@ -134,6 +138,7 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
        size        = excluded.size,
        storage_path= excluded.storage_path,
        published_at= excluded.published_at,
+        download_count = excluded.download_count,
        approval_status = excluded.approval_status
   `);
 
@@ -149,6 +154,12 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
   );
   const updateLatestApproval = db.prepare<[string, string]>(
     `UPDATE artifacts SET approval_status = ? WHERE id = ?`
+  );
+  const incrementVersionDownload = db.prepare<[string]>(
+    `UPDATE artifact_versions SET download_count = download_count + 1 WHERE id = ?`
+  );
+  const incrementLatestDownload = db.prepare<[string]>(
+    `UPDATE artifacts SET download_count = download_count + 1 WHERE id = ?`
   );
 
   const save = db.transaction((record: ArtifactRecord) => {
@@ -190,6 +201,15 @@ export function createArtifactRepository(db: DB): ArtifactRepository {
     findById(id) {
       const row = selectById.get(id) as Row | undefined;
       return row ? rowToRecord(row) : null;
+    },
+
+    incrementDownloadCount(id) {
+      const current = selectById.get(id) as Row | undefined;
+      if (!current) return null;
+      incrementVersionDownload.run(id);
+      incrementLatestDownload.run(id);
+      const updated = selectById.get(id) as Row | undefined;
+      return updated ? rowToRecord(updated) : null;
     },
 
     findLatest(kind, name) {
@@ -294,6 +314,7 @@ function toRow(record: ArtifactRecord): Record<string, unknown> {
     size: record.size,
     storage_path: record.storagePath,
     published_at: record.publishedAt,
+    download_count: record.downloadCount ?? 0,
     approval_status: record.approvalStatus ?? "approved",
   };
 }

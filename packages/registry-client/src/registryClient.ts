@@ -36,6 +36,7 @@ export class RegistryClient {
     const params = new URLSearchParams();
     if (query.kind) params.set("kind", query.kind);
     if (query.text) params.set("q", query.text);
+    if (query.username) params.set("username", query.username);
     if (query.limit != null) params.set("limit", String(query.limit));
     if (query.offset != null) params.set("offset", String(query.offset));
     const res = await this.fetchImpl(this.url(`/api/artifacts?${params}`), {

@@ -16,6 +16,7 @@ export interface ArtifactRecord {
   size: number;
   storagePath: string;
   publishedAt: string;
+  downloadCount?: number;
 }
 
 export interface SearchResult {

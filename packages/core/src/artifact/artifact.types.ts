@@ -73,6 +73,8 @@ export interface ArtifactRecord extends ArtifactManifest {
   storagePath: string;
   /** Review status used by the admin system */
   approvalStatus?: "approved" | "pending" | "rejected";
+  /** Download count for this artifact version */
+  downloadCount?: number;
 }
 
 export interface ArtifactPublishInput {

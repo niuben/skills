@@ -176,6 +176,8 @@ function getTableSql(db: DB, tableName: string): string | undefined {
 }
 
 function applyIncrementalMigrations(db: DB): void {
+  ensureColumn(db, "artifacts", "download_count", "INTEGER NOT NULL DEFAULT 0");
+  ensureColumn(db, "artifact_versions", "download_count", "INTEGER NOT NULL DEFAULT 0");
   ensureColumn(db, "artifacts", "approval_status", "TEXT NOT NULL DEFAULT 'approved'");
   ensureColumn(db, "artifact_versions", "approval_status", "TEXT NOT NULL DEFAULT 'approved'");
   ensureColumn(db, "users", "role", "TEXT NOT NULL DEFAULT 'member'");

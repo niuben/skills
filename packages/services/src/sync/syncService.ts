@@ -48,4 +48,40 @@ export class SyncService {
 
     return report;
   }
+
+  /** Pull only skills artifacts published by the specified username. */
+  async pullUserSkills(username: string): Promise<SyncReport> {
+    const report: SyncReport = { fetched: [], skipped: [], failed: [] };
+
+    const remote = await this.deps.registry.search({
+      kind: "skills",
+      username,
+      limit: 1000,
+    });
+
+    for (const record of remote.items) {
+      try {
+        const local = this.deps.repository.findById(record.id);
+        if (local && (await this.deps.storage.has(local.storagePath))) {
+          report.skipped.push(record);
+          continue;
+        }
+
+        const payload = await this.deps.registry.download(record.id);
+        if (sha256Buffer(payload) !== record.contentHash) {
+          throw new Error("content hash mismatch");
+        }
+
+        await this.deps.storage.put(record.storagePath, payload);
+        this.deps.repository.save(record);
+        report.fetched.push(record);
+        this.log.info(`synced ${record.id}`);
+      } catch (err) {
+        report.failed.push({ id: record.id, error: (err as Error).message });
+        this.log.warn(`failed ${record.id}: ${(err as Error).message}`);
+      }
+    }
+
+    return report;
+  }
 }

@@ -73,6 +73,7 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
       return reply.code(404).send({ error: "blob_missing" });
     }
     const buf = await deps.storage.get(record.storagePath);
+    deps.repository.incrementDownloadCount(record.id);
     reply.header("content-type", "application/octet-stream");
     reply.header("x-skillos-content-hash", record.contentHash);
     return reply.send(buf);

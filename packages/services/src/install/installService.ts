@@ -215,6 +215,9 @@ export class InstallService {
     await fs.unlink(payloadFile);
     await fs.unlink(manifestFile);
 
+    // Treat CLI install as a download action for local usage analytics.
+    this.deps.repository.incrementDownloadCount(record.id);
+
     this.log.info(`installed ${id} -> ${installPath}`);
     return { record, installPath };
   }

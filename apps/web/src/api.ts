@@ -71,6 +71,14 @@ export async function getArtifact(id: string): Promise<ArtifactRecord | null> {
   return MOCK.find((a) => a.id === id) ?? null;
 }
 
+export async function downloadArtifactPayload(id: string): Promise<Blob> {
+  const res = await fetch(`${BASE}/artifacts/${encodeURIComponent(id)}/download`);
+  if (!res.ok) {
+    throw new Error(`download failed: ${res.status}`);
+  }
+  return await res.blob();
+}
+
 export async function publishArtifact(input: PublishArtifactInput): Promise<ArtifactRecord> {
   const form = new FormData();
   form.append("manifest", JSON.stringify(input.manifest));

@@ -18,7 +18,7 @@ export function ArtifactCard({ a }: { a: ArtifactRecord }) {
             </span>
           ))}
         </div>
-        <span>v{a.version}</span>
+        <span>v{a.version} · ⬇ {(a.downloadCount ?? 0).toLocaleString()}</span>
       </div>
     </Link>
   );
