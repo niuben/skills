@@ -1,4 +1,7 @@
 # Skills Hub
+
+![Skills Hub icon](apps/web/public/favicon.svg)
+
 Skills Hub is an artifact platform for **skills**, **prompts**, and **agents**.
 This repository is a pnpm monorepo that includes a registry server, a CLI, a web UI, and an admin UI.
 

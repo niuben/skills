@@ -1202,6 +1202,7 @@ button {
 /* ===== Footer ===== */
 .footer {
   margin-top: auto;
+  background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 28px 0;
   font-size: 13px;
