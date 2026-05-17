@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "bin": {
-    "skillos": "./dist/index.js"
+    "skill": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -20,6 +20,7 @@
     "@taoai/skill-services": "workspace:*",
     "@taoai/skill-storage": "workspace:*",
     "@taoai/skill-utils": "workspace:*",
+    "@taoai/skill-server": "workspace:*",
     "@types/node": "^20.19.39",
     "@types/prompts": "^2.4.9",
     "axios": "^1.16.0",

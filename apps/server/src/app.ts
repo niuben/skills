@@ -135,3 +135,31 @@ function ensureDefaultAdmin(
   loginService.register(username, password, "admin");
   log.warn(`created default admin user '${username}'; configure SKILLOS_ADMIN_USERNAME/SKILLOS_ADMIN_PASSWORD for production`);
 }
+
+let serverInstance: FastifyInstance | null = null;
+
+export async function startServer() {
+  if (serverInstance) {
+    console.log("Server is already running.");
+    return;
+  }
+  const { app } = await buildApp();
+  await app.listen({ port: 3000 });
+  serverInstance = app;
+  console.log("Server started on port 3000.");
+}
+
+export async function stopServer() {
+  if (!serverInstance) {
+    console.log("Server is not running.");
+    return;
+  }
+  await serverInstance.close();
+  serverInstance = null;
+  console.log("Server stopped.");
+}
+
+export async function restartServer() {
+  await stopServer();
+  await startServer();
+}

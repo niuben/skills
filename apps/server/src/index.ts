@@ -45,3 +45,5 @@ async function main(): Promise<void> {
 }
 
 main();
+
+export { startServer, stopServer, restartServer } from './app.js';

@@ -70,6 +70,9 @@ importers:
       '@taoai/skill-registry-client':
         specifier: workspace:*
         version: link:../../packages/registry-client
+      '@taoai/skill-server':
+        specifier: workspace:*
+        version: link:../server
       '@taoai/skill-services':
         specifier: workspace:*
         version: link:../../packages/services
