@@ -1,7 +1,6 @@
 {
-  "name": "@taoai/skill",
+  "name": "@taoai/skills-hub",
   "version": "0.1.0",
-  "private": true,
   "description": "Enterprise skills/prompts/agents artifact management platform",
   "bin": {
     "skill": "./apps/cli/dist/index.js"
