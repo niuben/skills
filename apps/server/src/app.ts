@@ -144,9 +144,10 @@ export async function startServer() {
     return;
   }
   const { app } = await buildApp();
-  await app.listen({ port: 3000 });
-  serverInstance = app;
-  console.log("Server started on port 3000.");
+  await app.listen({ port: 7421 });  
+  serverInstance = app;  
+  console.log("Server started on port 7421.");
+  console.log("Server started successfully.");
 }
 
 export async function stopServer() {
