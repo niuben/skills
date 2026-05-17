@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "Enterprise skills/prompts/agents artifact management platform",
+  "bin": {
+    "skill": "./apps/cli/dist/index.js"
+  },
+
   "scripts": {
     "build": "pnpm -r build",
     "dev": "pnpm -r --parallel dev",
