@@ -6,11 +6,11 @@ import {
   parseArtifactId,
   type ArtifactKind,
   type ArtifactRecord,
-} from "@skillshub/core";
-import type { ArtifactRepository, FileStorage } from "@skillshub/storage";
-import type { RegistryClient } from "@skillshub/registry-client";
-import { createLogger, ensureDir, sha256Buffer } from "@skillshub/utils";
-import { AGENT_DIR_CONFIG, expandPath, findPlatformByProjectDir } from "@skillshub/config";
+} from "@taoai/skill-core";
+import type { ArtifactRepository, FileStorage } from "@taoai/skill-storage";
+import type { RegistryClient } from "@taoai/skill-registry-client";
+import { createLogger, ensureDir, sha256Buffer } from "@taoai/skill-utils";
+import { AGENT_DIR_CONFIG, expandPath, findPlatformByProjectDir } from "@taoai/skill-config";
 
 /**
  * Find the actual project root by walking up directories looking for .git

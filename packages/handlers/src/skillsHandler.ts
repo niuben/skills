@@ -3,7 +3,7 @@ import {
   type ArtifactHandler,
   matchSkillFiles,
   parseSkillMarkdownManifest,
-} from "@skillshub/core";
+} from "@taoai/skill-core";
 
 const schema = z.object({
   name: z.string().min(1),

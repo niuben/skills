@@ -1,5 +1,5 @@
-import type { ArtifactRecord } from "@skillshub/core";
-import type { ArtifactQuery, ArtifactRepository } from "@skillshub/storage";
+import type { ArtifactRecord } from "@taoai/skill-core";
+import type { ArtifactQuery, ArtifactRepository } from "@taoai/skill-storage";
 
 export interface SearchServiceDeps {
   repository: ArtifactRepository;

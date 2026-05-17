@@ -1,6 +1,6 @@
 import type { Command } from "commander";
-import type { ArtifactKind } from "@skillshub/core";
-import type { AgentPlatformInfo } from "@skillshub/services";
+import type { ArtifactKind } from "@taoai/skill-core";
+import type { AgentPlatformInfo } from "@taoai/skill-services";
 import readline from "node:readline";
 import { buildContext, fail } from "../utils.js";
 

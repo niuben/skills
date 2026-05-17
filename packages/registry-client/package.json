@@ -1,5 +1,5 @@
 {
-  "name": "@skillshub/registry-client",
+  "name": "@taoai/skill-registry-client",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillshub/core": "workspace:*",
-    "@skillshub/utils": "workspace:*"
+    "@taoai/skill-core": "workspace:*",
+    "@taoai/skill-utils": "workspace:*"
   }
 }

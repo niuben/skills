@@ -1,4 +1,4 @@
-import type { ArtifactKind, ArtifactManifest, ArtifactRecord } from "@skillshub/core";
+import type { ArtifactKind, ArtifactManifest, ArtifactRecord } from "@taoai/skill-core";
 
 export interface RegistryClientOptions {
   baseUrl: string;

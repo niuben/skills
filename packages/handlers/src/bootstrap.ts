@@ -1,4 +1,4 @@
-import { handlerRegistry, type HandlerRegistry } from "@skillshub/core";
+import { handlerRegistry, type HandlerRegistry } from "@taoai/skill-core";
 import { promptHandler } from "./promptHandler.js";
 import { skillsHandler } from "./skillsHandler.js";
 import { agentHandler } from "./agentHandler.js";

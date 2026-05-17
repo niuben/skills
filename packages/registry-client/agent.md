@@ -1,5 +1,5 @@
 
-**@skillshub/registry-client — Package Overview**
+**@taoai/skill-registry-client — Package Overview**
 
 - **Purpose**: HTTP client for interacting with remote registries for publishing, searching, and fetching artifacts.
 - **Main files**: `src/registryClient.ts`, `src/index.ts`.

@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import type { ArtifactKind } from "@skillshub/core";
+import type { ArtifactKind } from "@taoai/skill-core";
 import { buildContext } from "../utils.js";
 
 export function registerListCommand(program: Command): void {

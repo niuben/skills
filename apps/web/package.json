@@ -1,5 +1,5 @@
 {
-  "name": "@skillshub/web",
+  "name": "@taoai/skill-web",
   "version": "0.1.0",
   "private": true,
   "type": "module",

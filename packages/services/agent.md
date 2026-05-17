@@ -1,5 +1,5 @@
 
-**@skillshub/services — Package Overview**
+**@taoai/skill-services — Package Overview**
 
 - **Purpose**: Implement application business logic services (publish, install, search, sync, login, etc.). Provides reusable service classes that encapsulate specific operations.
 - **Main files**: `src/publish/publishService.ts`, `src/install/installService.ts`, `src/search/searchService.ts`, `src/sync/syncService.ts`, `src/login/loginService.ts`.

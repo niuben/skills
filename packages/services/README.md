@@ -1,4 +1,4 @@
-# @skillshub/services
+# @taoai/skill-services
 
 Application services that orchestrate repository, storage, and registry operations.
 

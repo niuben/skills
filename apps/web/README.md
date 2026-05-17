@@ -1,4 +1,4 @@
-# @skillshub/web
+# @taoai/skill-web
 
 Claude 风格的管理 UI（Vite + React + TS）。
 

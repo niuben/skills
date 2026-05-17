@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import type { SettingsRepository } from "@skillshub/storage";
+import type { SettingsRepository } from "@taoai/skill-storage";
 
 function toCssVariables(settings: { primaryColor?: string; siteName?: string }) {
   const primary = settings.primaryColor || "#d97706";

@@ -1,4 +1,4 @@
-import type { ArtifactKind, ArtifactRecord } from "@skillshub/core";
+import type { ArtifactKind, ArtifactRecord } from "@taoai/skill-core";
 import type {
   PublishRequest,
   RegistryClientOptions,

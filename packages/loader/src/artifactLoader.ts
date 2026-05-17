@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import * as tar from "tar";
-import { handlerRegistry, type Artifact, type FileEntry } from "@skillshub/core";
+import { handlerRegistry, type Artifact, type FileEntry } from "@taoai/skill-core";
 
 function hash(content: Buffer): string {
   return crypto.createHash("sha256").update(content).digest("hex");

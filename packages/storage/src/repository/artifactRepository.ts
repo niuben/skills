@@ -1,5 +1,5 @@
 import type { Database as DB } from "better-sqlite3";
-import type { ArtifactKind, ArtifactRecord } from "@skillshub/core";
+import type { ArtifactKind, ArtifactRecord } from "@taoai/skill-core";
 
 export interface ArtifactQuery {
   kind?: ArtifactKind;

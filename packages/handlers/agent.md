@@ -1,5 +1,5 @@
 
-**@skillshub/handlers — Package Overview**
+**@taoai/skill-handlers — Package Overview**
 
 - **Purpose**: Provide high-level event/request handlers (e.g., `agentHandler`, `promptHandler`) that integrate `core` with runtime environments.
 - **Main files**: `src/agentHandler.ts`, `src/promptHandler.ts`, `src/bootstrap.ts`.

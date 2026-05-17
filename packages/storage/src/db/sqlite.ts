@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Database, { type Database as DB } from "better-sqlite3";
-import { ensureDir } from "@skillshub/utils";
+import { ensureDir } from "@taoai/skill-utils";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

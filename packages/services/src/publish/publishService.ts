@@ -2,9 +2,9 @@ import {
   createArtifactRecord,
   type ArtifactPublishInput,
   type ArtifactRecord,
-} from "@skillshub/core";
-import type { ArtifactRepository, FileStorage, PathResolver } from "@skillshub/storage";
-import { createLogger } from "@skillshub/utils";
+} from "@taoai/skill-core";
+import type { ArtifactRepository, FileStorage, PathResolver } from "@taoai/skill-storage";
+import { createLogger } from "@taoai/skill-utils";
 
 export interface PublishServiceDeps {
   repository: ArtifactRepository;

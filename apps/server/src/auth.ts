@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import jwt from "jsonwebtoken";
-import type { User, UserRepository } from "@skillshub/storage";
+import type { User, UserRepository } from "@taoai/skill-storage";
 
 export interface AuthContext {
   user: User;

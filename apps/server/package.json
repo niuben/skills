@@ -1,5 +1,5 @@
 {
-  "name": "@skillshub/server",
+  "name": "@taoai/skill-server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,11 +12,11 @@
   "dependencies": {
     "@fastify/multipart": "^8.3.0",
     "@fastify/static": "^6.8.0",
-    "@skillshub/config": "workspace:*",
-    "@skillshub/core": "workspace:*",
-    "@skillshub/services": "workspace:*",
-    "@skillshub/storage": "workspace:*",
-    "@skillshub/utils": "workspace:*",
+    "@taoai/skill-config": "workspace:*",
+    "@taoai/skill-core": "workspace:*",
+    "@taoai/skill-services": "workspace:*",
+    "@taoai/skill-storage": "workspace:*",
+    "@taoai/skill-utils": "workspace:*",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.7",
     "express": "^5.2.1",

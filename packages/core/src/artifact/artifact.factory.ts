@@ -1,4 +1,4 @@
-import { sha256Buffer } from "@skillshub/utils";
+import { sha256Buffer } from "@taoai/skill-utils";
 import { makeArtifactId } from "./artifact.js";
 import type {
   ArtifactManifest,

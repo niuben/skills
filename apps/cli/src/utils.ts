@@ -1,6 +1,6 @@
 import path from "node:path";
-import type { AgentPlatformInfo } from "@skillshub/services";
-import { loadConfig, type SkillosConfig } from "@skillshub/config";
+import type { AgentPlatformInfo } from "@taoai/skill-services";
+import { loadConfig, type SkillosConfig } from "@taoai/skill-config";
 import {
   createArtifactRepository,
   createFileStorage,
@@ -9,14 +9,14 @@ import {
   type ArtifactRepository,
   type FileStorage,
   type PathResolver,
-} from "@skillshub/storage";
-import { RegistryClient } from "@skillshub/registry-client";
+} from "@taoai/skill-storage";
+import { RegistryClient } from "@taoai/skill-registry-client";
 import {
   InstallService,
   PublishService,
   SearchService,
   SyncService,
-} from "@skillshub/services";
+} from "@taoai/skill-services";
 
 export interface CliContext {
   config: SkillosConfig;

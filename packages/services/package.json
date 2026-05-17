@@ -1,5 +1,5 @@
 {
-  "name": "@skillshub/services",
+  "name": "@taoai/skill-services",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,11 +17,11 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillshub/config": "workspace:*",
-    "@skillshub/core": "workspace:*",
-    "@skillshub/registry-client": "workspace:*",
-    "@skillshub/storage": "workspace:*",
-    "@skillshub/utils": "workspace:*",
+    "@taoai/skill-config": "workspace:*",
+    "@taoai/skill-core": "workspace:*",
+    "@taoai/skill-registry-client": "workspace:*",
+    "@taoai/skill-storage": "workspace:*",
+    "@taoai/skill-utils": "workspace:*",
     "bcryptjs": "^3.0.3",
     "tar": "^7.4.3"
   }

@@ -1,6 +1,6 @@
 import Fastify, { type FastifyInstance } from "fastify";
 import multipart from "@fastify/multipart";
-import { loadConfig } from "@skillshub/config";
+import { loadConfig } from "@taoai/skill-config";
 import {
   createArtifactRepository,
   createFileStorage,
@@ -8,9 +8,9 @@ import {
   SettingsRepository,
   openDatabase,
   UserRepository,
-} from "@skillshub/storage";
-import { LoginService, PublishService, SearchService } from "@skillshub/services";
-import { createLogger } from "@skillshub/utils";
+} from "@taoai/skill-storage";
+import { LoginService, PublishService, SearchService } from "@taoai/skill-services";
+import { createLogger } from "@taoai/skill-utils";
 import { registerArtifactRoutes } from "./routes/artifact.js";
 import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";

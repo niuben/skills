@@ -1,5 +1,5 @@
 {
-  "name": "@skillshub/storage",
+  "name": "@taoai/skill-storage",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,9 +17,9 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillshub/config": "workspace:*",
-    "@skillshub/core": "workspace:*",
-    "@skillshub/utils": "workspace:*",
+    "@taoai/skill-config": "workspace:*",
+    "@taoai/skill-core": "workspace:*",
+    "@taoai/skill-utils": "workspace:*",
     "better-sqlite3": "^11.1.2"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 
-**@skillshub/utils — Package Overview**
+**@taoai/skill-utils — Package Overview**
 
 - **Purpose**: Provide common utility functions (filesystem helpers, logging, small helpers) shared across packages in the repository.
 - **Main files**: `src/fs.ts`, `src/logger.ts`, `src/index.ts`.

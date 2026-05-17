@@ -1,4 +1,4 @@
-# @skillshub/config
+# @taoai/skill-config
 
 Configuration loading and persistence for Skillos.
 
@@ -24,7 +24,7 @@ Configuration loading and persistence for Skillos.
 ## Example
 
 ```ts
-import { loadConfig } from "@skillshub/config";
+import { loadConfig } from "@taoai/skill-config";
 
 const cfg = await loadConfig();
 console.log(cfg.defaultRegistry);

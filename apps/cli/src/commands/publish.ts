@@ -8,9 +8,9 @@ import {
   type ArtifactKind,
   type ArtifactManifest,
   type ArtifactType,
-} from "@skillshub/core";
-import { registerBuiltinHandlers } from "@skillshub/handlers";
-import { ArtifactLoader, createTarballFromDir } from "@skillshub/loader";
+} from "@taoai/skill-core";
+import { registerBuiltinHandlers } from "@taoai/skill-handlers";
+import { ArtifactLoader, createTarballFromDir } from "@taoai/skill-loader";
 import { buildContext, fail } from "../utils.js";
 
 export function registerPublishCommand(program: Command): void {

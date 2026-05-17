@@ -1,4 +1,4 @@
-# @skillshub/utils
+# @taoai/skill-utils
 
 Shared low-level helpers used across the monorepo.
 
@@ -16,7 +16,7 @@ Shared low-level helpers used across the monorepo.
 ## Example
 
 ```ts
-import { createLogger, sha256Buffer } from "@skillshub/utils";
+import { createLogger, sha256Buffer } from "@taoai/skill-utils";
 
 const log = createLogger("example");
 log.info("ready");

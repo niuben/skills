@@ -3,4 +3,4 @@
 Node-side runtime for loading installed skills/prompts/agents into a host process
 (e.g. orchestrating an agent loop, registering tools, providing prompt templates).
 
-Will depend on `@skillshub/core` and `@skillshub/storage` (read-only repository).
+Will depend on `@taoai/skill-core` and `@taoai/skill-storage` (read-only repository).

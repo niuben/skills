@@ -55,28 +55,28 @@ importers:
 
   apps/cli:
     dependencies:
-      '@skillshub/config':
+      '@taoai/skill-config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@skillshub/handlers':
+      '@taoai/skill-handlers':
         specifier: workspace:*
         version: link:../../packages/handlers
-      '@skillshub/loader':
+      '@taoai/skill-loader':
         specifier: workspace:*
         version: link:../../packages/loader
-      '@skillshub/registry-client':
+      '@taoai/skill-registry-client':
         specifier: workspace:*
         version: link:../../packages/registry-client
-      '@skillshub/services':
+      '@taoai/skill-services':
         specifier: workspace:*
         version: link:../../packages/services
-      '@skillshub/storage':
+      '@taoai/skill-storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../../packages/utils
       '@types/node':
@@ -103,19 +103,19 @@ importers:
       '@fastify/static':
         specifier: ^6.8.0
         version: 6.12.0
-      '@skillshub/config':
+      '@taoai/skill-config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@skillshub/services':
+      '@taoai/skill-services':
         specifier: workspace:*
         version: link:../../packages/services
-      '@skillshub/storage':
+      '@taoai/skill-storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../../packages/utils
       '@types/express':
@@ -173,13 +173,13 @@ importers:
 
   packages/config:
     dependencies:
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/core:
     dependencies:
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../utils
       zod:
@@ -188,7 +188,7 @@ importers:
 
   packages/handlers:
     dependencies:
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -197,7 +197,7 @@ importers:
 
   packages/loader:
     dependencies:
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../core
       tar:
@@ -206,28 +206,28 @@ importers:
 
   packages/registry-client:
     dependencies:
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../core
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../utils
 
   packages/services:
     dependencies:
-      '@skillshub/config':
+      '@taoai/skill-config':
         specifier: workspace:*
         version: link:../config
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../core
-      '@skillshub/registry-client':
+      '@taoai/skill-registry-client':
         specifier: workspace:*
         version: link:../registry-client
-      '@skillshub/storage':
+      '@taoai/skill-storage':
         specifier: workspace:*
         version: link:../storage
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../utils
       bcryptjs:
@@ -239,13 +239,13 @@ importers:
 
   packages/storage:
     dependencies:
-      '@skillshub/config':
+      '@taoai/skill-config':
         specifier: workspace:*
         version: link:../config
-      '@skillshub/core':
+      '@taoai/skill-core':
         specifier: workspace:*
         version: link:../core
-      '@skillshub/utils':
+      '@taoai/skill-utils':
         specifier: workspace:*
         version: link:../utils
       better-sqlite3:

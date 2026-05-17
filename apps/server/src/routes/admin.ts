@@ -2,10 +2,10 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { randomBytes, randomUUID } from "node:crypto";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import type { ArtifactRecord } from "@skillshub/core";
-import type { ArtifactRepository, SettingsRepository, UserRepository } from "@skillshub/storage";
-import { LoginService } from "@skillshub/services";
-import { ensureDir } from "@skillshub/utils";
+import type { ArtifactRecord } from "@taoai/skill-core";
+import type { ArtifactRepository, SettingsRepository, UserRepository } from "@taoai/skill-storage";
+import { LoginService } from "@taoai/skill-services";
+import { ensureDir } from "@taoai/skill-utils";
 import { createRequireAdmin } from "../auth.js";
 
 export interface AdminRouteDeps {

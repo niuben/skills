@@ -1,9 +1,9 @@
 import type { FastifyInstance } from "fastify";
-import type { ArtifactKind, ArtifactManifest } from "@skillshub/core";
-import { validateManifest } from "@skillshub/core";
-import type { PublishService, SearchService } from "@skillshub/services";
-import type { FileStorage } from "@skillshub/storage";
-import type { ArtifactRepository } from "@skillshub/storage";
+import type { ArtifactKind, ArtifactManifest } from "@taoai/skill-core";
+import { validateManifest } from "@taoai/skill-core";
+import type { PublishService, SearchService } from "@taoai/skill-services";
+import type { FileStorage } from "@taoai/skill-storage";
+import type { ArtifactRepository } from "@taoai/skill-storage";
 
 export interface ArtifactRouteDeps {
   publishService: PublishService;

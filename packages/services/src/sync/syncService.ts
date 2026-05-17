@@ -1,8 +1,8 @@
-import type { ArtifactRecord } from "@skillshub/core";
-import type { ArtifactRepository, FileStorage } from "@skillshub/storage";
-import { createFileStorage, createPathResolver } from "@skillshub/storage";
-import type { RegistryClient } from "@skillshub/registry-client";
-import { createLogger, sha256Buffer } from "@skillshub/utils";
+import type { ArtifactRecord } from "@taoai/skill-core";
+import type { ArtifactRepository, FileStorage } from "@taoai/skill-storage";
+import { createFileStorage, createPathResolver } from "@taoai/skill-storage";
+import type { RegistryClient } from "@taoai/skill-registry-client";
+import { createLogger, sha256Buffer } from "@taoai/skill-utils";
 
 export interface SyncServiceDeps {
   repository: ArtifactRepository;

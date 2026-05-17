@@ -1,4 +1,4 @@
-# @skillshub/loader
+# @taoai/skill-loader
 
 Artifact loader for directory, tarball, and buffer sources.
 
@@ -21,8 +21,8 @@ Artifact loader for directory, tarball, and buffer sources.
 ## Usage
 
 ```ts
-import { ArtifactLoader } from "@skillshub/loader";
-import { registerBuiltinHandlers } from "@skillshub/handlers";
+import { ArtifactLoader } from "@taoai/skill-loader";
+import { registerBuiltinHandlers } from "@taoai/skill-handlers";
 
 registerBuiltinHandlers();
 

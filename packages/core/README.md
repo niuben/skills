@@ -1,4 +1,4 @@
-# @skillshub/core
+# @taoai/skill-core
 
 Core domain model and contracts for artifacts.
 

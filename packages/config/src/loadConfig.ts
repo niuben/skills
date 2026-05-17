@@ -1,5 +1,5 @@
 import path from "node:path";
-import { ensureDir, pathExists, readJson, writeJson } from "@skillshub/utils";
+import { ensureDir, pathExists, readJson, writeJson } from "@taoai/skill-utils";
 import { CONFIG_FILE_NAME, getDefaultConfig, getDefaultDataDir } from "./config.js";
 import type { PartialConfig, SkillosConfig } from "./types.js";
 

@@ -1,5 +1,5 @@
-import { loadConfig } from "@skillshub/config";
-import { createLogger } from "@skillshub/utils";
+import { loadConfig } from "@taoai/skill-config";
+import { createLogger } from "@taoai/skill-utils";
 import { buildApp } from "./app.js";
 
 const MAX_PORT_RETRIES = 20;

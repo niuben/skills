@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { ArtifactHandler, FileEntry } from "@skillshub/core";
+import type { ArtifactHandler, FileEntry } from "@taoai/skill-core";
 
 const schema = z.object({
   name: z.string().min(1),

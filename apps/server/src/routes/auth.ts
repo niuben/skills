@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import type { LoginService } from "@skillshub/services";
+import type { LoginService } from "@taoai/skill-services";
 import { createToken } from "../auth.js";
 
 export interface AuthRouteDeps {

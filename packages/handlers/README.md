@@ -1,4 +1,4 @@
-# @skillshub/handlers
+# @taoai/skill-handlers
 
 Built-in artifact handlers for convention-driven parsing.
 
@@ -13,7 +13,7 @@ Built-in artifact handlers for convention-driven parsing.
 Use `registerBuiltinHandlers` to register all built-in handlers into a registry.
 
 ```ts
-import { registerBuiltinHandlers } from "@skillshub/handlers";
+import { registerBuiltinHandlers } from "@taoai/skill-handlers";
 
 registerBuiltinHandlers();
 ```
@@ -27,4 +27,4 @@ registerBuiltinHandlers();
 
 ## Notes
 
-Handlers are intentionally simple and safe defaults for local development. You can register your own handlers with the same interface from `@skillshub/core`.
+Handlers are intentionally simple and safe defaults for local development. You can register your own handlers with the same interface from `@taoai/skill-core`.

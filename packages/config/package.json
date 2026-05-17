@@ -1,5 +1,5 @@
 {
-  "name": "@skillshub/config",
+  "name": "@taoai/skill-config",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,6 +17,6 @@
     "dev": "tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "@skillshub/utils": "workspace:*"
+    "@taoai/skill-utils": "workspace:*"
   }
 }

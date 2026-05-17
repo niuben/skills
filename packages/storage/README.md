@@ -1,4 +1,4 @@
-# @skillshub/storage
+# @taoai/skill-storage
 
 Persistence adapters for files and metadata.
 
