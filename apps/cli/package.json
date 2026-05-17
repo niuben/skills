@@ -1,7 +1,9 @@
 {
   "name": "@taoai/skill-cli",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",  
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "skill": "./dist/index.js"
