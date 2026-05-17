@@ -17,6 +17,7 @@ export async function loginCommand() {
     const token = res.data.token || '';
     if (registry) {
       registry.token = token;
+      registry.username = username;
       await saveConfig(config);
     }
     const configPath = path.join(process.env.HOME || '', '.skillsrc');

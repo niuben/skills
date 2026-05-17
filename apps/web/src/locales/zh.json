@@ -43,6 +43,30 @@
     "subtitle": "在组织内部发现、共享并管理技能与提示（prompts）。"
   },
   "home": {
+    "highlights": ["知识有序沉淀。", "工作流可复用。", "团队始终同步。"],
+    "pillars": [
+      {
+        "title": "结构化整理能力",
+        "body": "把团队的 skills、prompts 与 agents 统一归档，清晰标注名称、标签与归属。"
+      },
+      {
+        "title": "跨项目保持同步",
+        "body": "让本地项目、中心仓库和团队空间之间的能力资产保持一致，减少重复劳动。"
+      },
+      {
+        "title": "沉淀可复用流程",
+        "body": "将验证过的方法、规范与经验发布成可版本化资产，让团队更快复用。"
+      }
+    ],
+    "trust_bar": ["企业可用", "安全私有", "团队驱动"],
+    "preview_aria": "Skills Hub 预览",
+    "preview_subtitle": "浏览推荐的内部能力资产，并在组织范围内快速搜索和发现。",
+    "preview_card_fallback": "一个可供团队快速复用的内部能力资产。",
+    "stats": {
+      "recommended": "推荐条目",
+      "ready": "可直接使用",
+      "downloads": "下载次数"
+    },
     "recommended_title": "推荐 Skills",
     "recommended_subtitle": "来自团队近期发布与高频使用的能力",
     "view_all": "查看全部 →",

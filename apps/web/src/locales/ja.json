@@ -43,6 +43,30 @@
     "subtitle": "組織内でスキルとプロンプトを発見、共有、管理します。"
   },
   "home": {
+    "highlights": ["知識を整理する。", "ワークフローを再利用する。", "チームを常に同期する。"],
+    "pillars": [
+      {
+        "title": "構造化して整理",
+        "body": "チームの skills、prompts、agents を一つのカタログにまとめ、名前、タグ、所有者を明確にします。"
+      },
+      {
+        "title": "プロジェクト間で同期",
+        "body": "ローカルプロジェクト、レジストリ、チーム環境の間で実用的なアーティファクトを揃えます。"
+      },
+      {
+        "title": "再利用できる運用知識を公開",
+        "body": "実証済みの運用ノウハウをバージョン付きアセットとして公開し、チーム全体で素早く再利用できます。"
+      }
+    ],
+    "trust_bar": ["Enterprise ready", "Secure & private", "Team driven"],
+    "preview_aria": "Skills Hub プレビュー",
+    "preview_subtitle": "おすすめの社内アセットを閲覧し、組織全体の skills をすばやく検索できます。",
+    "preview_card_fallback": "チームですぐ使える再利用可能な社内アセットです。",
+    "stats": {
+      "recommended": "おすすめ",
+      "ready": "すぐ使える",
+      "downloads": "ダウンロード"
+    },
     "recommended_title": "おすすめスキル",
     "recommended_subtitle": "チームの最近のリリースや頻繁に使用されるスキル",
     "view_all": "すべてを見る →",

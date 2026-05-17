@@ -43,6 +43,30 @@
     "subtitle": "Discover, share and manage skills and prompts across your organization."
   },
   "home": {
+    "highlights": ["Your knowledge, organized.", "Your workflows, reusable.", "Your team, always in sync."],
+    "pillars": [
+      {
+        "title": "Organize with structure",
+        "body": "Group team skills, prompts and agents into a shared catalog with clear names, tags and ownership."
+      },
+      {
+        "title": "Sync across projects",
+        "body": "Keep practical artifacts aligned between local projects, the registry and your team workspace."
+      },
+      {
+        "title": "Ship reusable workflows",
+        "body": "Publish proven operating knowledge as versioned assets your team can discover and adopt fast."
+      }
+    ],
+    "trust_bar": ["Enterprise ready", "Secure & private", "Team driven"],
+    "preview_aria": "Skills Hub preview",
+    "preview_subtitle": "Browse recommended internal assets and search skills across your organization.",
+    "preview_card_fallback": "A reusable internal asset ready for your team.",
+    "stats": {
+      "recommended": "Recommended",
+      "ready": "Ready to use",
+      "downloads": "Downloads"
+    },
     "recommended_title": "Recommended Skills",
     "recommended_subtitle": "From recent and frequently used team skills",
     "view_all": "View all →",

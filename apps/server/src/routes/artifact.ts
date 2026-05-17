@@ -19,6 +19,7 @@ export function registerArtifactRoutes(app: FastifyInstance, deps: ArtifactRoute
   }>("/api/artifacts", async (req) => {
     const { kind, q, limit, offset, username } = req.query;
     // If username provided, query repository directly to allow exact author_name match
+    // No approval filter for user's own artifacts
     if (username) {
       const items = deps.repository.list({
         kind,
